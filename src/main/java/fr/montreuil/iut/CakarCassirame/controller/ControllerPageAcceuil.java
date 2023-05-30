@@ -21,19 +21,11 @@ public class ControllerPageAcceuil implements Initializable {
     @FXML
     private Pane paneExterne;
 
-    @FXML
-    private Button ButtonDemarer;
 
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //final Image image = new Image("C:\\Users\\husey\\Downloads\\TowerDefense\\TowerDefense\\src\\main\\resources\\fr\\montreuil\\iut\\CakarCassirame\\espace.jpg");
-        //final ImageView imageView = new ImageView(image);
-        //paneExterne.getChildren().setAll(imageView);
-        //final Image image = new Image("C:\\Users\\husey\\Downloads\\TowerDefense\\TowerDefense\\src\\main\\resources\\fr\\montreuil\\iut\\CakarCassirame\\arc32.jpg");
-        //final ImageView icon = new ImageView(image);
-        //ButtonDemarer.setGraphic(icon);
 
     }
 

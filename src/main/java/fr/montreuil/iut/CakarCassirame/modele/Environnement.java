@@ -16,6 +16,8 @@ public class Environnement {
 
     private ObservableList<Ennemie> listeEnnemis;
 
+    private ObservableList<Tour> listeTours;
+
     public Environnement() {
         this.map = new Map();
         this.x = this.map.getTileMap().length;
@@ -24,6 +26,7 @@ public class Environnement {
         this.nbEnnemieTue = 0;
         this.listeEnnemis = FXCollections.observableArrayList();
         this.nbEnnemieSpawn = 0;
+        this.listeTours = FXCollections.observableArrayList();
 
     }
 
@@ -39,6 +42,8 @@ public class Environnement {
 
     public ObservableList<Ennemie> getListeEnnemis() { return this.listeEnnemis; }
 
+    public ObservableList<Tour> getListeTours(){ return  this.listeTours; }
+
     public void verfication(){
         for (Ennemie ennemie : this.listeEnnemis){
             if(ennemie.getPv() < 1){
@@ -51,6 +56,10 @@ public class Environnement {
     public void ajouterEnnemie(){
         this.listeEnnemis.add(new Ennemie( this));
         this.nbEnnemieSpawn++;
+    }
+
+    public void ajouterTour(double x, double y){
+        this.listeTours.add(new Tour(this, x, y));
     }
 
     public void deplacement(){

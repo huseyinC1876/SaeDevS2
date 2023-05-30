@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" prefWidth="1300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.montreuil.iut.CakarCassirame.controller.ControllerNiveau1">
+<Pane fx:id="pane" prefWidth="1300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.montreuil.iut.CakarCassirame.controller.ControllerNiveau1" onMouseClicked="#placerTour">
     <TilePane fx:id="tilePaneExterne" alignment="CENTER" prefHeight="640" prefWidth="960" xmlns:fx="http://javafx.com/fxml">
         <!--    <padding>-->
         <!--        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>-->
@@ -24,6 +24,7 @@
         <!--        </image>-->
         <!--    </ImageView>-->
     </TilePane>
+   <TilePane fx:id="tilePaneInterne" prefHeight="640.0" prefWidth="960.0"/>
    <VBox layoutX="960.0" layoutY="14.0" prefHeight="380.0" prefWidth="340.0">
       <children>
          <Label alignment="CENTER" prefHeight="38.0" prefWidth="83.0" text="Tours :">
@@ -36,7 +37,7 @@
                <VBox>
                   <children>
                      <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Canon Laser" />
-                     <Button fx:id="canonLaser" mnemonicParsing="false" prefHeight="90.0" prefWidth="115.0">
+                     <Button fx:id="canonLaser" mnemonicParsing="false" prefHeight="90.0" prefWidth="115.0" onAction="#affichagePlacement">
                         <graphic>
                            <ImageView fitHeight="83.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true">
                               <image>
@@ -54,7 +55,7 @@
                <VBox>
                   <children>
                      <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Canon Missile" />
-                     <Button fx:id="canonMissile" mnemonicParsing="false" prefHeight="90.0" prefWidth="115.0">
+                     <Button fx:id="canonMissile" mnemonicParsing="false" prefHeight="90.0" prefWidth="115.0" onAction="#affichagePlacement">
                         <graphic>
                            <ImageView fitHeight="83.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
                               <image>
@@ -82,7 +83,7 @@
                <VBox>
                   <children>
                      <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Champs de force" />
-                     <Button fx:id="champForce" mnemonicParsing="false" prefHeight="90.0" prefWidth="115.0">
+                     <Button fx:id="champForce" mnemonicParsing="false" prefHeight="90.0" prefWidth="115.0" onAction="#affichagePlacement">
                         <graphic>
                            <ImageView fitHeight="80.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true">
                               <image>
@@ -100,7 +101,7 @@
                <VBox>
                   <children>
                      <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Canon Nucléaire" />
-                     <Button fx:id="canonNucleaire" mnemonicParsing="false" prefHeight="90.0" prefWidth="115.0">
+                     <Button fx:id="canonNucleaire" mnemonicParsing="false" prefHeight="90.0" prefWidth="115.0" onAction="#affichagePlacement">
                         <graphic>
                            <ImageView fitHeight="84.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                               <image>
@@ -127,6 +128,9 @@
             <font>
                <Font size="16.0" />
             </font>
+            <VBox.margin>
+               <Insets top="270.0" />
+            </VBox.margin>
          </Button>
       </children>
    </VBox>

@@ -1,33 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <Pane fx:id="paneExterne" prefHeight="640.0" prefWidth="1300.0" style="-fx-background-image: url('C:/Users/husey/Downloads/TowerDefense/TowerDefense/src/main/resources/fr/montreuil/iut/CakarCassirame/espace.jpg');" styleClass="paneAcceuil" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.montreuil.iut.CakarCassirame.controller.ControllerPageAcceuil">
    <stylesheets>
       <URL value="@style.css" />
    </stylesheets>
-
-   <BorderPane fx:id="borderPaneAcceuil" />
-   <Button fx:id="ButtonDemarer" alignment="CENTER" layoutX="454.0" layoutY="234.0" mnemonicParsing="false" onMouseClicked="#chargerPageNiveau" prefHeight="86.0" prefWidth="394.0" text="Démarrer">
-      <font>
-         <Font size="40.0" />
-      </font>
-   </Button>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="59.0" prefHeight="103.0" prefWidth="1300.0" text="Space Defender" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
-      <font>
-         <Font name="System Bold" size="70.0" />
-      </font>
-   </Label>
-   <Button fx:id="ButtonQuitter" alignment="CENTER" layoutX="454.0" layoutY="395.0" mnemonicParsing="false" onMouseClicked="#quitter" prefHeight="86.0" prefWidth="394.0" text="Quitter">
-      <font>
-         <Font size="40.0" />
-      </font>
-   </Button>
+   <ImageView fitHeight="640.0" fitWidth="1300.0" pickOnBounds="true">
+      <image>
+         <Image url="@espace.jpg" />
+      </image>
+   </ImageView>
+   <VBox alignment="CENTER" prefHeight="640.0" prefWidth="1300.0">
+      <children>
+            <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="103.0" prefWidth="1300.0" text="Space Defender" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+            <font>
+               <Font name="System Bold" size="70.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="140.0" />
+            </VBox.margin>
+            <textFill>
+               <RadialGradient centerX="0.5" centerY="0.5" radius="1.0">
+                  <stops>
+                     <Stop>
+                        <color>
+                           <Color red="0.42352941632270813" green="0.5803921818733215" blue="0.8470588326454163" />
+                        </color>
+                     </Stop>
+                     <Stop offset="1.0">
+                        <color>
+                           <Color red="1.0" green="1.0" blue="1.0" />
+                        </color>
+                     </Stop>
+                  </stops>
+               </RadialGradient>
+            </textFill>
+         </Label>
+         <Button fx:id="ButtonDemarer" alignment="CENTER" mnemonicParsing="false" onAction="#chargerPageNiveau" prefHeight="86.0" prefWidth="394.0" text="Démarrer">
+            <font>
+               <Font size="40.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="100.0" />
+            </VBox.margin>
+         </Button>
+         <Button fx:id="ButtonQuitter" alignment="CENTER" mnemonicParsing="false" onAction="#quitter" prefHeight="86.0" prefWidth="394.0" text="Quitter">
+            <font>
+               <Font size="40.0" />
+            </font>
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
+         </Button>
+      </children>
+   </VBox>
 
 
 

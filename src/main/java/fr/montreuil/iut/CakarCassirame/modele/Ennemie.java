@@ -85,13 +85,13 @@ public class Ennemie {
             this.yBackUp = this.y.getValue()/32;
             this.positionBackUp[0] = this.y.getValue()/32;
             this.y.setValue(this.y.getValue() + this.v);
-            System.out.println(2);
+
         }
         else if (!(positionBackUp[0] == this.y.getValue()/32-1 && positionBackUp[1] == this.x.getValue()/32) &&  (this.environnement.getMap().getTileMap()[(this.y.getValue()/32) - 1][(this.x.getValue()/32)] == 2)){
             this.yBackUp = this.y.getValue()/32;
             this.positionBackUp[0] = this.y.getValue()/32;
             this.y.setValue(this.y.getValue() - this.v);
-            System.out.println(3);
+
         }
 
         else if(!(positionBackUp[0] == this.y.getValue()/32 && positionBackUp[1] == this.x.getValue()/32- 1) && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32) - 1] == 2){

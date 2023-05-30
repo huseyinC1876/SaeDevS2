@@ -1,6 +1,8 @@
 package fr.montreuil.iut.CakarCassirame.modele;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Tour {
@@ -12,24 +14,27 @@ public class Tour {
     private IntegerProperty degat;
     private static int compteur = 0;
     private String id;
-    private IntegerProperty x, y;
+    private DoubleProperty x, y;
+    private Environnement environnement;
 
-    public Tour(int tempsRecharge,int prix, int coutAmelioration, int rayonPerimetreAction, IntegerProperty degat, String id, IntegerProperty x, IntegerProperty y) {
-        this.tempsRecharge = new SimpleIntegerProperty(tempsRecharge);
-        this.prix = prix;
-        this.coutAmelioration = coutAmelioration;
-        this.rayonPerimetreAction = rayonPerimetreAction;
-        this.degat = degat;
-        this.id = id;
-        this.x = new SimpleIntegerProperty();
-        this.y = new SimpleIntegerProperty();
+    public Tour(Environnement environnement , double x, double y) {
+        this.tempsRecharge = new SimpleIntegerProperty(5);
+        this.prix = 100;
+        this.coutAmelioration = 9000;
+        this.rayonPerimetreAction = 50;
+        this.degat = new SimpleIntegerProperty(20);
+        compteur++;
+        this.id = "A" + compteur;
+        this.x = new SimpleDoubleProperty(x);
+        this.y = new SimpleDoubleProperty(y);
+        this.environnement = environnement;
     }
 
     public String getId() {
         return id;
     }
 
-    public IntegerProperty XProperty(){ return this.x; }
+    public DoubleProperty XProperty(){ return this.x; }
 
-    public IntegerProperty YProperty(){ return this.y; }
+    public DoubleProperty YProperty(){ return this.y; }
 }

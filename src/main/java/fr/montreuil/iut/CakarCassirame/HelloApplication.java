@@ -18,7 +18,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("pageAcceuil.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 640);
-        stage.setTitle("Space Defencer");
+        stage.setTitle("Space Defender");
         stage.setScene(scene);
         stage.show();
     }
