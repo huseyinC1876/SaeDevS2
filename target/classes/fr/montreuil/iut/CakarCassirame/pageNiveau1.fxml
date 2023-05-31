@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" prefWidth="1300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.montreuil.iut.CakarCassirame.controller.ControllerNiveau1" onMouseClicked="#placerTour">
+<Pane fx:id="pane" onMouseClicked="#placerTour" prefWidth="1300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.montreuil.iut.CakarCassirame.controller.ControllerNiveau1">
     <TilePane fx:id="tilePaneExterne" alignment="CENTER" prefHeight="640" prefWidth="960" xmlns:fx="http://javafx.com/fxml">
         <!--    <padding>-->
         <!--        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>-->
@@ -24,10 +24,15 @@
         <!--        </image>-->
         <!--    </ImageView>-->
     </TilePane>
-   <TilePane fx:id="tilePaneInterne" prefHeight="640.0" prefWidth="960.0"/>
+   <TilePane fx:id="tilePaneInterne" prefHeight="640.0" prefWidth="960.0" />
+   <ImageView fitHeight="640.0" fitWidth="360.0" layoutX="940.0" pickOnBounds="true">
+      <image>
+         <Image url="@Galactus.jpg" />
+      </image>
+   </ImageView>
    <VBox layoutX="960.0" layoutY="14.0" prefHeight="380.0" prefWidth="340.0">
       <children>
-         <Label alignment="CENTER" prefHeight="38.0" prefWidth="83.0" text="Tours :">
+         <Label alignment="CENTER" prefHeight="38.0" prefWidth="83.0" text="Tours :" textFill="#faf0f0">
             <font>
                <Font name="System Bold" size="24.0" />
             </font>
@@ -36,8 +41,8 @@
             <children>
                <VBox>
                   <children>
-                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Canon Laser" />
-                     <Button fx:id="canonLaser" mnemonicParsing="false" prefHeight="90.0" prefWidth="115.0" onAction="#affichagePlacement">
+                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Canon Laser" textFill="WHITE" />
+                     <Button fx:id="canonLaser" mnemonicParsing="false" onAction="#affichagePlacement" prefHeight="90.0" prefWidth="115.0">
                         <graphic>
                            <ImageView fitHeight="83.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true">
                               <image>
@@ -46,7 +51,7 @@
                            </ImageView>
                         </graphic>
                      </Button>
-                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Price :" />
+                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Price :" textFill="#f4f2f2" />
                   </children>
                   <HBox.margin>
                      <Insets right="10.0" />
@@ -54,8 +59,8 @@
                </VBox>
                <VBox>
                   <children>
-                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Canon Missile" />
-                     <Button fx:id="canonMissile" mnemonicParsing="false" prefHeight="90.0" prefWidth="115.0" onAction="#affichagePlacement">
+                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Canon Missile" textFill="#fffefe" />
+                     <Button fx:id="canonMissile" mnemonicParsing="false" onAction="#affichagePlacement" prefHeight="90.0" prefWidth="115.0">
                         <graphic>
                            <ImageView fitHeight="83.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
                               <image>
@@ -64,7 +69,7 @@
                            </ImageView>
                         </graphic>
                      </Button>
-                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Price :" />
+                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Price :" textFill="WHITE" />
                   </children>
                   <HBox.margin>
                      <Insets left="10.0" />
@@ -82,8 +87,8 @@
             <children>
                <VBox>
                   <children>
-                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Champs de force" />
-                     <Button fx:id="champForce" mnemonicParsing="false" prefHeight="90.0" prefWidth="115.0" onAction="#affichagePlacement">
+                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Champs de force" textFill="WHITE" />
+                     <Button fx:id="champForce" mnemonicParsing="false" onAction="#affichagePlacement" prefHeight="90.0" prefWidth="115.0">
                         <graphic>
                            <ImageView fitHeight="80.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true">
                               <image>
@@ -92,7 +97,7 @@
                            </ImageView>
                         </graphic>
                      </Button>
-                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Price :" />
+                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Price :" textFill="WHITE" />
                   </children>
                   <HBox.margin>
                      <Insets right="10.0" />
@@ -100,8 +105,8 @@
                </VBox>
                <VBox>
                   <children>
-                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Canon Nucléaire" />
-                     <Button fx:id="canonNucleaire" mnemonicParsing="false" prefHeight="90.0" prefWidth="115.0" onAction="#affichagePlacement">
+                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Canon Nucléaire" textFill="WHITE" />
+                     <Button fx:id="canonNucleaire" mnemonicParsing="false" onAction="#affichagePlacement" prefHeight="90.0" prefWidth="115.0">
                         <graphic>
                            <ImageView fitHeight="84.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                               <image>
@@ -110,7 +115,7 @@
                            </ImageView>
                         </graphic>
                      </Button>
-                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Price :" />
+                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Price :" textFill="WHITE" />
                   </children>
                   <HBox.margin>
                      <Insets left="10.0" />

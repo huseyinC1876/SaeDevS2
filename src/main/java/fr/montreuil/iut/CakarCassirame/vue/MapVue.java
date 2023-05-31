@@ -27,17 +27,17 @@ public class MapVue {
                     tilePane.getChildren().add(image0bis);
                 }
                 else if(terrain[i][j] == 1) {
-                    Image image1 = new Image(new FileInputStream("src\\main\\resources\\fr\\montreuil\\iut\\CakarCassirame\\gris32.jpg"));
+                    Image image1 = new Image(new FileInputStream("src/main/resources/fr/montreuil/iut/CakarCassirame/gris32.jpg"));
                     ImageView image1bis = new ImageView(image1);
                     tilePane.getChildren().add(image1bis);
                 }
                 else if(terrain[i][j] == 2) {
-                    Image image2 = new Image(new FileInputStream("src\\main\\resources\\fr\\montreuil\\iut\\CakarCassirame\\arc32.jpg"));
+                    Image image2 = new Image(new FileInputStream("src/main/resources/fr/montreuil/iut/CakarCassirame/arc32.jpg"));
                     ImageView image2bis = new ImageView(image2);
                     tilePane.getChildren().add(image2bis);
                 }
                 else{
-                    Image image3 = new Image(new FileInputStream("src\\main\\resources\\fr\\montreuil\\iut\\CakarCassirame\\Space32.jpg"));
+                    Image image3 = new Image(new FileInputStream("src/main/resources/fr/montreuil/iut/CakarCassirame/Space32.jpg"));
                     ImageView image3bis = new ImageView(image3);
                     tilePane.getChildren().add(image3bis);
                 }

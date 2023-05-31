@@ -22,7 +22,7 @@ public class Environnement {
         this.map = new Map();
         this.x = this.map.getTileMap().length;
         this.y = this.map.getTileMap()[0].length;
-        this.nbEnnnemieMax = 100;
+        this.nbEnnnemieMax = 1;
         this.nbEnnemieTue = 0;
         this.listeEnnemis = FXCollections.observableArrayList();
         this.nbEnnemieSpawn = 0;

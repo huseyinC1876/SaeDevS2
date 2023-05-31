@@ -36,7 +36,6 @@ import java.util.ResourceBundle;
 
 public class ControllerNiveau1 implements Initializable {
 
-    hurhgrzgr
 
     private Environnement environnement;
 
@@ -96,7 +95,11 @@ public class ControllerNiveau1 implements Initializable {
                 public void onChanged(Change<? extends Ennemie> change) {
                     while (change.next()) {
                         for(Ennemie ennemie : change.getAddedSubList()){
-                            vueEnnemie.creerSprite(ennemie);
+                            try {
+                                vueEnnemie.creerSprite(ennemie);
+                            } catch (FileNotFoundException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                         for(Ennemie ennemie : change.getRemoved()){
                             pane.getChildren().remove(pane.lookup("#" + ennemie.getId()));
@@ -182,7 +185,7 @@ public class ControllerNiveau1 implements Initializable {
     }
 
 
-    public void affichagePlacement(){
+    public void affichagePlacement() throws FileNotFoundException {
         this.placementVue.affichage(this.environnement.getMap());
         this.placement = true;
     }

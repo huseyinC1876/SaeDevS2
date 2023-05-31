@@ -1,6 +1,7 @@
 package fr.montreuil.iut.CakarCassirame.controller;
 
 import fr.montreuil.iut.CakarCassirame.HelloApplication;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,7 +31,7 @@ public class ControllerPageAcceuil implements Initializable {
     }
 
     public void quitter(){
-        System.exit(1);
+        Platform.exit();
     }
 
     public void chargerPageNiveau() throws IOException {
