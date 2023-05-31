@@ -23,7 +23,7 @@ public class ControllerSelectionNiveau implements Initializable {
 
     }
 
-    public void chargerPageAcceuil() throws IOException {
+    public void chargerPageAccueil() throws IOException {
         Scene scene = paneExterneSelection.getScene();
         Stage stage = (Stage) scene.getWindow();
         ControllerPageAcceuil.load(stage);

@@ -115,3 +115,5 @@ tissu.propriétés
 .idea/**/azureSettings.xml
 
 # Fin de https://www.toptal.com/developers/gitignore/api/intellij
+
+target

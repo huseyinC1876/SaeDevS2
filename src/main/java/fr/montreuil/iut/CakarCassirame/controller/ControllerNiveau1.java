@@ -1,7 +1,7 @@
 package fr.montreuil.iut.CakarCassirame.controller;
 
 import fr.montreuil.iut.CakarCassirame.HelloApplication;
-import fr.montreuil.iut.CakarCassirame.modele.Ennemie;
+import fr.montreuil.iut.CakarCassirame.modele.Ennemi;
 import fr.montreuil.iut.CakarCassirame.modele.Environnement;
 import fr.montreuil.iut.CakarCassirame.modele.Tour;
 import fr.montreuil.iut.CakarCassirame.vue.EnnemieVue;
@@ -11,17 +11,11 @@ import fr.montreuil.iut.CakarCassirame.vue.TourVue;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.effect.Light;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
@@ -90,18 +84,18 @@ public class ControllerNiveau1 implements Initializable {
             this.vueMap.creerMap(this.environnement.getMap());
             initAnimation();
             gameLoop.play();
-            ListChangeListener<Ennemie> listenerEnnemie =  new ListChangeListener<Ennemie>() {
+            ListChangeListener<Ennemi> listenerEnnemie =  new ListChangeListener<Ennemi>() {
                 @Override
-                public void onChanged(Change<? extends Ennemie> change) {
+                public void onChanged(Change<? extends Ennemi> change) {
                     while (change.next()) {
-                        for(Ennemie ennemie : change.getAddedSubList()){
+                        for(Ennemi ennemie : change.getAddedSubList()){
                             try {
                                 vueEnnemie.creerSprite(ennemie);
                             } catch (FileNotFoundException e) {
                                 throw new RuntimeException(e);
                             }
                         }
-                        for(Ennemie ennemie : change.getRemoved()){
+                        for(Ennemi ennemie : change.getRemoved()){
                             pane.getChildren().remove(pane.lookup("#" + ennemie.getId()));
 
                         }
@@ -148,14 +142,14 @@ public class ControllerNiveau1 implements Initializable {
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
-                    if(environnement.getNbEnnemieTue() == environnement.getNbEnnnemieMax()){
+                    if(environnement.getNbEnnemiTue() == environnement.getNbEnnemiMax()){
                         System.out.println("fini");
                         gameLoop.stop();
                     } else if (temps%3 == 0) {
                         environnement.deplacement();
 
                     } else if (temps%5==0){
-                        if(this.environnement.getNbEnnemieSpawn() < this.environnement.getNbEnnnemieMax()) {
+                        if(this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
                             //System.out.println("un tour");
 
                             environnement.ajouterEnnemie();

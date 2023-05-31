@@ -51,7 +51,7 @@
                            </ImageView>
                         </graphic>
                      </Button>
-                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Price :" textFill="#f4f2f2" />
+                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="#f4f2f2" />
                   </children>
                   <HBox.margin>
                      <Insets right="10.0" />
@@ -69,7 +69,7 @@
                            </ImageView>
                         </graphic>
                      </Button>
-                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Price :" textFill="WHITE" />
+                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="WHITE" />
                   </children>
                   <HBox.margin>
                      <Insets left="10.0" />
@@ -97,7 +97,7 @@
                            </ImageView>
                         </graphic>
                      </Button>
-                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Price :" textFill="WHITE" />
+                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="WHITE" />
                   </children>
                   <HBox.margin>
                      <Insets right="10.0" />
@@ -115,7 +115,7 @@
                            </ImageView>
                         </graphic>
                      </Button>
-                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Price :" textFill="WHITE" />
+                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="WHITE" />
                   </children>
                   <HBox.margin>
                      <Insets left="10.0" />
@@ -129,7 +129,7 @@
                <Insets left="10.0" right="10.0" />
             </padding>
          </HBox>
-         <Button mnemonicParsing="false" onMouseClicked="#chargerPageAcceuil" prefHeight="38.0" prefWidth="340.0" text="Page d'acceuil">
+         <Button mnemonicParsing="false" onMouseClicked="#chargerPageAcceuil" prefHeight="38.0" prefWidth="340.0" text="Page d'accueil">
             <font>
                <Font size="16.0" />
             </font>

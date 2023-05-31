@@ -27,7 +27,7 @@
             <Font size="19.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" layoutX="452.0" layoutY="384.0" mnemonicParsing="false" onAction="#chargerPageAcceuil" prefHeight="77.0" prefWidth="397.0" text="Page d'Acceuil">
+      <Button alignment="CENTER" layoutX="452.0" layoutY="384.0" mnemonicParsing="false" onAction="#chargerPageAccueil" prefHeight="77.0" prefWidth="397.0" text="Page d'Accueil">
          <font>
             <Font size="36.0" />
          </font>
