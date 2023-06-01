@@ -1,14 +1,13 @@
 package fr.montreuil.iut.CakarCassirame.modele;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
+import javafx.beans.value.ObservableValue;
 
 public class Tour {
 
+
     private IntegerProperty tempsRecharge;
-    private int prix;
+    public static IntegerProperty prix = new SimpleIntegerProperty(100);
     private int coutAmelioration;
     private int rayonPerimetreAction;
     private IntegerProperty degat;
@@ -19,7 +18,6 @@ public class Tour {
 
     public Tour(Environnement environnement , double x, double y) {
         this.tempsRecharge = new SimpleIntegerProperty(5);
-        this.prix = 100;
         this.coutAmelioration = 9000;
         this.rayonPerimetreAction = 50;
         this.degat = new SimpleIntegerProperty(20);

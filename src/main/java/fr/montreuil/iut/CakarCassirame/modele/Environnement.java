@@ -1,5 +1,7 @@
 package fr.montreuil.iut.CakarCassirame.modele;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -19,6 +21,8 @@ public class Environnement {
     private ObservableList<Ennemi> listeEnnemis;
 
     private ObservableList<Tour> listeTours;
+
+    private IntegerProperty ressource = new SimpleIntegerProperty(125);
 
     public Environnement() {
         this.map = new Map();
@@ -46,12 +50,16 @@ public class Environnement {
 
     public ObservableList<Tour> getListeTours(){ return  this.listeTours; }
 
+    public IntegerProperty getRessource(){ return this.ressource; }
+
     public void verfication(){
         for (Ennemi ennemi : this.listeEnnemis){
             if(ennemi.getPv() < 1){
                 this.listeEnnemis.remove(ennemi);
                 this.nbEnnemiTue++;
+                this.ressource.setValue(this.getRessource().getValue() + ennemi.getGain());
             }
+
         }
     }
 

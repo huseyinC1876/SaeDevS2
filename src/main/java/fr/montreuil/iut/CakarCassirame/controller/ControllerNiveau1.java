@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
@@ -68,6 +69,20 @@ public class ControllerNiveau1 implements Initializable {
     private EnnemiGalactusBossVue ennemiGalactusBossVue;
 
 
+    @FXML
+    private Label prixCanonLaser;
+
+    @FXML
+    private Label prixCanonMissile;
+
+    @FXML
+    private Label prixChampDeForce;
+
+    @FXML
+    private Label prixCanonNucleaire;
+
+    @FXML
+    private Label nbRessources;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -81,6 +96,12 @@ public class ControllerNiveau1 implements Initializable {
         this.ennemiGalactusBossVue = new EnnemiGalactusBossVue(this.pane);
         this.tourVue = new TourVue(pane);
         this.placementVue = new PlacementVue(tilePaneInterne);
+        try {
+            this.placementVue.affichage(this.environnement.getMap());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        this.placementVue.reset();
 
 
         try {
@@ -127,6 +148,11 @@ public class ControllerNiveau1 implements Initializable {
                 }
             };
             this.environnement.getListeTours().addListener(listenerTours);
+            prixCanonLaser.textProperty().bind(Tour.prix.asString());
+            prixCanonMissile.textProperty().bind(Tour.prix.asString());
+            prixChampDeForce.textProperty().bind(Tour.prix.asString());
+            prixCanonNucleaire.textProperty().bind(Tour.prix.asString());
+            nbRessources.textProperty().bind(this.environnement.getRessource().asString());
 
 
 
@@ -145,7 +171,7 @@ public class ControllerNiveau1 implements Initializable {
 
         KeyFrame kf = new KeyFrame(
                 // on définit le FPS (nbre de frame par seconde)
-                Duration.seconds(0.03),
+                Duration.seconds(0.017),
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
@@ -154,6 +180,7 @@ public class ControllerNiveau1 implements Initializable {
                         gameLoop.stop();
                     } else if (temps%3 == 0) {
                         environnement.deplacement();
+                        this.environnement.verfication();
 
                     } else if (temps%23==0){
                         if(this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
@@ -185,9 +212,10 @@ public class ControllerNiveau1 implements Initializable {
 
     @FXML
     public void affichagePlacement() throws FileNotFoundException {
-        this.placementVue.affichage(this.environnement.getMap());
-        this.placement = true;
-
+        if(this.environnement.getRessource().getValue() >= Tour.prix.getValue()) {
+            this.placementVue.affichaged();
+            this.placement = true;
+        }
     }
 
 
@@ -195,14 +223,14 @@ public class ControllerNiveau1 implements Initializable {
     public void placerTour(MouseEvent mouseEvent){
         double positionX = mouseEvent.getX();
         double positionY = mouseEvent.getY();
-        if (positionY > -1 && positionY < 641 && positionX > -1 && positionX < 961) {
+        if (positionY > -1 && positionY <= tilePaneInterne.getHeight() && positionX > -1 && positionX <= tilePaneInterne.getWidth()) {
             if(this.environnement.getMap().getTile((int)positionY/32, (int)positionX/32) == 3 && placement){
                 this.environnement.ajouterTour(positionX, positionY);
-
-                this.placementVue.reset();
+                this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - Tour.prix.getValue());
 
             }
         }
+        this.placementVue.reset();
         placement = false;
 
     }

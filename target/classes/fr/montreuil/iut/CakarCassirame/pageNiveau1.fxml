@@ -22,11 +22,31 @@
    </ImageView>
    <VBox layoutX="960.0" layoutY="14.0" prefHeight="380.0" prefWidth="340.0">
       <children>
-         <Label alignment="CENTER" prefHeight="38.0" prefWidth="83.0" text="Tours :" textFill="#faf0f0">
-            <font>
-               <Font name="System Bold" size="24.0" />
-            </font>
-         </Label>
+         <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+               <Label alignment="CENTER" prefHeight="38.0" prefWidth="83.0" text="Tours :" textFill="#faf0f0">
+                  <font>
+                     <Font name="System Bold" size="24.0" />
+                  </font>
+               </Label>
+               <ImageView fitHeight="150.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@argent.png" />
+                  </image>
+                  <HBox.margin>
+                     <Insets left="100.0" />
+                  </HBox.margin>
+               </ImageView>
+               <Label fx:id="nbRessources" textFill="WHITE">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+                  <HBox.margin>
+                     <Insets left="20.0" />
+                  </HBox.margin>
+               </Label>
+            </children>
+         </HBox>
          <HBox>
             <children>
                <VBox>
@@ -41,7 +61,16 @@
                            </ImageView>
                         </graphic>
                      </Button>
-                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="#f4f2f2" />
+                     <HBox prefHeight="18.0" prefWidth="111.0">
+                        <children>
+                           <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="#f4f2f2" />
+                           <Label fx:id="prixCanonLaser" textFill="WHITE">
+                              <HBox.margin>
+                                 <Insets left="-30.0" />
+                              </HBox.margin>
+                           </Label>
+                        </children>
+                     </HBox>
                   </children>
                   <HBox.margin>
                      <Insets right="10.0" />
@@ -59,7 +88,16 @@
                            </ImageView>
                         </graphic>
                      </Button>
-                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="WHITE" />
+                     <HBox prefHeight="18.0" prefWidth="102.0">
+                        <children>
+                           <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="WHITE" />
+                           <Label fx:id="prixCanonMissile" textFill="WHITE">
+                              <HBox.margin>
+                                 <Insets left="-30.0" />
+                              </HBox.margin>
+                           </Label>
+                        </children>
+                     </HBox>
                   </children>
                   <HBox.margin>
                      <Insets left="10.0" />
@@ -87,7 +125,16 @@
                            </ImageView>
                         </graphic>
                      </Button>
-                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="WHITE" />
+                     <HBox prefHeight="22.0" prefWidth="85.0">
+                        <children>
+                           <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="WHITE" />
+                           <Label fx:id="prixChampDeForce" textFill="WHITE">
+                              <HBox.margin>
+                                 <Insets left="-30.0" />
+                              </HBox.margin>
+                           </Label>
+                        </children>
+                     </HBox>
                   </children>
                   <HBox.margin>
                      <Insets right="10.0" />
@@ -105,7 +152,16 @@
                            </ImageView>
                         </graphic>
                      </Button>
-                     <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="WHITE" />
+                     <HBox prefHeight="18.0" prefWidth="82.0">
+                        <children>
+                           <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="WHITE" />
+                           <Label fx:id="prixCanonNucleaire" textFill="WHITE">
+                              <HBox.margin>
+                                 <Insets left="-30.0" />
+                              </HBox.margin>
+                           </Label>
+                        </children>
+                     </HBox>
                   </children>
                   <HBox.margin>
                      <Insets left="10.0" />

@@ -33,6 +33,7 @@ public abstract class EnnemieVue {
         imageView.setScaleY(16);
         imageView.setFitWidth(16);
         imageView.setFitHeight(16);
+
     }
 
     public void rotation90(ImageView imageView){

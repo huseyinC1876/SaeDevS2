@@ -38,6 +38,14 @@ public abstract class Ennemi {
 
     public int getPv() { return pv; }
 
+    public int getGain() {
+        return gain;
+    }
+
+    public void setPv(int pv) {
+        this.pv = pv;
+    }
+
     public void seDeplacer(){
 
         if((positionBackUp[1] != this.x.getValue()/32+1)  && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32)+ 1] == 2){

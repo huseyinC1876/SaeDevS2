@@ -39,4 +39,9 @@ public class PlacementVue {
     public void reset(){
         this.tilePaneInterne.setVisible(false);
     }
+
+    public void affichaged(){
+        this.tilePaneInterne.setVisible(true);
+
+    }
 }
