@@ -13,16 +13,6 @@
 
 <Pane fx:id="pane" onMouseClicked="#placerTour" prefWidth="1300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.montreuil.iut.CakarCassirame.controller.ControllerNiveau1">
     <TilePane fx:id="tilePaneExterne" alignment="CENTER" prefHeight="640" prefWidth="960" xmlns:fx="http://javafx.com/fxml">
-        <!--    <padding>-->
-        <!--        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>-->
-        <!--    </padding>-->
-
-
-        <!--    <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">-->
-        <!--        <image>-->
-        <!--            <Image url="DONNER URL" />-->
-        <!--        </image>-->
-        <!--    </ImageView>-->
     </TilePane>
    <TilePane fx:id="tilePaneInterne" prefHeight="640.0" prefWidth="960.0" />
    <ImageView fitHeight="640.0" fitWidth="360.0" layoutX="940.0" pickOnBounds="true">

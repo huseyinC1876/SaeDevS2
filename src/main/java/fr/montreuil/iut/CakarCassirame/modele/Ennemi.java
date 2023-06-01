@@ -68,4 +68,10 @@ public abstract class Ennemi {
             }
         }
     }
+
+    public void décrémenterPV(int PV){
+        this.pv = this.pv - PV;
+    }
+
+    public Environnement getEnvironnement(){return this.environnement;}
 }

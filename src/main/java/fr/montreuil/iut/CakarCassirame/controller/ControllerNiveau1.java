@@ -1,13 +1,8 @@
 package fr.montreuil.iut.CakarCassirame.controller;
 
 import fr.montreuil.iut.CakarCassirame.HelloApplication;
-import fr.montreuil.iut.CakarCassirame.modele.Ennemi;
-import fr.montreuil.iut.CakarCassirame.modele.Environnement;
-import fr.montreuil.iut.CakarCassirame.modele.Tour;
-import fr.montreuil.iut.CakarCassirame.vue.EnnemieVue;
-import fr.montreuil.iut.CakarCassirame.vue.MapVue;
-import fr.montreuil.iut.CakarCassirame.vue.PlacementVue;
-import fr.montreuil.iut.CakarCassirame.vue.TourVue;
+import fr.montreuil.iut.CakarCassirame.modele.*;
+import fr.montreuil.iut.CakarCassirame.vue.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.ListChangeListener;
@@ -47,17 +42,17 @@ public class ControllerNiveau1 implements Initializable {
 
     private EnnemieVue vueEnnemie;
 
-    @FXML
-    private Button canonLaser;
-
-    @FXML
-    private Button canonMissile;
-
-    @FXML
-    private Button canonNucleaire;
-
-    @FXML
-    private Button champForce;
+//    @FXML
+//    private Button canonLaser;
+//
+//    @FXML
+//    private Button canonMissile;
+//
+//    @FXML
+//    private Button canonNucleaire;
+//
+//    @FXML
+//    private Button champForce;
 
     @FXML
     private TilePane tilePaneInterne;
@@ -67,6 +62,10 @@ public class ControllerNiveau1 implements Initializable {
     private TourVue tourVue;
 
     private boolean placement = false;
+    private EnnemiExtraterrestreVue ennemiExtraterrestreVue;
+    private EnnemiVaisseauSpatialVue ennemiVaisseauSpatialVue;
+    private EnnemiSuperVaisseauSpatialVue ennemiSuperVaisseauSpatialVue;
+    private EnnemiGalactusBossVue ennemiGalactusBossVue;
 
 
 
@@ -75,7 +74,11 @@ public class ControllerNiveau1 implements Initializable {
 
         this.environnement = new Environnement();
         this.vueMap = new MapVue(this.tilePaneExterne);
-        this.vueEnnemie = new EnnemieVue(this.pane);
+      //  this.vueEnnemie = new EnnemieVue(this.pane);
+        this.ennemiExtraterrestreVue = new EnnemiExtraterrestreVue(this.pane);
+        this.ennemiVaisseauSpatialVue = new EnnemiVaisseauSpatialVue(this.pane);
+        this.ennemiSuperVaisseauSpatialVue = new EnnemiSuperVaisseauSpatialVue(this.pane);
+        this.ennemiGalactusBossVue = new EnnemiGalactusBossVue(this.pane);
         this.tourVue = new TourVue(pane);
         this.placementVue = new PlacementVue(tilePaneInterne);
 
@@ -90,7 +93,15 @@ public class ControllerNiveau1 implements Initializable {
                     while (change.next()) {
                         for(Ennemi ennemie : change.getAddedSubList()){
                             try {
-                                vueEnnemie.creerSprite(ennemie);
+//                                vueEnnemie.creerSprite(ennemie);
+                                if(ennemie instanceof EnnemiExtraterrestre)
+                                    ennemiExtraterrestreVue.creerSprite(ennemie);
+                                else if(ennemie instanceof EnnemiVaisseauSpatial)
+                                    ennemiVaisseauSpatialVue.creerSprite(ennemie);
+                                else if (ennemie instanceof EnnemiSuperVaisseauSpatial)
+                                    ennemiSuperVaisseauSpatialVue.creerSprite(ennemie);
+                                else
+                                    ennemiGalactusBossVue.creerSprite(ennemie);
                             } catch (FileNotFoundException e) {
                                 throw new RuntimeException(e);
                             }
@@ -127,10 +138,6 @@ public class ControllerNiveau1 implements Initializable {
     }
 
 
-
-
-
-
     private void initAnimation() {
         gameLoop = new Timeline();
         temps=0;
@@ -148,10 +155,8 @@ public class ControllerNiveau1 implements Initializable {
                     } else if (temps%3 == 0) {
                         environnement.deplacement();
 
-                    } else if (temps%5==0){
+                    } else if (temps%23==0){
                         if(this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
-                            //System.out.println("un tour");
-
                             environnement.ajouterEnnemie();
                         }
 
@@ -178,14 +183,15 @@ public class ControllerNiveau1 implements Initializable {
         stage.show();
     }
 
-
+    @FXML
     public void affichagePlacement() throws FileNotFoundException {
         this.placementVue.affichage(this.environnement.getMap());
         this.placement = true;
+
     }
 
 
-
+    @FXML
     public void placerTour(MouseEvent mouseEvent){
         double positionX = mouseEvent.getX();
         double positionY = mouseEvent.getY();

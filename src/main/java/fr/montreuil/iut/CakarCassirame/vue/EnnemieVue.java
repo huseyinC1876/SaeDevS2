@@ -8,34 +8,31 @@ import javafx.scene.layout.Pane;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class EnnemieVue {
+public abstract class EnnemieVue {
 
     private Pane pane;
+    private String file;
 
-    public EnnemieVue(Pane pane){
+    public EnnemieVue(Pane pane, String file){
         this.pane = pane;
+        this.file = file;
     }
 
 
     public void creerSprite(Ennemi ennemi) throws FileNotFoundException {
-        /*
-        Circle r;
-        r = new Circle(3);
-        r.setFill(Color.RED);
-
-        r.translateXProperty().bind(ennemie.XProperty());
-        r.translateYProperty().bind(ennemie.YProperty());
-        r.setId(ennemie.getId());
-        this.pane.getChildren().add(r);
-
-
-         */
-        ImageView imageViewsSpaceChip = new ImageView(new Image(new FileInputStream("src/main/resources/fr/montreuil/iut/CakarCassirame/vaisseau32.png")));
+        ImageView imageViewsSpaceChip = new ImageView(new Image(new FileInputStream(this.file)));
         imageViewsSpaceChip.setId(ennemi.getId());
         imageViewsSpaceChip.translateXProperty().bind(ennemi.XProperty());
         imageViewsSpaceChip.translateYProperty().bind(ennemi.YProperty());
         this.pane.getChildren().add(imageViewsSpaceChip);
+    }
 
+
+    public void reduireTaille(ImageView imageView){
+        imageView.setScaleX(16);
+        imageView.setScaleY(16);
+        imageView.setFitWidth(16);
+        imageView.setFitHeight(16);
     }
 
     public void rotation90(ImageView imageView){

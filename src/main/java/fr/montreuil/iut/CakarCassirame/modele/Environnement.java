@@ -3,6 +3,8 @@ package fr.montreuil.iut.CakarCassirame.modele;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Random;
+
 public class Environnement {
 
     private int x;
@@ -22,7 +24,7 @@ public class Environnement {
         this.map = new Map();
         this.x = this.map.getTileMap().length;
         this.y = this.map.getTileMap()[0].length;
-        this.nbEnnemiMax = 1;
+        this.nbEnnemiMax = 100;
         this.nbEnnemiTue = 0;
         this.listeEnnemis = FXCollections.observableArrayList();
         this.nbEnnemiSpawn = 0;
@@ -54,8 +56,24 @@ public class Environnement {
     }
 
     public void ajouterEnnemie(){
-        this.listeEnnemis.add(new EnnemiExtraterrestre( this));
+        if (this.nbEnnemiSpawn == nbEnnemiMax-1)
+            this.listeEnnemis.add(new EnnemiGalactusBoss(this));
+
+        double random = Math.random()*3;
+        if(random < 1)
+            this.listeEnnemis.add(new EnnemiExtraterrestre(this));
+        else if (random < 2)
+            this.listeEnnemis.add(new EnnemiVaisseauSpatial(this));
+        else
+            this.listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this));
+
         this.nbEnnemiSpawn++;
+    }
+
+    public void ajouterEnnemiDivision(){
+        for(int i = 0 ; i <2 ; i++) {
+            this.listeEnnemis.add(new EnnemiVaisseauSpatial(this));
+        }
     }
 
     public void ajouterTour(double x, double y){

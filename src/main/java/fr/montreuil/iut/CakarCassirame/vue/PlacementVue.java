@@ -12,14 +12,11 @@ import java.io.FileNotFoundException;
 public class PlacementVue {
 
     private TilePane tilePaneInterne;
-
     public PlacementVue(TilePane pane){
         this.tilePaneInterne = pane;
     }
 
     public void affichage(Map map) throws FileNotFoundException {
-
-
 
         int[][] terrain = map.getTileMap();
         for(int i = 0 ; i < terrain.length ; i++) {
@@ -40,6 +37,6 @@ public class PlacementVue {
     }
 
     public void reset(){
-        this.tilePaneInterne.getChildren().removeAll();
+        this.tilePaneInterne.setVisible(false);
     }
 }
