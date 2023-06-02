@@ -67,6 +67,7 @@ public class ControllerNiveau1 implements Initializable {
     private EnnemiVaisseauSpatialVue ennemiVaisseauSpatialVue;
     private EnnemiSuperVaisseauSpatialVue ennemiSuperVaisseauSpatialVue;
     private EnnemiGalactusBossVue ennemiGalactusBossVue;
+    private boolean vague = false;
 
 
     @FXML
@@ -112,17 +113,16 @@ public class ControllerNiveau1 implements Initializable {
                 @Override
                 public void onChanged(Change<? extends Ennemi> change) {
                     while (change.next()) {
-                        for(Ennemi ennemie : change.getAddedSubList()){
+                        for(Ennemi ennemi : change.getAddedSubList()){
                             try {
-//                                vueEnnemie.creerSprite(ennemie);
-                                if(ennemie instanceof EnnemiExtraterrestre)
-                                    ennemiExtraterrestreVue.creerSprite(ennemie);
-                                else if(ennemie instanceof EnnemiVaisseauSpatial)
-                                    ennemiVaisseauSpatialVue.creerSprite(ennemie);
-                                else if (ennemie instanceof EnnemiSuperVaisseauSpatial)
-                                    ennemiSuperVaisseauSpatialVue.creerSprite(ennemie);
+                                if(ennemi instanceof EnnemiExtraterrestre)
+                                    ennemiExtraterrestreVue.creerSprite(ennemi);
+                                else if(ennemi instanceof EnnemiVaisseauSpatial)
+                                    ennemiVaisseauSpatialVue.creerSprite(ennemi);
+                                else if (ennemi instanceof EnnemiSuperVaisseauSpatial)
+                                    ennemiSuperVaisseauSpatialVue.creerSprite(ennemi);
                                 else
-                                    ennemiGalactusBossVue.creerSprite(ennemie);
+                                    ennemiGalactusBossVue.creerSprite(ennemi);
                             } catch (FileNotFoundException e) {
                                 throw new RuntimeException(e);
                             }
@@ -154,10 +154,6 @@ public class ControllerNiveau1 implements Initializable {
             prixCanonNucleaire.textProperty().bind(Tour.prix.asString());
             nbRessources.textProperty().bind(this.environnement.getRessource().asString());
 
-
-
-
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -175,24 +171,40 @@ public class ControllerNiveau1 implements Initializable {
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
+//                    if(this.environnement.getNbEnnemiTue()%5 == 0 && this.environnement.getNbEnnemiTue() != 0)
+//                        this.vague = true;
                     if(environnement.getNbEnnemiTue() == environnement.getNbEnnemiMax()){
                         System.out.println("fini");
                         gameLoop.stop();
                     } else if (temps%3 == 0) {
                         environnement.deplacement();
                         this.environnement.verfication();
+                    }else ajouterEnnemis();
 
-                    } else if (temps%23==0){
-                        if(this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
-                            environnement.ajouterEnnemie();
-                        }
-
-                    }
                     temps++;
                 })
-
         );
         gameLoop.getKeyFrames().add(kf);
+    }
+
+    public void ajouterEnnemis(){
+        if (this.environnement.getNbEnnemiSpawn() == this.environnement.getNbEnnemiMax()-1) {
+        this.environnement.ajouterEnnemiGalactus();
+//                    } else if(vague && this.environnement.getNbEnnemiTue()%5 == 0 && this.environnement.getNbEnnemiTue() != 0 && this.environnement.getNbEnnemiSpawn() < environnement.getNbEnnemiMax()){
+    } else if (temps%500 == 0 && temps != 0) {
+        System.out.println("VAGUE VAGUE VAGUE");
+        this.environnement.ajouterVagueEnnemis();
+//                            this.vague = false;
+    } else if(this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()){
+        System.out.println("NB ENNEMIS SPAWN"+ this.environnement.getNbEnnemiSpawn());
+        if(temps%71==0) {
+            environnement.ajouterEnnemiExtraterrestre();
+        } else if (temps%101 == 0) {
+            environnement.ajouterEnnemiVaisseauSpatial();
+        } else if (temps % 139 == 0) {
+            environnement.ajouterEnnemiSuperVaisseauSpatial();
+        }
+    }
     }
 
     public void chargerPageAcceuil() throws IOException {
