@@ -27,7 +27,7 @@ public class Environnement {
         this.map = new Map();
         this.x = this.map.getTileMap().length;
         this.y = this.map.getTileMap()[0].length;
-        this.nbEnnemiMax = new SimpleIntegerProperty(10);
+        this.nbEnnemiMax = new SimpleIntegerProperty(100);
         this.nbEnnemiTue = new SimpleIntegerProperty(0);
         this.listeEnnemis = FXCollections.observableArrayList();
         this.nbEnnemiSpawn = 0;
@@ -70,21 +70,22 @@ public class Environnement {
     }
 
     public void ajouterEnnemie() {
-        if (getNbEnnemiMax() > 1 && this.nbEnnemiSpawn < 100) {
+        if (this.nbEnnemiSpawn < nbEnnemiMax.getValue()) {
+            if (getNbEnnemiSpawn() == getNbEnnemiMax() - 1) {
+                ajouterEnnemiGalactus();
+            }
             double random = Math.random() * 3;
-            if (random < 1)
-                this.listeEnnemis.add(new EnnemiExtraterrestre(this));
-            else if (random < 2)
-                this.listeEnnemis.add(new EnnemiVaisseauSpatial(this));
-            else
-                this.listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this));
-        } else
-            this.listeEnnemis.add(new EnnemiGalactusBoss(this));
-
+            if (random < 1) {
+                ajouterEnnemiExtraterrestre();
+            } else if (random < 2) {
+                ajouterEnnemiVaisseauSpatial();
+            } else {
+                ajouterEnnemiSuperVaisseauSpatial();            }
+        }
     }
 
     public void ajouterVagueEnnemis() {
-        if(nbEnnemiSpawn<99) {
+        if(nbEnnemiSpawn<nbEnnemiMax.getValue()-1) {
             verifNbEnnemisParVague();
             System.out.println("ENNEMIS PAR VAGUE : " + this.nbEnnemisParVague);
             for (int i = 0; i < this.nbEnnemisParVague; i++) {
@@ -134,8 +135,15 @@ public class Environnement {
         }
     }
 
-    public void ajouterTour(double x, double y){
-//        this.listeTours.add(new Tour(this, x, y));
+    public void ajouterTour(double x, double y, int nbChoixTour){
+        if(nbChoixTour == 1)
+            this.listeTours.add(new TourCanonLaser(this, x, y));
+        else if(nbChoixTour == 2)
+            this.listeTours.add(new TourCanonMissile(this, x, y));
+       else if(nbChoixTour == 3)
+            this.listeTours.add(new TourCanonBombeNuclaire(this, x, y));
+        else this.listeTours.add(new TourChampDeForce(this, x, y));
+
     }
 
     public void deplacement(){
@@ -144,7 +152,7 @@ public class Environnement {
             if(ennemi.getEnter()){
                 this.getVieProperty().setValue(getVieProperty().getValue() - 1);
             }
-//            ennemi.décrémenterPV(1);
+            ennemi.décrémenterPV(10);
         }
     }
 

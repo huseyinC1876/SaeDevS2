@@ -127,4 +127,7 @@ public abstract class Ennemi {
     public Environnement getEnvironnement(){return this.environnement;}
 
 
+    public void setVitesse(double nb){
+        this.v = (int)(this.v*nb);
+    }
 }
