@@ -3,24 +3,20 @@ package fr.montreuil.iut.CakarCassirame.modele;
 import javafx.beans.property.*;
 import javafx.beans.value.ObservableValue;
 
-public class Tour {
+public abstract class Tour {
 
 
-    private IntegerProperty tempsRecharge;
     public static IntegerProperty prix = new SimpleIntegerProperty(100);
     private int coutAmelioration;
     private int rayonPerimetreAction;
-    private IntegerProperty degat;
     private static int compteur = 0;
     private String id;
     private DoubleProperty x, y;
     private Environnement environnement;
 
-    public Tour(Environnement environnement , double x, double y) {
-        this.tempsRecharge = new SimpleIntegerProperty(5);
-        this.coutAmelioration = 9000;
-        this.rayonPerimetreAction = 100;
-        this.degat = new SimpleIntegerProperty(20);
+    public Tour(Environnement environnement, double x, double y, int coutAmelioration, int rayonPerimetreAction) {
+        this.coutAmelioration = coutAmelioration;
+        this.rayonPerimetreAction = rayonPerimetreAction;
         compteur++;
         this.id = "A" + compteur;
         this.x = new SimpleDoubleProperty(x);
@@ -40,13 +36,6 @@ public class Tour {
         return (val < 0) ? -val : val;
     }
 
-    public void attaquer(Ennemi ennemi){
-        if(valAbs(ennemi.XProperty().getValue() - this.XProperty().getValue()) <= rayonPerimetreAction && valAbs(ennemi.YProperty().getValue() - this.YProperty().getValue()) <= rayonPerimetreAction ){
-            if(ennemi instanceof EnnemiSuperVaisseauSpatial){
-                ((EnnemiSuperVaisseauSpatial) ennemi).décrémenterVie(this.degat.getValue());
-            }
-            else
-                ennemi.décrémenterPV(this.degat.getValue());
-        }
-    }
+    public int getRayonPerimetreAction(){return this.rayonPerimetreAction;}
+
 }

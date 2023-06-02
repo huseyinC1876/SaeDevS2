@@ -11,10 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -71,6 +68,7 @@ public class ControllerNiveau1 implements Initializable {
     private EnnemiVaisseauSpatialVue ennemiVaisseauSpatialVue;
     private EnnemiSuperVaisseauSpatialVue ennemiSuperVaisseauSpatialVue;
     private EnnemiGalactusBossVue ennemiGalactusBossVue;
+    private boolean vague = false;
 
 
     @FXML
@@ -135,17 +133,16 @@ public class ControllerNiveau1 implements Initializable {
                 @Override
                 public void onChanged(Change<? extends Ennemi> change) {
                     while (change.next()) {
-                        for(Ennemi ennemie : change.getAddedSubList()){
+                        for(Ennemi ennemi : change.getAddedSubList()){
                             try {
-//                                vueEnnemie.creerSprite(ennemie);
-                                if(ennemie instanceof EnnemiExtraterrestre)
-                                    ennemiExtraterrestreVue.creerSprite(ennemie);
-                                else if(ennemie instanceof EnnemiVaisseauSpatial)
-                                    ennemiVaisseauSpatialVue.creerSprite(ennemie);
-                                else if (ennemie instanceof EnnemiSuperVaisseauSpatial)
-                                    ennemiSuperVaisseauSpatialVue.creerSprite(ennemie);
+                                if(ennemi instanceof EnnemiExtraterrestre)
+                                    ennemiExtraterrestreVue.creerSprite(ennemi);
+                                else if(ennemi instanceof EnnemiVaisseauSpatial)
+                                    ennemiVaisseauSpatialVue.creerSprite(ennemi);
+                                else if (ennemi instanceof EnnemiSuperVaisseauSpatial)
+                                    ennemiSuperVaisseauSpatialVue.creerSprite(ennemi);
                                 else
-                                    ennemiGalactusBossVue.creerSprite(ennemie);
+                                    ennemiGalactusBossVue.creerSprite(ennemi);
                             } catch (FileNotFoundException e) {
                                 throw new RuntimeException(e);
                             }
@@ -177,10 +174,6 @@ public class ControllerNiveau1 implements Initializable {
             prixCanonNucleaire.textProperty().bind(Tour.prix.asString());
             nbRessources.textProperty().bind(this.environnement.getRessource().asString());
 
-
-
-
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -207,7 +200,7 @@ public class ControllerNiveau1 implements Initializable {
 
                     } else if (temps%3 == 0) {
                         if(this.environnement.getVieProperty().getValue() > 0) {
-                            this.environnement.tour();
+                            this.environnement.unTour();
                         }
                         if(this.environnement.getVieProperty().getValue() < 3) {
                                 this.hboxVie.getChildren().get(-(this.environnement.getVieProperty().getValue() + 1 - 3)).setVisible(false);
@@ -217,15 +210,11 @@ public class ControllerNiveau1 implements Initializable {
                             this.finPartie.setAlignment(Pos.CENTER);
                             this.finPartie.setVisible(true);
                             temps = 0;
-
-
                         }
-
                     } else if (temps%23==0 && this.environnement.getVieProperty().getValue() > 0){
                         if(this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
                             environnement.ajouterEnnemie();
                         }
-
                     }
                     else if (this.environnement.getVieProperty().getValue() < 1 || this.environnement.getNbEnnemiTue() == this.environnement.getNbEnnemiMax()){
                         if(temps > 500){
@@ -235,17 +224,37 @@ public class ControllerNiveau1 implements Initializable {
                                 throw new RuntimeException(e);
                             }
                             gameLoop.stop();
-
                         }
-                    }
+                    } else ajouterEnnemis();
                     temps++;
                 })
-
         );
         gameLoop.getKeyFrames().add(kf);
 
 
 
+    }
+
+    public void ajouterEnnemis(){
+        if (this.environnement.getNbEnnemiSpawn() == this.environnement.getNbEnnemiMax()-1) {
+        this.environnement.ajouterEnnemiGalactus();
+            //                    if(this.environnement.getNbEnnemiTue()%5 == 0 && this.environnement.getNbEnnemiTue() != 0)
+//                        this.vague = true;
+//                    } else if(vague && this.environnement.getNbEnnemiTue()%5 == 0 && this.environnement.getNbEnnemiTue() != 0 && this.environnement.getNbEnnemiSpawn() < environnement.getNbEnnemiMax()){
+    } else if (temps%500 == 0 && temps != 0) {
+        System.out.println("VAGUE VAGUE VAGUE");
+        this.environnement.ajouterVagueEnnemis();
+//                            this.vague = false;
+    } else if(this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()){
+        System.out.println("NB ENNEMIS SPAWN"+ this.environnement.getNbEnnemiSpawn());
+        if(temps%71==0) {
+            environnement.ajouterEnnemiExtraterrestre();
+        } else if (temps%101 == 0) {
+            environnement.ajouterEnnemiVaisseauSpatial();
+        } else if (temps % 139 == 0) {
+            environnement.ajouterEnnemiSuperVaisseauSpatial();
+        }
+    }
     }
 
     public void chargerPageAcceuil() throws IOException {
@@ -270,7 +279,6 @@ public class ControllerNiveau1 implements Initializable {
             this.placement = true;
         }
     }
-
 
     @FXML
     public void placerTour(MouseEvent mouseEvent){

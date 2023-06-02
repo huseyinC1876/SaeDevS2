@@ -5,24 +5,21 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.Random;
-
 public class Environnement {
 
     private int x;
     private int y;
     private IntegerProperty nbEnnemiMax;
-
     private int nbEnnemiSpawn;
 
     private IntegerProperty nbEnnemiTue;
     private Map map;
-
     private ObservableList<Ennemi> listeEnnemis;
 
     private ObservableList<Tour> listeTours;
 
     private IntegerProperty ressource = new SimpleIntegerProperty(125);
+    private int nbEnnemisParVague;
 
     private IntegerProperty vie = new SimpleIntegerProperty(3);
 
@@ -35,8 +32,10 @@ public class Environnement {
         this.listeEnnemis = FXCollections.observableArrayList();
         this.nbEnnemiSpawn = 0;
         this.listeTours = FXCollections.observableArrayList();
-
+        this.nbEnnemisParVague = 10;
     }
+
+    public int getNbEnnemisParVague(){return this.nbEnnemisParVague;}
 
     public Map getMap() {
         return map;
@@ -66,14 +65,12 @@ public class Environnement {
                 this.ressource.setValue(this.getRessource().getValue() + this.listeEnnemis.get(i).getGain());
                 this.listeEnnemis.remove(i);
                 this.nbEnnemiTue.setValue(this.nbEnnemiTue.getValue() + 1);
-
             }
-
         }
     }
 
-    public void ajouterEnnemie(){
-        if(getNbEnnemiMax() > 1 && this.nbEnnemiSpawn < 100) {
+    public void ajouterEnnemie() {
+        if (getNbEnnemiMax() > 1 && this.nbEnnemiSpawn < 100) {
             double random = Math.random() * 3;
             if (random < 1)
                 this.listeEnnemis.add(new EnnemiExtraterrestre(this));
@@ -81,20 +78,64 @@ public class Environnement {
                 this.listeEnnemis.add(new EnnemiVaisseauSpatial(this));
             else
                 this.listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this));
-        }
-        else
+        } else
             this.listeEnnemis.add(new EnnemiGalactusBoss(this));
+
+    }
+
+    public void ajouterVagueEnnemis() {
+        if(nbEnnemiSpawn<99) {
+            verifNbEnnemisParVague();
+            System.out.println("ENNEMIS PAR VAGUE : " + this.nbEnnemisParVague);
+            for (int i = 0; i < this.nbEnnemisParVague; i++) {
+                double random = Math.random() * 3;
+//                System.out.println("RANDOM : " + random);
+                if (random < 1) {
+                    System.out.println("ajouter extraterrestre");
+                    this.listeEnnemis.add(new EnnemiExtraterrestre(this));
+                    this.nbEnnemiSpawn++;
+                } else if (random < 2) {
+                    System.out.println("ajouter vaisseau");
+                    this.listeEnnemis.add(new EnnemiVaisseauSpatial(this));
+                    this.nbEnnemiSpawn++;
+                } else {
+                    System.out.println("ajouter SUPER Vaisseau");
+                    this.listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this));
+                    this.nbEnnemiSpawn++;
+                }
+            }
+        }
+    }
+
+    public void ajouterEnnemiExtraterrestre(){
+        this.listeEnnemis.add(new EnnemiExtraterrestre(this));
+        this.nbEnnemiSpawn++;
+    }
+
+    public void ajouterEnnemiVaisseauSpatial(){
+        this.listeEnnemis.add(new EnnemiVaisseauSpatial(this));
+        this.nbEnnemiSpawn++;
+    }
+
+    public void ajouterEnnemiSuperVaisseauSpatial(){
+        this.listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this));
+        this.nbEnnemiSpawn++;
+    }
+
+    public void ajouterEnnemiGalactus(){
+        this.listeEnnemis.add(new EnnemiGalactusBoss(this));
         this.nbEnnemiSpawn++;
     }
 
     public void ajouterEnnemiDivision(){
         for(int i = 0 ; i <2 ; i++) {
             this.listeEnnemis.add(new EnnemiVaisseauSpatial(this));
+            this.nbEnnemiSpawn++;
         }
     }
 
     public void ajouterTour(double x, double y){
-        this.listeTours.add(new Tour(this, x, y));
+//        this.listeTours.add(new Tour(this, x, y));
     }
 
     public void deplacement(){
@@ -103,7 +144,13 @@ public class Environnement {
             if(ennemi.getEnter()){
                 this.getVieProperty().setValue(getVieProperty().getValue() - 1);
             }
-            //ennemi.décrémenterPV(10);
+//            ennemi.décrémenterPV(1);
+        }
+    }
+
+    public void verifNbEnnemisParVague(){
+        if(this.nbEnnemiSpawn > 91){
+            this.nbEnnemisParVague = 99 - nbEnnemiSpawn;
         }
 
     }
@@ -111,16 +158,19 @@ public class Environnement {
     public void attaque(){
         for(int i = 0; i < this.getListeTours().size(); i++){
             for (int j = 0; j < this.getListeEnnemis().size(); j++){
-                this.getListeTours().get(i).attaquer(this.listeEnnemis.get(j));
+                if(this.getListeTours().get(i) instanceof TourCanon) {
+                    ((TourCanon) this.getListeTours().get(i)).attaquer(this.listeEnnemis.get(j));
+                }
             }
         }
     }
 
-    public void tour(){
+    public void unTour(){
         deplacement();
         attaque();
         verfication();
     }
+
 
 
 }

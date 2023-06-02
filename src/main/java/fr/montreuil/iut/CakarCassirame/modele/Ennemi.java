@@ -125,4 +125,6 @@ public abstract class Ennemi {
     }
 
     public Environnement getEnvironnement(){return this.environnement;}
+
+
 }
