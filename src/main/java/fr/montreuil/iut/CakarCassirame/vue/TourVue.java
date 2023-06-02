@@ -1,15 +1,24 @@
 package fr.montreuil.iut.CakarCassirame.vue;
 
+import fr.montreuil.iut.CakarCassirame.modele.Ennemi;
 import fr.montreuil.iut.CakarCassirame.modele.Tour;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-public class TourVue {
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+public abstract class TourVue {
 
     private Pane pane;
-    public TourVue(Pane pane){
+
+    private String file;
+    public TourVue(Pane pane, String file){
         this.pane = pane;
+        this.file = file;
     }
 
 
@@ -24,15 +33,17 @@ public class TourVue {
         r.setId(tour.getId());
         this.pane.getChildren().add(r);
 
-        /*
-        Image image;
-        image = new Image("C:\\Users\\husey\\Downloads\\TowerDefense\\TowerDefense\\src\\main\\resources\\fr\\montreuil\\iut\\CakarCassirame\\bombeNucléaireDraw.jpg");
-        ImageView imageView = new ImageView(image);
-        imageView.translateXProperty().bind(tour.XProperty());
-        imageView.translateYProperty().bind(tour.YProperty());
-        imageView.setId(tour.getId());
-        this.pane.getChildren().add(imageView);
-        */
+    }
+
+    public void creerSpriteImage(Tour tour) throws FileNotFoundException {
+        ImageView imageViewsTour = new ImageView(new Image(new FileInputStream(this.file)));
+        imageViewsTour.setId(tour.getId());
+        imageViewsTour.translateXProperty().bind(tour.XProperty());
+        imageViewsTour.translateYProperty().bind(tour.YProperty());
+        imageViewsTour.setFitWidth(32);
+        imageViewsTour.setFitHeight(32);
+        this.pane.getChildren().add(imageViewsTour);
+
     }
 
 

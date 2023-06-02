@@ -62,7 +62,7 @@ public class ControllerNiveau1 implements Initializable {
 
     private PlacementVue placementVue;
 
-    private TourVue tourVue;
+    private TourCanonLaserVue tourCanonLaserVue;
 
     private boolean placement = false;
     private EnnemiExtraterrestreVue ennemiExtraterrestreVue;
@@ -100,7 +100,7 @@ public class ControllerNiveau1 implements Initializable {
     private Label finPartie;
 
     private boolean enter = false;
-    private int choixTour;
+    private int choixTour = 0;
 
 
     @Override
@@ -113,7 +113,7 @@ public class ControllerNiveau1 implements Initializable {
         this.ennemiVaisseauSpatialVue = new EnnemiVaisseauSpatialVue(this.pane);
         this.ennemiSuperVaisseauSpatialVue = new EnnemiSuperVaisseauSpatialVue(this.pane);
         this.ennemiGalactusBossVue = new EnnemiGalactusBossVue(this.pane);
-        this.tourVue = new TourVue(pane);
+        this.tourCanonLaserVue = new TourCanonLaserVue(pane);
         this.placementVue = new PlacementVue(tilePaneInterne);
         this.nbEnnemiMax.textProperty().bind(this.environnement.getNbEnnemiMaxProperty().asString());
         this.nbEnnemiTue.textProperty().bind(this.environnement.getNbEnnemiTueProperty().asString());
@@ -163,7 +163,13 @@ public class ControllerNiveau1 implements Initializable {
                 public void onChanged(Change<? extends Tour> change) {
                     while (change.next()) {
                         for (Tour tour : change.getAddedSubList()) {
-                            tourVue.creerSprite(tour);
+                            if (tour instanceof TourCanonLaser) {
+                                try {
+                                    tourCanonLaserVue.creerSpriteImage(tour);
+                                } catch (FileNotFoundException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
                         }
                     }
                 }
@@ -199,108 +205,88 @@ public class ControllerNiveau1 implements Initializable {
                         this.finPartie.setVisible(true);
                         temps = 0;
 
-                    } else if (temps % 3 == 0) {
-                        if (this.environnement.getVieProperty().getValue() > 0) {
+
+                    } else if (this.environnement.getVieProperty().getValue() > 0) {
+                        if (temps % 3 == 0) {
                             this.environnement.unTour();
-                        }
-                        if (this.environnement.getVieProperty().getValue() < 3) {
-                            this.hboxVie.getChildren().get(-(this.environnement.getVieProperty().getValue() + 1 - 3)).setVisible(false);
-                        }
-                        if (this.environnement.getVieProperty().getValue() < 1) {
-                            this.finPartie.setText("You Dead");
-                            this.finPartie.setAlignment(Pos.CENTER);
-                            this.finPartie.setVisible(true);
-                            temps = 0;
-                        }
-                    } else if (temps % 23 == 0 && this.environnement.getVieProperty().getValue() > 0) {
-                        if (this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
-                            environnement.ajouterEnnemie();
-                        }
-                    } else if (temps % 500 == 0 && temps != 0 && this.environnement.getVieProperty().getValue() > 0 && this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
-                        System.out.println("VAGUE VAGUE VAGUE");
-                        this.environnement.ajouterVagueEnnemis();
-                    } else
-                        if (this.environnement.getVieProperty().getValue() < 1 || this.environnement.getNbEnnemiTue() == this.environnement.getNbEnnemiMax()) {
-                            if (temps > 500) {
-                                try {
-                                    chargerPageAcceuil();
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                gameLoop.stop();
+
+                            if (this.environnement.getVieProperty().getValue() < 3) {
+                                this.hboxVie.getChildren().get(-(this.environnement.getVieProperty().getValue() + 1 - 3)).setVisible(false);
                             }
+                            if (this.environnement.getVieProperty().getValue() < 1) {
+                                this.finPartie.setText("You Dead");
+                                this.finPartie.setAlignment(Pos.CENTER);
+                                this.finPartie.setVisible(true);
+                                temps = 0;
+                            }
+                        } else if (temps % 23 == 0) {
+                            if (this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
+                                environnement.ajouterEnnemie();
+                            }
+                        } else if (temps % 500 == 0 && temps != 0 && this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
+                            System.out.println("VAGUE VAGUE VAGUE");
+                            this.environnement.ajouterVagueEnnemis();
                         }
-//                    } else this.environnement.ajouterEnnemie();
-                        temps++;
-                    })
+                    } else if (this.environnement.getVieProperty().getValue() < 1 || this.environnement.getNbEnnemiTue() == this.environnement.getNbEnnemiMax()) {
+                        if (temps > 500) {
+                            try {
+                                chargerPageAcceuil();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            gameLoop.stop();
+                        }
+                    }
+                    temps++;
+                })
         );
-                    gameLoop.getKeyFrames().add(kf);
-
-
-                }
-
-//    public void ajouterEnnemis(){
-//        if (this.environnement.getNbEnnemiSpawn() == this.environnement.getNbEnnemiMax()-1) {
-//        this.environnement.ajouterEnnemiGalactus();
-//            //                    if(this.environnement.getNbEnnemiTue()%5 == 0 && this.environnement.getNbEnnemiTue() != 0)
-////                        this.vague = true;
-////                    } else if(vague && this.environnement.getNbEnnemiTue()%5 == 0 && this.environnement.getNbEnnemiTue() != 0 && this.environnement.getNbEnnemiSpawn() < environnement.getNbEnnemiMax()){
-//    } else if (temps%500 == 0 && temps != 0) {
-//        System.out.println("VAGUE VAGUE VAGUE");
-//        this.environnement.ajouterVagueEnnemis();
-////                            this.vague = false;
-//    } else if(this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()){
-//        System.out.println("NB ENNEMIS SPAWN"+ this.environnement.getNbEnnemiSpawn());
-//        if(temps%71==0) {
-//            environnement.ajouterEnnemiExtraterrestre();
-//        } else if (temps%101 == 0) {
-//            environnement.ajouterEnnemiVaisseauSpatial();
-//        } else if (temps % 139 == 0) {
-//            environnement.ajouterEnnemiSuperVaisseauSpatial();
-//        }
-//    }
-//    }
-
-        public void chargerPageAcceuil () throws IOException {
-            Scene scene = pane.getScene();
-            Stage stage = (Stage) scene.getWindow();
-            ControllerPageAcceuil.load(stage);
-
-        }
-
-        public static void load (Stage stage) throws IOException {
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("pageNiveau1.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1300, 640);
-            stage.setTitle("Space Defencer");
-            stage.setScene(scene);
-            stage.show();
-        }
-
-        @FXML
-        public void affichagePlacement () throws FileNotFoundException {
-            if (this.environnement.getRessource().getValue() >= Tour.prix.getValue()) {
-                this.placementVue.affichaged();
-                this.placement = true;
-            }
-            choixTour = canonLaser.isArmed() ? 1 : canonMissile.isArmed() ? 2 : canonNucleaire.isArmed() ? 3 : 4;
-        }
-
-        @FXML
-        public void placerTour (MouseEvent mouseEvent){
-            double positionX = mouseEvent.getX();
-            double positionY = mouseEvent.getY();
-            if (positionY > -1 && positionY <= tilePaneInterne.getHeight() && positionX > -1 && positionX <= tilePaneInterne.getWidth()) {
-                if (this.environnement.getMap().getTile((int) positionY / 32, (int) positionX / 32) == 3 && placement) {
-                    this.environnement.ajouterTour(positionX, positionY, this.choixTour);
-                    this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - Tour.prix.getValue());
-                }
-            }
-            this.placementVue.reset();
-            placement = false;
-
-        }
+        gameLoop.getKeyFrames().add(kf);
 
 
     }
+
+
+    public void chargerPageAcceuil() throws IOException {
+        Scene scene = pane.getScene();
+        Stage stage = (Stage) scene.getWindow();
+        ControllerPageAcceuil.load(stage);
+
+    }
+
+    public static void load(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("pageNiveau1.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 640);
+        stage.setTitle("Space Defencer");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void affichagePlacement() throws FileNotFoundException {
+        if (this.environnement.getRessource().getValue() >= Tour.prix.getValue()) {
+            this.placementVue.affichaged();
+            this.placement = true;
+            choixTour = (canonLaser.isArmed()) ? 1 : (canonMissile.isArmed()) ? 2 : (champForce.isArmed()) ? 3 : 4;
+
+        }
+    }
+
+    @FXML
+    public void placerTour(MouseEvent mouseEvent) {
+        double positionX = mouseEvent.getX();
+        double positionY = mouseEvent.getY();
+        if (positionY > -1 && positionY <= tilePaneInterne.getHeight() && positionX > -1 && positionX <= tilePaneInterne.getWidth()) {
+            if (this.environnement.getMap().getTile((int) positionY / 32, (int) positionX / 32) == 3 && placement) {
+                this.environnement.ajouterTour(positionX, positionY, this.choixTour);
+                this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - Tour.prix.getValue());
+            }
+        }
+        this.placementVue.reset();
+        placement = false;
+
+    }
+
+
+}
 
 

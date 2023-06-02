@@ -84,8 +84,10 @@ public class Environnement {
         }
     }
 
+
+
     public void ajouterVagueEnnemis() {
-        if(nbEnnemiSpawn<nbEnnemiMax.getValue()-1) {
+        if(nbEnnemiSpawn < nbEnnemiMax.getValue() - 1) {
             verifNbEnnemisParVague();
             System.out.println("ENNEMIS PAR VAGUE : " + this.nbEnnemisParVague);
             for (int i = 0; i < this.nbEnnemisParVague; i++) {
