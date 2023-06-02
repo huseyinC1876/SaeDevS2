@@ -10,4 +10,16 @@ public class EnnemiSuperVaisseauSpatial extends Ennemi {
    public void décrémenterBouclier(int PV){
         this.bouclier = this.bouclier - PV;
    }
+
+   public void décrémenterVie(int pv){
+        if (this.bouclier > pv){
+            this.bouclier -= pv;
+        }
+        else if(this.bouclier > 0){
+            this.bouclier = 0;
+        }
+        else{
+            this.décrémenterPV(pv);
+        }
+   }
 }

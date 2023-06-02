@@ -9,10 +9,14 @@ import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
@@ -84,6 +88,22 @@ public class ControllerNiveau1 implements Initializable {
     @FXML
     private Label nbRessources;
 
+    @FXML
+    private HBox hboxVie;
+
+    @FXML
+    private Label nbEnnemiTue;
+
+    @FXML
+    private Label nbEnnemiMax;
+
+    @FXML
+    private Label finPartie;
+
+    private boolean enter = false;
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -96,6 +116,9 @@ public class ControllerNiveau1 implements Initializable {
         this.ennemiGalactusBossVue = new EnnemiGalactusBossVue(this.pane);
         this.tourVue = new TourVue(pane);
         this.placementVue = new PlacementVue(tilePaneInterne);
+        this.nbEnnemiMax.textProperty().bind(this.environnement.getNbEnnemiMaxProperty().asString());
+        this.nbEnnemiTue.textProperty().bind(this.environnement.getNbEnnemiTueProperty().asString());
+
         try {
             this.placementVue.affichage(this.environnement.getMap());
         } catch (FileNotFoundException e) {
@@ -175,24 +198,54 @@ public class ControllerNiveau1 implements Initializable {
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
-                    if(environnement.getNbEnnemiTue() == environnement.getNbEnnemiMax()){
+                    if(environnement.getNbEnnemiTue() == environnement.getNbEnnemiMax() && enter == false){
                         System.out.println("fini");
-                        gameLoop.stop();
-                    } else if (temps%3 == 0) {
-                        environnement.deplacement();
-                        this.environnement.verfication();
+                        enter = true;
+                        this.finPartie.setText("Victory");
+                        this.finPartie.setVisible(true);
+                        temps = 0;
 
-                    } else if (temps%23==0){
+                    } else if (temps%3 == 0) {
+                        if(this.environnement.getVieProperty().getValue() > 0) {
+                            this.environnement.tour();
+                        }
+                        if(this.environnement.getVieProperty().getValue() < 3) {
+                                this.hboxVie.getChildren().get(-(this.environnement.getVieProperty().getValue() + 1 - 3)).setVisible(false);
+                        }
+                        if(this.environnement.getVieProperty().getValue() < 1){
+                            this.finPartie.setText("You Dead");
+                            this.finPartie.setAlignment(Pos.CENTER);
+                            this.finPartie.setVisible(true);
+                            temps = 0;
+
+
+                        }
+
+                    } else if (temps%23==0 && this.environnement.getVieProperty().getValue() > 0){
                         if(this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
                             environnement.ajouterEnnemie();
                         }
 
+                    }
+                    else if (this.environnement.getVieProperty().getValue() < 1 || this.environnement.getNbEnnemiTue() == this.environnement.getNbEnnemiMax()){
+                        if(temps > 500){
+                            try {
+                                chargerPageAcceuil();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            gameLoop.stop();
+
+                        }
                     }
                     temps++;
                 })
 
         );
         gameLoop.getKeyFrames().add(kf);
+
+
+
     }
 
     public void chargerPageAcceuil() throws IOException {

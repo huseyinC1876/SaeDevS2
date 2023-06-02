@@ -11,16 +11,62 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" onMouseClicked="#placerTour" prefWidth="1300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.montreuil.iut.CakarCassirame.controller.ControllerNiveau1">
+<Pane fx:id="pane" onMouseClicked="#placerTour" prefHeight="640.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.montreuil.iut.CakarCassirame.controller.ControllerNiveau1">
     <TilePane fx:id="tilePaneExterne" alignment="CENTER" prefHeight="640" prefWidth="960" xmlns:fx="http://javafx.com/fxml">
     </TilePane>
    <TilePane fx:id="tilePaneInterne" prefHeight="640.0" prefWidth="960.0" />
-   <ImageView fitHeight="640.0" fitWidth="360.0" layoutX="940.0" pickOnBounds="true">
+   <HBox fx:id="hboxVie" prefHeight="33.0" prefWidth="107.0">
+      <children>
+         <ImageView fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@coeur32.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@coeur32.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@coeur32.png" />
+            </image>
+         </ImageView>
+      </children>
+      <padding>
+         <Insets left="850.0" top="10.0" />
+      </padding>
+   </HBox>
+   <HBox prefHeight="38.0" prefWidth="98.0">
+      <children>
+         <Label fx:id="nbEnnemiTue" textFill="WHITE">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
+         <Label text="/" textFill="WHITE">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
+         <Label fx:id="nbEnnemiMax" textFill="#f4f4f4">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
+      </children>
+   </HBox>
+   <Label fx:id="finPartie" textFill="#f70000">
+      <padding>
+         <Insets left="430.0" top="300.0" />
+      </padding>
+      <font>
+         <Font name="System Bold Italic" size="96.0" />
+      </font>
+   </Label>
+   <ImageView fitHeight="640.0" fitWidth="340.0" layoutX="960.0" pickOnBounds="true">
       <image>
          <Image url="@Galactus.jpg" />
       </image>
    </ImageView>
-   <VBox layoutX="960.0" layoutY="14.0" prefHeight="380.0" prefWidth="340.0">
+   <VBox layoutX="960.0" layoutY="-5.0" prefHeight="640.0" prefWidth="340.0">
       <children>
          <HBox prefHeight="100.0" prefWidth="200.0">
             <children>
@@ -39,7 +85,7 @@
                </ImageView>
                <Label fx:id="nbRessources" textFill="WHITE">
                   <font>
-                     <Font size="24.0" />
+                     <Font name="System Bold Italic" size="24.0" />
                   </font>
                   <HBox.margin>
                      <Insets left="20.0" />

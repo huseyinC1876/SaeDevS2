@@ -14,6 +14,7 @@ public abstract class Ennemi {
     private int xBackUp, yBackUp;
     private int[]  positionBackUp = new int[2];
     private Environnement environnement;
+    private boolean enter;
 
 
 
@@ -46,35 +47,77 @@ public abstract class Ennemi {
         this.pv = pv;
     }
 
+    public boolean getEnter() { return this.enter; }
+
     public void seDeplacer(){
 
-        if((positionBackUp[1] != this.x.getValue()/32+1)  && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32)+ 1] == 2){
+        if((positionBackUp[1] != this.x.getValue()/32+1)  && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32)+ 1] == 2 && !enter){
             this.positionBackUp[0] = this.y.getValue()/32;
             this.x.setValue(this.x.getValue() + this.v);
             if(this.x.getValue()/32 - this.positionBackUp[1] == 2){
                 this.positionBackUp[1]++;
             }
         }
-        else if ((positionBackUp[0] != this.y.getValue()/32+1) &&  (this.environnement.getMap().getTileMap()[(this.y.getValue()/32) + 1][(this.x.getValue()/32)] == 2)){
+        else if(this.environnement.getMap().getTileMap()[this.y.getValue()/32 + 1][(this.x.getValue()/32)] == 0){
+            enter = true;
+            this.y.setValue(this.y.getValue() - this.v);
+            System.out.println("OK enter");
+                this.pv = 0;
+                this.gain = 0;
+
+        }
+        else if ((positionBackUp[0] != this.y.getValue()/32+1) &&  (this.environnement.getMap().getTileMap()[(this.y.getValue()/32) + 1][(this.x.getValue()/32)] == 2) && !enter){
             this.y.setValue(this.y.getValue() + this.v);
             if(this.y.getValue()/32 - this.positionBackUp[0] == 2){
                 this.positionBackUp[0]++;
             }
         }
-        else if ((positionBackUp[0] != this.y.getValue()/32-1) &&  (this.environnement.getMap().getTileMap()[(this.y.getValue()/32) - 1][(this.x.getValue()/32)] == 2)){
+        else if ((positionBackUp[0] != this.y.getValue()/32-1) &&  (this.environnement.getMap().getTileMap()[(this.y.getValue()/32) - 1][(this.x.getValue()/32)] == 2) && !enter){
             this.positionBackUp[1] = this.x.getValue() /32;
             this.y.setValue(this.y.getValue() - this.v);
             if(this.positionBackUp[0] - this.y.getValue()/32 == 2){
                 this.positionBackUp[0]--;
             }
         }
-        else if((positionBackUp[1] != this.x.getValue()/32- 1) && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32) - 1] == 2){
+        else if((positionBackUp[1] != this.x.getValue()/32- 1) && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32) - 1] == 2 && !enter){
             this.positionBackUp[0] = this.y.getValue() /32;
             this.x.setValue(this.x.getValue() - this.v);
             if(this.positionBackUp[1] - this.x.getValue()/32 == 2){
                 this.positionBackUp[1]--;
             }
         }
+
+
+        /*
+
+        else if((positionBackUp[0] != this.y.getValue()/32 + 1) && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32) + 1] == 0){
+            this.positionBackUp[1] = this.x.getValue() /32;
+            this.x.setValue(this.y.getValue() + this.v);
+            if(this.y.getValue()/32 - this.positionBackUp[0]  == 2){
+                this.pv = 0;
+                this.gain = 0;
+            }
+        }
+
+        else if((positionBackUp[1] != this.x.getValue()/32- 1) && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32) - 1] == 0){
+            this.positionBackUp[0] = this.y.getValue() /32;
+            this.x.setValue(this.x.getValue() - this.v);
+            if(this.positionBackUp[1] - this.x.getValue()/32 == 2){
+                this.pv = 0;
+                this.gain = 0;
+            }
+        }
+
+        else if((positionBackUp[1] != this.x.getValue()/32 + 1) && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32) + 1] == 0){
+            this.positionBackUp[0] = this.y.getValue() /32;
+            this.x.setValue(this.x.getValue() + this.v);
+            if(this.x.getValue()/32 - this.positionBackUp[1]  == 2){
+                this.pv = 0;
+                this.gain = 0;
+            }
+        }
+        */
+
     }
 
     public void décrémenterPV(int PV){
