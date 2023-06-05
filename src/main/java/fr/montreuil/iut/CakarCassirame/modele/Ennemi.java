@@ -49,7 +49,7 @@ public abstract class Ennemi {
 
     public boolean getEnter() { return this.enter; }
 
-    public int getV() {
+    public double getV() {
         return v;
     }
 
@@ -131,7 +131,11 @@ public abstract class Ennemi {
     public Environnement getEnvironnement(){return this.environnement;}
 
 
-    public void setVitesse(double nb){
-        this.v = (int)(this.v*nb);
+    public void setVitessePourcentage(double nb){
+        this.v =(int) (this.v * nb);
+    }
+
+    public void setVitesse(int v) {
+        this.v = v;
     }
 }

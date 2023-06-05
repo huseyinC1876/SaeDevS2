@@ -5,7 +5,7 @@ import fr.montreuil.iut.CakarCassirame.vue.EnnemiVaisseauSpatialVue;
 
 public class EnnemiVaisseauSpatial extends Ennemi {
 
-    static int vitesseInitial = 2;
+    static int vitesseInitial = 3;
     public EnnemiVaisseauSpatial(Environnement environnement) {
         super(environnement, 600, vitesseInitial, 55);
     }
