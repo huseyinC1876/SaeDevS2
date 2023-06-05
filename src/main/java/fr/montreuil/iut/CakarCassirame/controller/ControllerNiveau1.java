@@ -294,7 +294,7 @@ public class ControllerNiveau1 implements Initializable {
         if (this.environnement.getRessource().getValue() >= Tour.prix.getValue()) {
             this.placementVue.affichaged();
             this.placement = true;
-            choixTour = (canonLaser.isArmed()) ? 1 : (canonMissile.isArmed()) ? 2 : (champForce.isArmed()) ? 3 : 4;
+            choixTour = (canonLaser.isArmed()) ? 1 : (canonMissile.isArmed()) ? 2 : (canonNucleaire.isArmed()) ? 3 : 4;
 
         }
     }
