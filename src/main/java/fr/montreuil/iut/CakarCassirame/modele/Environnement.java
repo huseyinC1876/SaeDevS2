@@ -18,7 +18,7 @@ public class Environnement {
 
     private ObservableList<Tour> listeTours;
 
-    private IntegerProperty ressource = new SimpleIntegerProperty(125);
+    private IntegerProperty ressource = new SimpleIntegerProperty(500);
     private int nbEnnemisParVague;
 
     private IntegerProperty vie = new SimpleIntegerProperty(3);
@@ -74,13 +74,16 @@ public class Environnement {
             if (getNbEnnemiSpawn() == getNbEnnemiMax() - 1) {
                 ajouterEnnemiGalactus();
             }
-            double random = Math.random() * 3;
-            if (random < 1) {
-                ajouterEnnemiExtraterrestre();
-            } else if (random < 2) {
-                ajouterEnnemiVaisseauSpatial();
-            } else {
-                ajouterEnnemiSuperVaisseauSpatial();            }
+            else {
+                double random = Math.random() * 3;
+                if (random < 1) {
+                    ajouterEnnemiExtraterrestre();
+                } else if (random < 2) {
+                    ajouterEnnemiVaisseauSpatial();
+                } else {
+                    ajouterEnnemiSuperVaisseauSpatial();
+                }
+            }
         }
     }
 
@@ -108,6 +111,15 @@ public class Environnement {
                 }
             }
         }
+    }
+
+    public boolean verificationPlacement(double x, double y){
+        for(Tour tour : this.listeTours){
+            if(tour.XProperty().getValue() == x && tour.YProperty().getValue() == y){
+                return false;
+            }
+        }
+        return true;
     }
 
     public void ajouterEnnemiExtraterrestre(){
@@ -154,7 +166,7 @@ public class Environnement {
             if(ennemi.getEnter()){
                 this.getVieProperty().setValue(getVieProperty().getValue() - 1);
             }
-            ennemi.décrémenterPV(10);
+            //ennemi.décrémenterPV(10);
         }
     }
 

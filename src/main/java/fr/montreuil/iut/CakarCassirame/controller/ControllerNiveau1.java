@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -277,8 +278,12 @@ public class ControllerNiveau1 implements Initializable {
         double positionY = mouseEvent.getY();
         if (positionY > -1 && positionY <= tilePaneInterne.getHeight() && positionX > -1 && positionX <= tilePaneInterne.getWidth()) {
             if (this.environnement.getMap().getTile((int) positionY / 32, (int) positionX / 32) == 3 && placement) {
-                this.environnement.ajouterTour(positionX, positionY, this.choixTour);
-                this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - Tour.prix.getValue());
+                positionX = ((int) positionX/32) * 32;
+                positionY = ((int) positionY/32) * 32;
+                if(this.environnement.verificationPlacement(positionX, positionY) == true) {
+                    this.environnement.ajouterTour(positionX, positionY, this.choixTour);
+                    this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - Tour.prix.getValue());
+                }
             }
         }
         this.placementVue.reset();
