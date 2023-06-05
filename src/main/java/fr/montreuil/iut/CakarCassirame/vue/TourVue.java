@@ -43,7 +43,6 @@ public abstract class TourVue {
         imageViewsTour.setFitWidth(32);
         imageViewsTour.setFitHeight(32);
         this.pane.getChildren().add(imageViewsTour);
-
     }
 
 
