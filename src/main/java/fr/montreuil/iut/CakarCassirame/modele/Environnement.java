@@ -183,6 +183,10 @@ public class Environnement {
                 if(this.getListeTours().get(i) instanceof TourCanon) {
                     ((TourCanon) this.getListeTours().get(i)).attaquer(this.listeEnnemis.get(j));
                 }
+                else if(this.listeTours.get(i) instanceof TourChampDeForce) {
+                    ((TourChampDeForce) this.listeTours.get(i)).attaquer(this.listeEnnemis.get(j));
+
+                }
             }
         }
     }

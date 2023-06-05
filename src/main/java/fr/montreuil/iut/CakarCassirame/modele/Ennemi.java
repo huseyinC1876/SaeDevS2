@@ -49,6 +49,10 @@ public abstract class Ennemi {
 
     public boolean getEnter() { return this.enter; }
 
+    public double getV() {
+        return v;
+    }
+
     public void seDeplacer(){
 
         if((positionBackUp[1] != this.x.getValue()/32+1)  && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32)+ 1] == 2 && !enter){
@@ -127,7 +131,11 @@ public abstract class Ennemi {
     public Environnement getEnvironnement(){return this.environnement;}
 
 
-    public void setVitesse(double nb){
-        this.v = (int)(this.v*nb);
+    public void setVitessePourcentage(double nb){
+        this.v =(int) (this.v * nb);
+    }
+
+    public void setVitesse(int v) {
+        this.v = v;
     }
 }
