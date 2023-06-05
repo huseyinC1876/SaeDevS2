@@ -22,20 +22,20 @@ public abstract class TourVue {
     }
 
 
-    public void creerSprite(Tour tour) {
+//    public void creerSprite(Tour tour) {
+//
+//        Circle r;
+//        r = new Circle(4);
+//        r.setFill(Color.GREENYELLOW);
+//
+//        r.translateXProperty().bind(tour.XProperty());
+//        r.translateYProperty().bind(tour.YProperty());
+//        r.setId(tour.getId());
+//        this.pane.getChildren().add(r);
+//
+//    }
 
-        Circle r;
-        r = new Circle(4);
-        r.setFill(Color.GREENYELLOW);
-
-        r.translateXProperty().bind(tour.XProperty());
-        r.translateYProperty().bind(tour.YProperty());
-        r.setId(tour.getId());
-        this.pane.getChildren().add(r);
-
-    }
-
-    public void creerSpriteImage(Tour tour) throws FileNotFoundException {
+    public void creerSprite(Tour tour) throws FileNotFoundException {
         ImageView imageViewsTour = new ImageView(new Image(new FileInputStream(this.file)));
         imageViewsTour.setId(tour.getId());
         imageViewsTour.translateXProperty().bind(tour.XProperty());
