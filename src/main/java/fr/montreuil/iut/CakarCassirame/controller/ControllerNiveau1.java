@@ -64,6 +64,9 @@ public class ControllerNiveau1 implements Initializable {
     private PlacementVue placementVue;
 
     private TourCanonLaserVue tourCanonLaserVue;
+    private TourChampDeForceVue tourChampDeForceVue;
+    private TourCanonMissileVue tourCanonMissileVue;
+    private TourCanonBombeNucleaireVue tourCanonBombeNucleaireVue;
 
     private boolean placement = false;
     private EnnemiExtraterrestreVue ennemiExtraterrestreVue;
@@ -115,6 +118,9 @@ public class ControllerNiveau1 implements Initializable {
         this.ennemiSuperVaisseauSpatialVue = new EnnemiSuperVaisseauSpatialVue(this.pane);
         this.ennemiGalactusBossVue = new EnnemiGalactusBossVue(this.pane);
         this.tourCanonLaserVue = new TourCanonLaserVue(pane);
+        this.tourCanonMissileVue = new TourCanonMissileVue(pane);
+        this.tourCanonBombeNucleaireVue = new TourCanonBombeNucleaireVue(pane);
+        this.tourChampDeForceVue = new TourChampDeForceVue(pane);
         this.placementVue = new PlacementVue(tilePaneInterne);
         this.nbEnnemiMax.textProperty().bind(this.environnement.getNbEnnemiMaxProperty().asString());
         this.nbEnnemiTue.textProperty().bind(this.environnement.getNbEnnemiTueProperty().asString());
@@ -166,7 +172,28 @@ public class ControllerNiveau1 implements Initializable {
                         for (Tour tour : change.getAddedSubList()) {
                             if (tour instanceof TourCanonLaser) {
                                 try {
-                                    tourCanonLaserVue.creerSpriteImage(tour);
+                                    tourCanonLaserVue.creerSprite(tour);
+                                } catch (FileNotFoundException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                            else if (tour instanceof TourCanonMissile) {
+                                try {
+                                    tourCanonMissileVue.creerSprite(tour);
+                                } catch (FileNotFoundException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                            else if (tour instanceof TourCanonBombeNuclaire) {
+                                try {
+                                    tourCanonBombeNucleaireVue.creerSprite(tour);
+                                } catch (FileNotFoundException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                            else {
+                                try {
+                                    tourChampDeForceVue.creerSprite(tour);
                                 } catch (FileNotFoundException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -278,9 +305,9 @@ public class ControllerNiveau1 implements Initializable {
         double positionY = mouseEvent.getY();
         if (positionY > -1 && positionY <= tilePaneInterne.getHeight() && positionX > -1 && positionX <= tilePaneInterne.getWidth()) {
             if (this.environnement.getMap().getTile((int) positionY / 32, (int) positionX / 32) == 3 && placement) {
-                positionX = ((int) positionX/32) * 32;
-                positionY = ((int) positionY/32) * 32;
-                if(this.environnement.verificationPlacement(positionX, positionY) == true) {
+                positionX = ((int) positionX / 32) * 32;
+                positionY = ((int) positionY / 32) * 32;
+                if (this.environnement.verificationPlacement(positionX, positionY) == true) {
                     this.environnement.ajouterTour(positionX, positionY, this.choixTour);
                     this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - Tour.prix.getValue());
                 }
