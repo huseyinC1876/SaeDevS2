@@ -6,7 +6,15 @@ public class TourChampDeForce extends Tour{
     }
 
     public void attaquer(Ennemi ennemi) {
-        if (valAbs(ennemi.XProperty().getValue() - this.XProperty().getValue()) <= this.getRayonPerimetreAction() && valAbs(ennemi.YProperty().getValue() - this.YProperty().getValue()) <= this.getRayonPerimetreAction()) {
+        int vitesseInit;
+        if(ennemi instanceof EnnemiExtraterrestre)
+            vitesseInit = EnnemiExtraterrestre.vitesseInitial;
+        else if(ennemi instanceof EnnemiVaisseauSpatial)
+            vitesseInit = EnnemiVaisseauSpatial.vitesseInitial;
+        else
+            vitesseInit = EnnemiSuperVaisseauSpatial.vitesseInitial;
+
+        if (!(ennemi instanceof EnnemiGalactusBoss) && valAbs(ennemi.XProperty().getValue() - this.XProperty().getValue()) <= this.getRayonPerimetreAction() && valAbs(ennemi.YProperty().getValue() - this.YProperty().getValue()) <= this.getRayonPerimetreAction() && ennemi.getV() == vitesseInit){
             ennemi.setVitesse(0.75);
         }
     }

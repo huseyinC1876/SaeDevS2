@@ -49,6 +49,10 @@ public abstract class Ennemi {
 
     public boolean getEnter() { return this.enter; }
 
+    public int getV() {
+        return v;
+    }
+
     public void seDeplacer(){
 
         if((positionBackUp[1] != this.x.getValue()/32+1)  && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32)+ 1] == 2 && !enter){

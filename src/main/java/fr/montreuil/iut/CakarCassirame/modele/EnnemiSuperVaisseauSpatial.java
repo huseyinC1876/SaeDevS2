@@ -2,8 +2,9 @@ package fr.montreuil.iut.CakarCassirame.modele;
 
 public class EnnemiSuperVaisseauSpatial extends Ennemi {
     private int bouclier;
+    static int vitesseInitial = 3;
     public EnnemiSuperVaisseauSpatial(Environnement environnement) {
-        super(environnement, 500, 3, 80);
+        super(environnement, 500, vitesseInitial, 80);
         this.bouclier = 100;
     }
 
