@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public abstract class Ennemi {
 
     private int pv;
-    private int v;
+    private double v;
     private int gain;
     private IntegerProperty x,y;
     public static int compteur = 0;
@@ -17,8 +17,7 @@ public abstract class Ennemi {
     private boolean enter;
 
 
-
-    public Ennemi(Environnement environnement, int pv, int v, int gain){
+    public Ennemi(Environnement environnement, int pv, double v, int gain){
         this.pv = pv;
         this.v = v;
         this.gain = gain;
@@ -90,52 +89,29 @@ public abstract class Ennemi {
                 this.positionBackUp[1]--;
             }
         }
-
-
-        /*
-
-        else if((positionBackUp[0] != this.y.getValue()/32 + 1) && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32) + 1] == 0){
-            this.positionBackUp[1] = this.x.getValue() /32;
-            this.x.setValue(this.y.getValue() + this.v);
-            if(this.y.getValue()/32 - this.positionBackUp[0]  == 2){
-                this.pv = 0;
-                this.gain = 0;
-            }
-        }
-
-        else if((positionBackUp[1] != this.x.getValue()/32- 1) && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32) - 1] == 0){
-            this.positionBackUp[0] = this.y.getValue() /32;
-            this.x.setValue(this.x.getValue() - this.v);
-            if(this.positionBackUp[1] - this.x.getValue()/32 == 2){
-                this.pv = 0;
-                this.gain = 0;
-            }
-        }
-
-        else if((positionBackUp[1] != this.x.getValue()/32 + 1) && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32) + 1] == 0){
-            this.positionBackUp[0] = this.y.getValue() /32;
-            this.x.setValue(this.x.getValue() + this.v);
-            if(this.x.getValue()/32 - this.positionBackUp[1]  == 2){
-                this.pv = 0;
-                this.gain = 0;
-            }
-        }
-        */
-
     }
 
     public void décrémenterPV(int PV){
         this.pv = this.pv - PV;
     }
 
+
+    public void setVitessePourcentage(double nb){ this.v =(int) (this.v * nb);}
+
+    public void setVitesse(double v) {
+        if(v >= 1)
+            this.v = v;
+    }
+
     public Environnement getEnvironnement(){return this.environnement;}
 
 
-    public void setVitessePourcentage(double nb){
-        this.v =(int) (this.v * nb);
+    //TODO : utiliser pythagore pr savoir si un point est dans un cercle
+    public boolean estDansPerimetreTour(Tour tour){
+        return Math.sqrt(Math.pow(this.XProperty().getValue() - tour.XProperty().getValue(), 2) + Math.pow(this.YProperty().getValue() - tour.YProperty().getValue(), 2)) <= tour.getRayonPerimetreAction();
     }
 
-    public void setVitesse(int v) {
-        this.v = v;
-    }
+
+
+
 }

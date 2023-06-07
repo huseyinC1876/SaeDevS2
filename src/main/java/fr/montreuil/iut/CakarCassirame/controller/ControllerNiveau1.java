@@ -308,7 +308,7 @@ public class ControllerNiveau1 implements Initializable {
                 positionX = ((int) positionX / 32) * 32;
                 positionY = ((int) positionY / 32) * 32;
                 if (this.environnement.verificationPlacement(positionX, positionY) == true) {
-                    this.environnement.ajouterTour(positionX, positionY, this.choixTour);
+                    this.environnement.ajouterTour(positionX+16, positionY+16, this.choixTour);
                     this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - Tour.prix.getValue());
                 }
             }
