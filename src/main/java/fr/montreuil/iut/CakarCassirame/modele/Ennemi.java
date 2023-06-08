@@ -22,8 +22,8 @@ public abstract class Ennemi {
         this.pv = pv;
         this.v = v;
         this.gain = gain;
-        this.x = new SimpleIntegerProperty(65);
-        this.y = new SimpleIntegerProperty(135);
+        this.x = new SimpleIntegerProperty(65); //65
+        this.y = new SimpleIntegerProperty(112); //135
         compteur +=1;
         this.id = String.valueOf(compteur);
         this.environnement = environnement;
@@ -79,6 +79,13 @@ public abstract class Ennemi {
         else if ((positionBackUp[0] != this.y.getValue()/32-1) &&  (this.environnement.getMap().getTileMap()[(this.y.getValue()/32) - 1][(this.x.getValue()/32)] == 2) && !enter){
             this.positionBackUp[1] = this.x.getValue() /32;
             this.y.setValue(this.y.getValue() - this.v);
+            if(this.environnement.getMap().getTileMap()[(this.y.getValue()/32) - 1][(this.x.getValue()/32)] == 3){
+                int multiplicateur = (32 - this.v );
+                multiplicateur = multiplicateur / this.v;
+                System.out.println("multiplicateur = " + multiplicateur);
+                System.out.println("calcul = " + this.v * multiplicateur);
+                this.y.setValue(this.y.getValue() - this.v * multiplicateur) ;
+            }
             if(this.positionBackUp[0] - this.y.getValue()/32 == 2){
                 this.positionBackUp[0]--;
             }

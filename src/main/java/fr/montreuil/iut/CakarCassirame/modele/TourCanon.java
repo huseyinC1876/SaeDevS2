@@ -3,26 +3,40 @@ package fr.montreuil.iut.CakarCassirame.modele;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class TourCanon extends Tour{
-    private IntegerProperty degat;
-    private IntegerProperty tempsRecharge;
+public abstract class TourCanon extends Tour{
+    //public IntegerProperty degat;
+    //private IntegerProperty tempsRecharge;
 
-    public TourCanon(Environnement environnement, double x, double y, int coutAmelioration, int rayonPerimetreAction, IntegerProperty tempsRecharge, IntegerProperty degat) {
-        super(environnement, x, y, coutAmelioration, rayonPerimetreAction);
-        this.tempsRecharge = tempsRecharge;
-        this.degat = degat;
+    public TourCanon(Environnement environnement, double x, double y,int prix, int coutAmelioration, int rayonPerimetreAction) {
+        super(environnement, x, y,prix , coutAmelioration, rayonPerimetreAction);
+        //this.tempsRecharge = tempsRecharge;
+        //this.degat = degat;
     }
 
+    /*
     public void setTempsRecharge(IntegerProperty temps){
         this.tempsRecharge = temps;
     }
 
-    public void setDegat(IntegerProperty degat){
-        this.degat = degat;
+     */
+
+    /*
+    public void setDegat(int degat){
+        this.degat.setValue(degat);
     }
 
+     */
 
-    public void attaquer(Ennemi ennemi){
+    /*
+    public IntegerProperty degatProperty() {
+        return degat;
+    }
+
+     */
+
+    public abstract void attaquer(Ennemi ennemi);
+    /*
+    {
         if(valAbs(ennemi.XProperty().getValue() - this.XProperty().getValue()) <= this.getRayonPerimetreAction() && valAbs(ennemi.YProperty().getValue() - this.YProperty().getValue()) <= this.getRayonPerimetreAction() ){
             if(ennemi instanceof EnnemiSuperVaisseauSpatial){
                 ((EnnemiSuperVaisseauSpatial) ennemi).décrémenterVie(this.degat.getValue());
@@ -31,4 +45,6 @@ public class TourCanon extends Tour{
                 ennemi.décrémenterPV(this.degat.getValue());
         }
     }
+
+     */
 }

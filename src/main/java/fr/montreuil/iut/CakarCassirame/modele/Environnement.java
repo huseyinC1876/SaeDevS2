@@ -182,6 +182,7 @@ public class Environnement {
             for (int j = 0; j < this.getListeEnnemis().size(); j++){
                 if(this.getListeTours().get(i) instanceof TourCanon) {
                     ((TourCanon) this.getListeTours().get(i)).attaquer(this.listeEnnemis.get(j));
+                    System.out.println(TourCanonLaser.degat);
                 }
                 else if(this.listeTours.get(i) instanceof TourChampDeForce) {
                     ((TourChampDeForce) this.listeTours.get(i)).attaquer(this.listeEnnemis.get(j));
@@ -189,6 +190,28 @@ public class Environnement {
                 }
             }
         }
+    }
+
+    public void ameliorationTour(int choix){
+        if(choix == 1) {
+            this.ressource.setValue(this.ressource.getValue() - TourCanonLaser.prixA.getValue());
+            TourCanonLaser.amelioration();
+        }
+        else if (choix == 2) {
+            this.ressource.setValue(this.ressource.getValue() - TourCanonMissile.prixA.getValue());
+            TourCanonMissile.amelioration(/*35,4*/);
+        }
+        else if (choix == 3) {
+            //this.ressource.setValue(this.ressource.getValue() - TourCanonBombeNuclaire.prixA.getValue());
+            TourCanonBombeNuclaire.amelioration(300, 7);
+        }
+        else {
+            //this.ressource.setValue(this.ressource.getValue() - TourChampDeForce.prixA.getValue());
+            TourChampDeForce.amelioration(0.50);
+        }
+
+
+
     }
 
     public void unTour(){
