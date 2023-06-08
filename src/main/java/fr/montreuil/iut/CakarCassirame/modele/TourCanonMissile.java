@@ -7,7 +7,6 @@ public class TourCanonMissile extends TourPerimetre{
 
     public static IntegerProperty tempsRecharge;
     public static IntegerProperty degat;
-//    private int rayonPerimetreAction = 20;
 
     public TourCanonMissile(Environnement environnement, double x, double y) {
         super(environnement, x, y, 400, 20);
@@ -16,8 +15,6 @@ public class TourCanonMissile extends TourPerimetre{
     }
 
     public int getDegat(){return degat.getValue();}
-
-//    public int getRayonPerimetreAction(){return this.rayonPerimetreAction;}
 
 
     @Override

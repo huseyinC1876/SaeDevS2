@@ -72,6 +72,9 @@ public class ControllerNiveau1 implements Initializable {
     private EnnemiVaisseauSpatialVue ennemiVaisseauSpatialVue;
     private EnnemiSuperVaisseauSpatialVue ennemiSuperVaisseauSpatialVue;
     private EnnemiGalactusBossVue ennemiGalactusBossVue;
+    private ProjectileMissileVue projectileMissileVue;
+    private ProjectileLaserVue projectileLaserVue;
+    private ProjectileBombeNuclaireVue projectileBombeNuclaireVue;
     private boolean vague = false;
 
 
@@ -123,6 +126,9 @@ public class ControllerNiveau1 implements Initializable {
         this.placementVue = new PlacementVue(tilePaneInterne);
         this.nbEnnemiMax.textProperty().bind(this.environnement.getNbEnnemiMaxProperty().asString());
         this.nbEnnemiTue.textProperty().bind(this.environnement.getNbEnnemiTueProperty().asString());
+        this.projectileBombeNuclaireVue = new ProjectileBombeNuclaireVue(pane);
+        this.projectileLaserVue = new ProjectileLaserVue(pane);
+        this.projectileMissileVue = new ProjectileMissileVue(pane);
 
         try {
             this.placementVue.affichage(this.environnement.getMap());

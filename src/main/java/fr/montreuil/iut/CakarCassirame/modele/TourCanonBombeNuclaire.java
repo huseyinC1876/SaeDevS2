@@ -7,6 +7,8 @@ public class TourCanonBombeNuclaire extends Tour{
 
     public static IntegerProperty degat;
     public static IntegerProperty tempsRecharge;
+    //TODO : ajout projectile. Pr l'instant, j'ai créé la classe projectile et la classe ProjectileVue. j'ai initialize les vues dans le controller
+    private Projectile projectile;
     public TourCanonBombeNuclaire(Environnement environnement, double x, double y) {
         super(environnement, x, y, 1750);
         tempsRecharge = new SimpleIntegerProperty(10);
@@ -17,7 +19,9 @@ public class TourCanonBombeNuclaire extends Tour{
 
     @Override
     public void attaquer(Ennemi ennemi) {
-
+        for(int i = 0 ; i < this.getEnvironnement().getListeEnnemis().size() ; i++){
+            this.getEnvironnement().getListeEnnemis().get(i).décrémenterPV(getDegat());
+        }
     }
 }
 
