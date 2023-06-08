@@ -1,12 +1,13 @@
 package fr.montreuil.iut.CakarCassirame.modele;
 
-import fr.montreuil.iut.CakarCassirame.vue.TourChampDeForceVue;
-import fr.montreuil.iut.CakarCassirame.vue.TourVue;
+public class TourChampDeForce extends TourPerimetre {
 
-public class TourChampDeForce extends Tour {
+//    private int rayonPerimetreAction;
 
     public TourChampDeForce(Environnement environnement, double x, double y) {
+
         super(environnement, x, y, 750, 100);
+//        this.rayonPerimetreAction = 100;
     }
 
 
@@ -19,7 +20,7 @@ public class TourChampDeForce extends Tour {
         else
             vitesseInit = EnnemiSuperVaisseauSpatial.vitesseInitiale;
 
-        if (!(ennemi instanceof EnnemiGalactusBoss) && ennemi.estDansPerimetreTour(this) && ennemi.getV() == vitesseInit) {
+        if (!(ennemi instanceof EnnemiGalactusBoss) && hasEnnemiDansPerimetre(ennemi) && ennemi.getV() == vitesseInit) {
             ennemi.setVitesse(ennemi.getV()-1);
 //            System.out.println("ennemi ID : "+ennemi.getId() + " - type : " + ennemi.getClass() + " - vitesse actuelle : " + ennemi.getV());
 //            if (ennemi instanceof EnnemiExtraterrestre)
@@ -31,4 +32,7 @@ public class TourChampDeForce extends Tour {
 //            System.out.println();
         }
     }
+
+//    public int getRayonPerimetreAction(){return this.rayonPerimetreAction;}
+
 }

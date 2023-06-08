@@ -7,12 +7,14 @@ import javafx.scene.shape.Circle;
 
 import java.io.FileNotFoundException;
 
-public class TourCanonMissileVue extends TourPerimetreVue{
-    public TourCanonMissileVue(Pane pane) {
-        super(pane, "src/main/resources/fr/montreuil/iut/CakarCassirame/canonMissile.jpg");
+public class TourPerimetreVue extends TourVue{
+
+
+    public TourPerimetreVue(Pane pane, String file) {
+        super(pane, file);
     }
 
-    public void creerSpritePerimetre(TourPerimetre tour) throws FileNotFoundException {
+    public void creerSprite(TourPerimetre tour) throws FileNotFoundException {
 
         Circle r;
         r = new Circle(tour.getRayonPerimetreAction());

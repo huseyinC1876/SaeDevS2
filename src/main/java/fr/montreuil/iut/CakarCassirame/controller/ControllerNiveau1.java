@@ -67,7 +67,6 @@ public class ControllerNiveau1 implements Initializable {
     private TourChampDeForceVue tourChampDeForceVue;
     private TourCanonMissileVue tourCanonMissileVue;
     private TourCanonBombeNucleaireVue tourCanonBombeNucleaireVue;
-
     private boolean placement = false;
     private EnnemiExtraterrestreVue ennemiExtraterrestreVue;
     private EnnemiVaisseauSpatialVue ennemiVaisseauSpatialVue;
@@ -173,6 +172,8 @@ public class ControllerNiveau1 implements Initializable {
                             if (tour instanceof TourCanonLaser) {
                                 try {
                                     tourCanonLaserVue.creerSprite(tour);
+                                    tourCanonLaserVue.creerSpritePerimetre((TourPerimetre) tour);
+
                                 } catch (FileNotFoundException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -180,6 +181,8 @@ public class ControllerNiveau1 implements Initializable {
                             else if (tour instanceof TourCanonMissile) {
                                 try {
                                     tourCanonMissileVue.creerSprite(tour);
+                                    tourCanonMissileVue.creerSpritePerimetre((TourPerimetre) tour);
+
                                 } catch (FileNotFoundException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -194,6 +197,7 @@ public class ControllerNiveau1 implements Initializable {
                             else {
                                 try {
                                     tourChampDeForceVue.creerSprite(tour);
+                                    tourChampDeForceVue.creerSpritePerimetre((TourPerimetre) tour);
                                 } catch (FileNotFoundException e) {
                                     throw new RuntimeException(e);
                                 }

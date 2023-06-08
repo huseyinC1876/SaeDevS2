@@ -93,17 +93,16 @@ public class Environnement {
         if (this.nbEnnemiSpawn < nbEnnemiMax.getValue()) {
             if (getNbEnnemiSpawn() == getNbEnnemiMax() - 1) {
                 ajouterEnnemiGalactus();
-            }
-            else {
-            double random = Math.random() * 3;
+            } else {
+                double random = Math.random() * 3;
                 if (random < 1) {
                     ajouterEnnemiExtraterrestre();
                 } else if (random < 2) {
-            ajouterEnnemiVaisseauSpatial();
-        } else {
-            ajouterEnnemiSuperVaisseauSpatial();
-        }
-    }
+                    ajouterEnnemiVaisseauSpatial();
+                } else {
+                    ajouterEnnemiSuperVaisseauSpatial();
+                }
+            }
         }
     }
 
@@ -196,20 +195,19 @@ public class Environnement {
     }
 
     public void attaquer() {
-        for (int i = 0; i < this.listeEnnemis.size(); i++) {
-            for (int j = 0; j < this.listeTours.size(); j++) {
-                if (listeEnnemis.get(i).estDansPerimetreTour(listeTours.get(j))) {
-                    listeTours.get(j).attaquer(listeEnnemis.get(i));
-                }
+        for (int i = 0; i < this.listeTours.size(); i++) {
+            for (int j = 0; j < this.listeEnnemis.size(); j++) {
+                listeTours.get(i).attaquer(listeEnnemis.get(j));
+                verifPerimetreChampDeForce(listeEnnemis.get(j));
             }
-            verifPerimetreChampDeForce(listeEnnemis.get(i));
         }
     }
 
+
     public void verifPerimetreChampDeForce(Ennemi ennemi) {
         boolean dansAucunPerimetreDeTourChampForce = true;
-        for (int j = 0; j < this.listeTours.size(); j++) {
-            if (ennemi.estDansPerimetreTour(listeTours.get(j)) && listeTours.get(j) instanceof TourChampDeForce) {
+        for (int i = 0; i < this.listeTours.size(); i++) {
+            if (listeTours.get(i) instanceof TourChampDeForce && ((TourChampDeForce) listeTours.get(i)).hasEnnemiDansPerimetre(ennemi)) {
                 dansAucunPerimetreDeTourChampForce = false;
             }
         }

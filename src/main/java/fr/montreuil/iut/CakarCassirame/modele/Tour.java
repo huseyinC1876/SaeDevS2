@@ -8,15 +8,13 @@ public abstract class Tour {
 
     public static IntegerProperty prix = new SimpleIntegerProperty(100);
     private int coutAmelioration;
-    private int rayonPerimetreAction;
     private static int compteur = 0;
     private String id;
     private DoubleProperty x, y;
     private Environnement environnement;
 
-    public Tour(Environnement environnement, double x, double y, int coutAmelioration, int rayonPerimetreAction) {
+    public Tour(Environnement environnement, double x, double y, int coutAmelioration) {
         this.coutAmelioration = coutAmelioration;
-        this.rayonPerimetreAction = rayonPerimetreAction;
         compteur++;
         this.id = "A" + compteur;
         this.x = new SimpleDoubleProperty(x);
@@ -36,7 +34,6 @@ public abstract class Tour {
         return (val < 0) ? -val : val;
     }
 
-    public int getRayonPerimetreAction(){return this.rayonPerimetreAction;}
 
     public Environnement getEnvironnement() {
         return environnement;

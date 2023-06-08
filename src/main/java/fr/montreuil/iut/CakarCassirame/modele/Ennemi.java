@@ -107,7 +107,7 @@ public abstract class Ennemi {
 
 
     //TODO : utiliser pythagore pr savoir si un point est dans un cercle
-    public boolean estDansPerimetreTour(Tour tour){
+    public boolean estDansPerimetre(TourPerimetre tour){
         return Math.sqrt(Math.pow(this.XProperty().getValue() - tour.XProperty().getValue(), 2) + Math.pow(this.YProperty().getValue() - tour.YProperty().getValue(), 2)) <= tour.getRayonPerimetreAction();
     }
 
