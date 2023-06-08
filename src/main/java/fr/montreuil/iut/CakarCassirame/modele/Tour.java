@@ -41,4 +41,9 @@ public abstract class Tour {
 
     public int getRayonPerimetreAction(){return this.rayonPerimetreAction;}
 
+    public Environnement getEnvironnement() {
+        return environnement;
+    }
+
+    public abstract void attaquer(Ennemi ennemi);
 }

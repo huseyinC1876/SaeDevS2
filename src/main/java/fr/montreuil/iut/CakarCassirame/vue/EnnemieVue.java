@@ -4,6 +4,8 @@ import fr.montreuil.iut.CakarCassirame.modele.Ennemi;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,6 +27,15 @@ public abstract class EnnemieVue {
         imageViewsSpaceChip.translateXProperty().bind(ennemi.XProperty());
         imageViewsSpaceChip.translateYProperty().bind(ennemi.YProperty());
         this.pane.getChildren().add(imageViewsSpaceChip);
+
+//
+//        Circle r;
+//        r = new Circle(4);
+//        r.setFill(Color.ORANGERED);
+//        r.translateXProperty().bind(ennemi.XProperty());
+//        r.translateYProperty().bind(ennemi.YProperty());
+//        r.setId(ennemi.getId());
+//        this.pane.getChildren().add(r);
     }
 
 

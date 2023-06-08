@@ -27,7 +27,7 @@ public class Environnement {
         this.map = new Map();
         this.x = this.map.getTileMap().length;
         this.y = this.map.getTileMap()[0].length;
-        this.nbEnnemiMax = new SimpleIntegerProperty(100);
+        this.nbEnnemiMax = new SimpleIntegerProperty(5);
         this.nbEnnemiTue = new SimpleIntegerProperty(0);
         this.listeEnnemis = FXCollections.observableArrayList();
         this.nbEnnemiSpawn = 0;
@@ -35,33 +35,53 @@ public class Environnement {
         this.nbEnnemisParVague = 10;
     }
 
-    public int getNbEnnemisParVague(){return this.nbEnnemisParVague;}
+    public int getNbEnnemisParVague() {
+        return this.nbEnnemisParVague;
+    }
 
     public Map getMap() {
         return map;
     }
 
-    public int getNbEnnemiMax() { return this.nbEnnemiMax.getValue(); }
+    public int getNbEnnemiMax() {
+        return this.nbEnnemiMax.getValue();
+    }
 
-    public IntegerProperty getNbEnnemiMaxProperty(){ return this.nbEnnemiMax; }
+    public IntegerProperty getNbEnnemiMaxProperty() {
+        return this.nbEnnemiMax;
+    }
 
-    public int getNbEnnemiTue() { return this.nbEnnemiTue .getValue(); }
+    public int getNbEnnemiTue() {
+        return this.nbEnnemiTue.getValue();
+    }
 
-    public IntegerProperty getNbEnnemiTueProperty(){ return this.nbEnnemiTue; }
+    public IntegerProperty getNbEnnemiTueProperty() {
+        return this.nbEnnemiTue;
+    }
 
-    public int getNbEnnemiSpawn() { return nbEnnemiSpawn; }
+    public int getNbEnnemiSpawn() {
+        return nbEnnemiSpawn;
+    }
 
-    public IntegerProperty getVieProperty(){ return this.vie; }
+    public IntegerProperty getVieProperty() {
+        return this.vie;
+    }
 
-    public ObservableList<Ennemi> getListeEnnemis() { return this.listeEnnemis; }
+    public ObservableList<Ennemi> getListeEnnemis() {
+        return this.listeEnnemis;
+    }
 
-    public ObservableList<Tour> getListeTours(){ return  this.listeTours; }
+    public ObservableList<Tour> getListeTours() {
+        return this.listeTours;
+    }
 
-    public IntegerProperty getRessource(){ return this.ressource; }
+    public IntegerProperty getRessource() {
+        return this.ressource;
+    }
 
-    public void verfication(){
-        for (int i = this.listeEnnemis.size() - 1 ; i >= 0 ; i-- ){
-            if(this.listeEnnemis.get(i).getPv() < 1){
+    public void verfication() {
+        for (int i = this.listeEnnemis.size() - 1; i >= 0; i--) {
+            if (this.listeEnnemis.get(i).getPv() < 1) {
                 this.ressource.setValue(this.getRessource().getValue() + this.listeEnnemis.get(i).getGain());
                 this.listeEnnemis.remove(i);
                 this.nbEnnemiTue.setValue(this.nbEnnemiTue.getValue() + 1);
@@ -75,22 +95,21 @@ public class Environnement {
                 ajouterEnnemiGalactus();
             }
             else {
-                double random = Math.random() * 3;
+            double random = Math.random() * 3;
                 if (random < 1) {
                     ajouterEnnemiExtraterrestre();
                 } else if (random < 2) {
-                    ajouterEnnemiVaisseauSpatial();
-                } else {
-                    ajouterEnnemiSuperVaisseauSpatial();
-                }
-            }
+            ajouterEnnemiVaisseauSpatial();
+        } else {
+            ajouterEnnemiSuperVaisseauSpatial();
+        }
+    }
         }
     }
 
 
-
     public void ajouterVagueEnnemis() {
-        if(nbEnnemiSpawn < nbEnnemiMax.getValue() - 1) {
+        if (nbEnnemiSpawn < nbEnnemiMax.getValue() - 1) {
             verifNbEnnemisParVague();
             System.out.println("ENNEMIS PAR VAGUE : " + this.nbEnnemisParVague);
             for (int i = 0; i < this.nbEnnemisParVague; i++) {
@@ -113,112 +132,128 @@ public class Environnement {
         }
     }
 
-    public boolean verificationPlacement(double x, double y){
-        for(Tour tour : this.listeTours){
-            if(tour.XProperty().getValue() == x && tour.YProperty().getValue() == y){
+    public boolean verificationPlacement(double x, double y) {
+        for (Tour tour : this.listeTours) {
+            if (tour.XProperty().getValue() == x && tour.YProperty().getValue() == y) {
                 return false;
             }
         }
         return true;
     }
 
-    public void ajouterEnnemiExtraterrestre(){
+    public void ajouterEnnemiExtraterrestre() {
         this.listeEnnemis.add(new EnnemiExtraterrestre(this));
         this.nbEnnemiSpawn++;
     }
 
-    public void ajouterEnnemiVaisseauSpatial(){
+    public void ajouterEnnemiVaisseauSpatial() {
         this.listeEnnemis.add(new EnnemiVaisseauSpatial(this));
         this.nbEnnemiSpawn++;
     }
 
-    public void ajouterEnnemiSuperVaisseauSpatial(){
+    public void ajouterEnnemiSuperVaisseauSpatial() {
         this.listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this));
         this.nbEnnemiSpawn++;
     }
 
-    public void ajouterEnnemiGalactus(){
+    public void ajouterEnnemiGalactus() {
         this.listeEnnemis.add(new EnnemiGalactusBoss(this));
         this.nbEnnemiSpawn++;
     }
 
-    public void ajouterEnnemiDivision(){
-        for(int i = 0 ; i <2 ; i++) {
+    public void ajouterEnnemiDivision() {
+        for (int i = 0; i < 2; i++) {
             this.listeEnnemis.add(new EnnemiVaisseauSpatial(this));
             this.nbEnnemiSpawn++;
         }
     }
 
-    public void ajouterTour(double x, double y, int nbChoixTour){
-        if(nbChoixTour == 1)
+    public void ajouterTour(double x, double y, int nbChoixTour) {
+        if (nbChoixTour == 1)
             this.listeTours.add(new TourCanonLaser(this, x, y));
-        else if(nbChoixTour == 2)
+        else if (nbChoixTour == 2)
             this.listeTours.add(new TourCanonMissile(this, x, y));
-       else if(nbChoixTour == 3)
+        else if (nbChoixTour == 3)
             this.listeTours.add(new TourCanonBombeNuclaire(this, x, y));
         else this.listeTours.add(new TourChampDeForce(this, x, y));
 
     }
 
-    public void deplacement(){
-        for(Ennemi ennemi : this.listeEnnemis){
+    public void deplacement() {
+        for (Ennemi ennemi : this.listeEnnemis) {
             ennemi.seDeplacer();
-            if(ennemi.getEnter()){
+            if (ennemi.getEnter()) {
                 this.getVieProperty().setValue(getVieProperty().getValue() - 1);
             }
-            //ennemi.décrémenterPV(10);
         }
     }
 
-    public void verifNbEnnemisParVague(){
-        if(this.nbEnnemiSpawn > 91){
+    public void verifNbEnnemisParVague() {
+        if (this.nbEnnemiSpawn > 91) {
             this.nbEnnemisParVague = 99 - nbEnnemiSpawn;
         }
 
     }
 
-    public void attaque(){
-        for(int i = 0; i < this.getListeTours().size(); i++){
-            for (int j = 0; j < this.getListeEnnemis().size(); j++){
-                if(this.getListeTours().get(i) instanceof TourCanon) {
+
+    public void attaque() {
+        for (int i = 0; i < this.getListeTours().size(); i++) {
+            for (int j = 0; j < this.getListeEnnemis().size(); j++) {
+                if (this.getListeTours().get(i) instanceof TourCanon) {
                     ((TourCanon) this.getListeTours().get(i)).attaquer(this.listeEnnemis.get(j));
                     System.out.println(TourCanonLaser.degat);
-                }
-                else if(this.listeTours.get(i) instanceof TourChampDeForce) {
+                } else if (this.listeTours.get(i) instanceof TourChampDeForce) {
                     ((TourChampDeForce) this.listeTours.get(i)).attaquer(this.listeEnnemis.get(j));
-
                 }
             }
         }
     }
 
-    public void ameliorationTour(int choix){
-        if(choix == 1) {
-            this.ressource.setValue(this.ressource.getValue() - TourCanonLaser.prixA.getValue());
-            TourCanonLaser.amelioration();
-        }
-        else if (choix == 2) {
-            this.ressource.setValue(this.ressource.getValue() - TourCanonMissile.prixA.getValue());
-            TourCanonMissile.amelioration(/*35,4*/);
-        }
-        else if (choix == 3) {
-            //this.ressource.setValue(this.ressource.getValue() - TourCanonBombeNuclaire.prixA.getValue());
-            TourCanonBombeNuclaire.amelioration(300, 7);
-        }
-        else {
-            //this.ressource.setValue(this.ressource.getValue() - TourChampDeForce.prixA.getValue());
-            TourChampDeForce.amelioration(0.50);
-        }
+                    public void ameliorationTour ( int choix){
+                        if (choix == 1) {
+                            this.ressource.setValue(this.ressource.getValue() - TourCanonLaser.prixA.getValue());
+                            TourCanonLaser.amelioration();
+                        } else if (choix == 2) {
+                            this.ressource.setValue(this.ressource.getValue() - TourCanonMissile.prixA.getValue());
+                            TourCanonMissile.amelioration(/*35,4*/);
+                        } else if (choix == 3) {
+                            //this.ressource.setValue(this.ressource.getValue() - TourCanonBombeNuclaire.prixA.getValue());
+                            TourCanonBombeNuclaire.amelioration(300, 7);
+                        } else {
+                            //this.ressource.setValue(this.ressource.getValue() - TourChampDeForce.prixA.getValue());
+                            TourChampDeForce.amelioration(0.50);
+                        }
 
 
+                    }
 
+
+    /*
+
+    public void verifPerimetreChampDeForce(Ennemi ennemi) {
+        boolean dansAucunPerimetreDeTourChampForce = true;
+        for (int j = 0; j < this.listeTours.size(); j++) {
+            if (ennemi.estDansPerimetreTour(listeTours.get(j)) && listeTours.get(j) instanceof TourChampDeForce) {
+                dansAucunPerimetreDeTourChampForce = false;
+            }
+        }
+        if (dansAucunPerimetreDeTourChampForce) {
+            if (ennemi instanceof EnnemiExtraterrestre && ennemi.getV() != EnnemiExtraterrestre.vitesseInitiale)
+                ennemi.setVitesse(EnnemiExtraterrestre.vitesseInitiale);
+            else if (ennemi instanceof EnnemiVaisseauSpatial && ennemi.getV() != EnnemiVaisseauSpatial.vitesseInitiale)
+                ennemi.setVitesse(EnnemiVaisseauSpatial.vitesseInitiale);
+            else if (ennemi instanceof EnnemiSuperVaisseauSpatial && ennemi.getV() != EnnemiSuperVaisseauSpatial.vitesseInitiale)
+                ennemi.setVitesse(EnnemiSuperVaisseauSpatial.vitesseInitiale);
+        }
     }
 
-    public void unTour(){
-        deplacement();
-        attaque();
-        verfication();
-    }
+     */
+
+                    public void unTour () {
+                        deplacement();
+                        attaque();
+                        verfication();
+                    }
 
 
 

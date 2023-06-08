@@ -445,6 +445,7 @@ public class ControllerNiveau1 implements Initializable {
 
     @FXML
     public void placerTour(MouseEvent mouseEvent) {
+<<<<<<< HEAD
         if (!arretTemps) {
             double positionX = mouseEvent.getX();
             double positionY = mouseEvent.getY();
@@ -457,6 +458,17 @@ public class ControllerNiveau1 implements Initializable {
                         int prix = (choixTour == 1) ? TourCanonLaser.prixT.getValue() : (choixTour == 2) ? TourCanonMissile.prixT.getValue() : (choixTour == 3) ? TourCanonBombeNuclaire.prixT.getValue() : TourChampDeForce.prixT.getValue();
                         this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - prix);
                     }
+=======
+        double positionX = mouseEvent.getX();
+        double positionY = mouseEvent.getY();
+        if (positionY > -1 && positionY <= tilePaneInterne.getHeight() && positionX > -1 && positionX <= tilePaneInterne.getWidth()) {
+            if (this.environnement.getMap().getTile((int) positionY / 32, (int) positionX / 32) == 3 && placement) {
+                positionX = ((int) positionX / 32) * 32;
+                positionY = ((int) positionY / 32) * 32;
+                if (this.environnement.verificationPlacement(positionX, positionY) == true) {
+                    this.environnement.ajouterTour(positionX+16, positionY+16, this.choixTour);
+                    this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - Tour.prix.getValue());
+>>>>>>> c169cbce69f1aa029e4ec5b854e398af4b4ac8bb
                 }
             }
             this.placementVue.reset();
