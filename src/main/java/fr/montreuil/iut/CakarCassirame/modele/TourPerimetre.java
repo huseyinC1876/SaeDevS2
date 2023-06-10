@@ -10,7 +10,7 @@ public abstract class TourPerimetre extends Tour{
         }
 
     @Override
-    public void attaquer(Ennemi ennemi) {}
+    public void attaquer() {}
 
     public int getRayonPerimetreAction(){return this.rayonPerimetreAction;}
 

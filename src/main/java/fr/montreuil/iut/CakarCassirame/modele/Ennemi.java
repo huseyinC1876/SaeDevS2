@@ -64,7 +64,7 @@ public abstract class Ennemi {
         else if(this.environnement.getMap().getTileMap()[this.y.getValue()/32 + 1][(this.x.getValue()/32)] == 0){
             enter = true;
             this.y.setValue(this.y.getValue() - this.v);
-            System.out.println("OK enter");
+//            System.out.println("OK enter");
                 this.pv = 0;
                 this.gain = 0;
 

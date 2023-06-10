@@ -13,6 +13,6 @@ public class ProjectileBombeNuclaireVue extends ProjectileVue{
 
 
     public ProjectileBombeNuclaireVue(Pane pane) {
-        super(pane,"src/main/resources/fr/montreuil/iut/CakarCassirame/projectile.png");
+        super(pane,"src/main/resources/fr/montreuil/iut/CakarCassirame/bombe.png");
     }
 }

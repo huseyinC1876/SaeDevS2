@@ -22,10 +22,8 @@ public class ProjectileVue {
 
         ImageView imageViewsTour = new ImageView(new Image(new FileInputStream(this.file)));
         imageViewsTour.setId(projectile.getId());
-//        imageViewsTour.translateXProperty().bind(projectile.XProperty().subtract(16));
-//        imageViewsTour.translateYProperty().bind(projectile.YProperty().subtract(16));
-        imageViewsTour.translateXProperty().bind(projectile.XProperty());
-        imageViewsTour.translateYProperty().bind(projectile.YProperty());
+        imageViewsTour.translateXProperty().bind(projectile.XProperty().subtract(16));
+        imageViewsTour.translateYProperty().bind(projectile.YProperty().subtract(16));
         imageViewsTour.setFitWidth(32);
         imageViewsTour.setFitHeight(32);
         this.pane.getChildren().add(imageViewsTour);

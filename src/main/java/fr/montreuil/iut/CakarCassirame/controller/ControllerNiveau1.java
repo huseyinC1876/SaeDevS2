@@ -35,6 +35,8 @@ public class ControllerNiveau1 implements Initializable {
     @FXML
     private TilePane tilePaneExterne;
 
+    @FXML private TilePane tilePaneBombe;
+
     @FXML
     private Pane pane;
 
@@ -75,6 +77,7 @@ public class ControllerNiveau1 implements Initializable {
     private ProjectileMissileVue projectileMissileVue;
     private ProjectileLaserVue projectileLaserVue;
     private ProjectileBombeNuclaireVue projectileBombeNuclaireVue;
+    private ProjectileBombeNucleaireExplosionVue projectileBombeNucleaireExplosionVue;
     private boolean vague = false;
 
 
@@ -129,6 +132,7 @@ public class ControllerNiveau1 implements Initializable {
         this.projectileBombeNuclaireVue = new ProjectileBombeNuclaireVue(pane);
         this.projectileLaserVue = new ProjectileLaserVue(pane);
         this.projectileMissileVue = new ProjectileMissileVue(pane);
+        this.projectileBombeNucleaireExplosionVue = new ProjectileBombeNucleaireExplosionVue(tilePaneBombe);
 
         try {
             this.placementVue.affichage(this.environnement.getMap());
@@ -183,8 +187,7 @@ public class ControllerNiveau1 implements Initializable {
                                 } catch (FileNotFoundException e) {
                                     throw new RuntimeException(e);
                                 }
-                            }
-                            else if (tour instanceof TourCanonMissile) {
+                            } else if (tour instanceof TourCanonMissile) {
                                 try {
                                     tourCanonMissileVue.creerSprite(tour);
                                     tourCanonMissileVue.creerSpritePerimetre((TourPerimetre) tour);
@@ -192,15 +195,13 @@ public class ControllerNiveau1 implements Initializable {
                                 } catch (FileNotFoundException e) {
                                     throw new RuntimeException(e);
                                 }
-                            }
-                            else if (tour instanceof TourCanonBombeNuclaire) {
+                            } else if (tour instanceof TourCanonBombeNuclaire) {
                                 try {
                                     tourCanonBombeNucleaireVue.creerSprite(tour);
                                 } catch (FileNotFoundException e) {
                                     throw new RuntimeException(e);
                                 }
-                            }
-                            else {
+                            } else {
                                 try {
                                     tourChampDeForceVue.creerSprite(tour);
                                     tourChampDeForceVue.creerSpritePerimetre((TourPerimetre) tour);
@@ -213,6 +214,49 @@ public class ControllerNiveau1 implements Initializable {
                 }
             };
             this.environnement.getListeTours().addListener(listenerTours);
+
+
+            ListChangeListener<Projectile> listenerProjectile = new ListChangeListener<Projectile>() {
+                @Override
+                public void onChanged(Change<? extends Projectile> change) {
+                    while (change.next()) {
+                        for (Projectile projectile : change.getAddedSubList()) {
+                            if(projectile instanceof ProjectileCanonLaser) {
+                                try {
+                                    projectileLaserVue.creerSprite(projectile);
+                                } catch (FileNotFoundException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            } else if (projectile instanceof ProjectileCanonMissile) {
+                                try {
+                                    projectileMissileVue.creerSprite(projectile);
+                                } catch (FileNotFoundException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            } else if (projectile instanceof ProjectileCanonBombeNucleaire) {
+                                try {
+                                    projectileBombeNuclaireVue.creerSprite(projectile);
+                                } catch (FileNotFoundException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
+                        for (Projectile projectile : change.getRemoved()) {
+                            pane.getChildren().remove(pane.lookup("#" + projectile.getId()));
+                            try {
+                                projectileBombeNucleaireExplosionVue.creerSprite(projectile);
+//                                System.out.println("CREATION SPRITE SPRITE SPRITE SPRITE SPRITE SPRITE SPRITE");
+                            } catch (FileNotFoundException e) {
+                                throw new RuntimeException(e);
+                            }
+
+//TODO : il faut enlever l'image !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (attention, pour l'instant, l'image est sur un 3ème tilepane et ça ne marche pas bien.
+                        }
+                    }
+                }
+            };
+            this.environnement.getListeProjectiles().addListener(listenerProjectile);
+
             prixCanonLaser.textProperty().bind(Tour.prix.asString());
             prixCanonMissile.textProperty().bind(Tour.prix.asString());
             prixChampDeForce.textProperty().bind(Tour.prix.asString());
@@ -238,6 +282,11 @@ public class ControllerNiveau1 implements Initializable {
                 (ev -> {
                     if (environnement.getNbEnnemiTue() == environnement.getNbEnnemiMax() && enter == false) {
                         System.out.println("fini");
+//                        try {
+//                            chargerPageAcceuil();
+//                        } catch (IOException e) {
+//                            throw new RuntimeException(e);
+//                        }
                         enter = true;
                         this.finPartie.setText("Victory");
                         this.finPartie.setVisible(true);
@@ -245,6 +294,30 @@ public class ControllerNiveau1 implements Initializable {
 
 
                     } else if (this.environnement.getVieProperty().getValue() > 0) {
+
+                        if (this.environnement.getListeTours().size() != 0) {
+                            for(int i = 0 ; i < this.environnement.getListeTours().size() ; i++){
+                                if(this.environnement.getListeTours().get(i) instanceof TourCanonLaser){
+                                    if(temps%TourCanonLaser.tempsRecharge.getValue() == 0) {
+                                        this.environnement.ajouterProjectile(1, this.environnement.getListeTours().get(i).XProperty().getValue(), this.environnement.getListeTours().get(i).YProperty().getValue() );
+//                                        System.out.println("ajouter proj 1 controller");
+                                    }
+                                }
+                                if(this.environnement.getListeTours().get(i) instanceof TourCanonMissile){
+                                    if(temps%TourCanonMissile.tempsRecharge.getValue() == 0) {
+                                        this.environnement.ajouterProjectile(2 , this.environnement.getListeTours().get(i).XProperty().getValue(), this.environnement.getListeTours().get(i).YProperty().getValue() );
+//                                        System.out.println("ajouter proj 2 controller");
+                                    }
+                                }
+                                if(this.environnement.getListeTours().get(i) instanceof TourCanonBombeNuclaire){
+                                    if(temps% TourCanonBombeNuclaire.tempsRecharge.getValue() == 0) {
+                                        this.environnement.ajouterProjectile(3, this.environnement.getListeTours().get(i).XProperty().getValue(), this.environnement.getListeTours().get(i).YProperty().getValue() );
+//                                        System.out.println("ajouter proj 3 controller");
+                                    }
+                                }
+                            }
+                        }
+
                         if (temps % 3 == 0) {
                             this.environnement.unTour();
 
@@ -257,6 +330,7 @@ public class ControllerNiveau1 implements Initializable {
                                 this.finPartie.setVisible(true);
                                 temps = 0;
                             }
+
                         } else if (temps % 23 == 0) {
                             if (this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
                                 environnement.ajouterEnnemie();
@@ -300,7 +374,7 @@ public class ControllerNiveau1 implements Initializable {
     }
 
     @FXML
-    public void affichagePlacement() throws FileNotFoundException {
+    public void affichagePlacement() {
         if (this.environnement.getRessource().getValue() >= Tour.prix.getValue()) {
             this.placementVue.affichaged();
             this.placement = true;
@@ -318,7 +392,7 @@ public class ControllerNiveau1 implements Initializable {
                 positionX = ((int) positionX / 32) * 32;
                 positionY = ((int) positionY / 32) * 32;
                 if (this.environnement.verificationPlacement(positionX, positionY) == true) {
-                    this.environnement.ajouterTour(positionX+16, positionY+16, this.choixTour);
+                    this.environnement.ajouterTour(positionX + 16, positionY + 16, this.choixTour);
                     this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - Tour.prix.getValue());
                 }
             }

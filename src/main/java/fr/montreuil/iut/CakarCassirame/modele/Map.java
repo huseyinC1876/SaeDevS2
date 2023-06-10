@@ -46,4 +46,8 @@ public class Map {
         return this.tileMap;
     }
 
+    public double getTileMapHeight(){return this.tileMap.length;} //20
+
+    public double getTileMapWidth(){return this.tileMap[0].length;} //30
+
 }

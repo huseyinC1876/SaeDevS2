@@ -14,6 +14,8 @@
 <Pane fx:id="pane" onMouseClicked="#placerTour" prefHeight="640.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.montreuil.iut.CakarCassirame.controller.ControllerNiveau1">
     <TilePane fx:id="tilePaneExterne" alignment="CENTER" prefHeight="640" prefWidth="960" xmlns:fx="http://javafx.com/fxml">
     </TilePane>
+   <TilePane fx:id="tilePaneBombe" prefHeight="640" prefWidth="960">
+   </TilePane>
    <TilePane fx:id="tilePaneInterne" prefHeight="640.0" prefWidth="960.0" />
    <HBox fx:id="hboxVie" prefHeight="33.0" prefWidth="107.0">
       <children>
