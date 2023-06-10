@@ -79,8 +79,8 @@ public abstract class Ennemi {
             this.positionBackUp[1] = this.x.getValue() /32;
             this.y.setValue(this.y.getValue() - this.v);
             if(this.environnement.getMap().getTileMap()[(this.y.getValue()/32) - 1][(this.x.getValue()/32)] == 3){
-                int multiplicateur = (32 - this.v );
-                multiplicateur = multiplicateur / this.v;
+                int multiplicateur = (int) (32 - this.v);
+                multiplicateur = (int) (multiplicateur / this.v) ;
                 System.out.println("multiplicateur = " + multiplicateur);
                 System.out.println("calcul = " + this.v * multiplicateur);
                 this.y.setValue(this.y.getValue() - this.v * multiplicateur) ;
@@ -114,7 +114,7 @@ public abstract class Ennemi {
 
 
     //TODO : utiliser pythagore pr savoir si un point est dans un cercle
-    public boolean estDansPerimetreTour(Tour tour){
+    public boolean estDansPerimetre(TourPerimetre tour){
         return Math.sqrt(Math.pow(this.XProperty().getValue() - tour.XProperty().getValue(), 2) + Math.pow(this.YProperty().getValue() - tour.YProperty().getValue(), 2)) <= tour.getRayonPerimetreAction();
     }
 

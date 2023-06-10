@@ -1,7 +1,6 @@
 package fr.montreuil.iut.CakarCassirame.modele;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+/*
 
 public abstract class TourCanon extends Tour{
     //public IntegerProperty degat;
@@ -32,10 +31,10 @@ public abstract class TourCanon extends Tour{
         return degat;
     }
 
-     */
+
 
     public abstract void attaquer(Ennemi ennemi);
-    /*
+
     {
         if(valAbs(ennemi.XProperty().getValue() - this.XProperty().getValue()) <= this.getRayonPerimetreAction() && valAbs(ennemi.YProperty().getValue() - this.YProperty().getValue()) <= this.getRayonPerimetreAction() ){
             if(ennemi instanceof EnnemiSuperVaisseauSpatial){
@@ -46,5 +45,6 @@ public abstract class TourCanon extends Tour{
         }
     }
 
-     */
+
 }
+*/

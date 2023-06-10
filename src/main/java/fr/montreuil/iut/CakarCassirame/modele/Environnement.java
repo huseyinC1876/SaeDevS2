@@ -93,17 +93,16 @@ public class Environnement {
         if (this.nbEnnemiSpawn < nbEnnemiMax.getValue()) {
             if (getNbEnnemiSpawn() == getNbEnnemiMax() - 1) {
                 ajouterEnnemiGalactus();
-            }
-            else {
-            double random = Math.random() * 3;
+            } else {
+                double random = Math.random() * 3;
                 if (random < 1) {
                     ajouterEnnemiExtraterrestre();
                 } else if (random < 2) {
-            ajouterEnnemiVaisseauSpatial();
-        } else {
-            ajouterEnnemiSuperVaisseauSpatial();
-        }
-    }
+                    ajouterEnnemiVaisseauSpatial();
+                } else {
+                    ajouterEnnemiSuperVaisseauSpatial();
+                }
+            }
         }
     }
 
@@ -132,6 +131,7 @@ public class Environnement {
         }
     }
 
+
     public boolean verificationPlacement(double x, double y) {
         for (Tour tour : this.listeTours) {
             if (tour.XProperty().getValue() == x && tour.YProperty().getValue() == y) {
@@ -140,6 +140,8 @@ public class Environnement {
         }
         return true;
     }
+
+
 
     public void ajouterEnnemiExtraterrestre() {
         this.listeEnnemis.add(new EnnemiExtraterrestre(this));
@@ -199,12 +201,8 @@ public class Environnement {
     public void attaque() {
         for (int i = 0; i < this.getListeTours().size(); i++) {
             for (int j = 0; j < this.getListeEnnemis().size(); j++) {
-                if (this.getListeTours().get(i) instanceof TourCanon) {
-                    ((TourCanon) this.getListeTours().get(i)).attaquer(this.listeEnnemis.get(j));
-                    System.out.println(TourCanonLaser.degat);
-                } else if (this.listeTours.get(i) instanceof TourChampDeForce) {
-                    ((TourChampDeForce) this.listeTours.get(i)).attaquer(this.listeEnnemis.get(j));
-                }
+                this.getListeTours().get(i).attaquer(this.listeEnnemis.get(j));
+
             }
         }
     }
@@ -228,12 +226,11 @@ public class Environnement {
                     }
 
 
-    /*
 
     public void verifPerimetreChampDeForce(Ennemi ennemi) {
         boolean dansAucunPerimetreDeTourChampForce = true;
-        for (int j = 0; j < this.listeTours.size(); j++) {
-            if (ennemi.estDansPerimetreTour(listeTours.get(j)) && listeTours.get(j) instanceof TourChampDeForce) {
+        for (int i = 0; i < this.listeTours.size(); i++) {
+            if (listeTours.get(i) instanceof TourChampDeForce && ((TourChampDeForce) listeTours.get(i)).hasEnnemiDansPerimetre(ennemi)) {
                 dansAucunPerimetreDeTourChampForce = false;
             }
         }
@@ -247,7 +244,7 @@ public class Environnement {
         }
     }
 
-     */
+
 
                     public void unTour () {
                         deplacement();

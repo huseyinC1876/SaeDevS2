@@ -77,12 +77,14 @@ public class ControllerNiveau1 implements Initializable {
     private TourChampDeForceVue tourChampDeForceVue;
     private TourCanonMissileVue tourCanonMissileVue;
     private TourCanonBombeNucleaireVue tourCanonBombeNucleaireVue;
-
     private boolean placement = false;
     private EnnemiExtraterrestreVue ennemiExtraterrestreVue;
     private EnnemiVaisseauSpatialVue ennemiVaisseauSpatialVue;
     private EnnemiSuperVaisseauSpatialVue ennemiSuperVaisseauSpatialVue;
     private EnnemiGalactusBossVue ennemiGalactusBossVue;
+    private ProjectileMissileVue projectileMissileVue;
+    private ProjectileLaserVue projectileLaserVue;
+    private ProjectileBombeNuclaireVue projectileBombeNuclaireVue;
     private boolean vague = false;
 
 
@@ -168,12 +170,19 @@ public class ControllerNiveau1 implements Initializable {
         this.placementVue = new PlacementVue(tilePaneInterne);
         this.nbEnnemiMax.textProperty().bind(this.environnement.getNbEnnemiMaxProperty().asString());
         this.nbEnnemiTue.textProperty().bind(this.environnement.getNbEnnemiTueProperty().asString());
+
         this.infoBulleBoutonsTours = new InfoBulleBoutonsTours(canonLaser,canonMissile,champForce,canonNucleaire);
         menuAmelioration1.setVisible(false);
         menuAmelioration2.setVisible(false);
-        Tooltip tooltip = new Tooltip("atq -> 100");
+        //Tooltip tooltip = new Tooltip("atq -> 100");
         //tooltip.setText("atq -> 100");
         //this.canonLaser.setTooltip(tooltip);
+
+        this.projectileBombeNuclaireVue = new ProjectileBombeNuclaireVue(pane);
+        this.projectileLaserVue = new ProjectileLaserVue(pane);
+        this.projectileMissileVue = new ProjectileMissileVue(pane);
+
+
         try {
             this.placementVue.affichage(this.environnement.getMap());
         } catch (FileNotFoundException e) {
@@ -222,6 +231,8 @@ public class ControllerNiveau1 implements Initializable {
                             if (tour instanceof TourCanonLaser) {
                                 try {
                                     tourCanonLaserVue.creerSprite(tour);
+                                    tourCanonLaserVue.creerSpritePerimetre((TourPerimetre) tour);
+
                                 } catch (FileNotFoundException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -229,6 +240,8 @@ public class ControllerNiveau1 implements Initializable {
                             else if (tour instanceof TourCanonMissile) {
                                 try {
                                     tourCanonMissileVue.creerSprite(tour);
+                                    tourCanonMissileVue.creerSpritePerimetre((TourPerimetre) tour);
+
                                 } catch (FileNotFoundException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -243,6 +256,7 @@ public class ControllerNiveau1 implements Initializable {
                             else {
                                 try {
                                     tourChampDeForceVue.creerSprite(tour);
+                                    tourChampDeForceVue.creerSpritePerimetre((TourPerimetre) tour);
                                 } catch (FileNotFoundException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -445,7 +459,6 @@ public class ControllerNiveau1 implements Initializable {
 
     @FXML
     public void placerTour(MouseEvent mouseEvent) {
-<<<<<<< HEAD
         if (!arretTemps) {
             double positionX = mouseEvent.getX();
             double positionY = mouseEvent.getY();
@@ -458,17 +471,6 @@ public class ControllerNiveau1 implements Initializable {
                         int prix = (choixTour == 1) ? TourCanonLaser.prixT.getValue() : (choixTour == 2) ? TourCanonMissile.prixT.getValue() : (choixTour == 3) ? TourCanonBombeNuclaire.prixT.getValue() : TourChampDeForce.prixT.getValue();
                         this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - prix);
                     }
-=======
-        double positionX = mouseEvent.getX();
-        double positionY = mouseEvent.getY();
-        if (positionY > -1 && positionY <= tilePaneInterne.getHeight() && positionX > -1 && positionX <= tilePaneInterne.getWidth()) {
-            if (this.environnement.getMap().getTile((int) positionY / 32, (int) positionX / 32) == 3 && placement) {
-                positionX = ((int) positionX / 32) * 32;
-                positionY = ((int) positionY / 32) * 32;
-                if (this.environnement.verificationPlacement(positionX, positionY) == true) {
-                    this.environnement.ajouterTour(positionX+16, positionY+16, this.choixTour);
-                    this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - Tour.prix.getValue());
->>>>>>> c169cbce69f1aa029e4ec5b854e398af4b4ac8bb
                 }
             }
             this.placementVue.reset();

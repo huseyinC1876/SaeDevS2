@@ -1,10 +1,6 @@
 package fr.montreuil.iut.CakarCassirame.modele;
 
 
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 public class Map {
 
     private int[][] tileMap = new int[20][30];
@@ -45,5 +41,6 @@ public class Map {
     public int[][] getTileMap(){
         return this.tileMap;
     }
+
 
 }
