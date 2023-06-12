@@ -5,7 +5,7 @@ public class EnnemiExtraterrestre extends Ennemi {
 
 
     public EnnemiExtraterrestre(Environnement environnement) {
-        super(environnement, 100, 2, 35);
+        super(environnement, 100, 2, 35, 65, 135);
     }
 
     public double getVitesseInitiale(){return vitesseInitiale;}

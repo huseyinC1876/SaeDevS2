@@ -5,6 +5,5 @@ public class EnnemiGalactusBoss extends Ennemi {
 
 
     public EnnemiGalactusBoss(Environnement environnement) {
-        super(environnement, 1000, 3, 500);
-    }
-}
+        super(environnement, 1000, 3, 500, 65, 135);
+    }}

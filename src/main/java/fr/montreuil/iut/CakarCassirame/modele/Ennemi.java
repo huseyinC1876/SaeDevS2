@@ -17,12 +17,12 @@ public abstract class Ennemi {
     private boolean enter;
 
 
-    public Ennemi(Environnement environnement, int pv, double v, int gain){
+    public Ennemi(Environnement environnement, int pv, double v, int gain, int x, int y){
         this.pv = pv;
         this.v = v;
         this.gain = gain;
-        this.x = new SimpleIntegerProperty(65);
-        this.y = new SimpleIntegerProperty(135);
+        this.x = new SimpleIntegerProperty(x); //65
+        this.y = new SimpleIntegerProperty(y); //135
         compteur +=1;
         this.id = String.valueOf(compteur);
         this.environnement = environnement;

@@ -92,8 +92,14 @@ public class Environnement {
         for (int i = this.listeEnnemis.size() - 1; i >= 0; i--) {
             if (this.listeEnnemis.get(i).getPv() < 1) {
                 this.ressource.setValue(this.getRessource().getValue() + this.listeEnnemis.get(i).getGain());
+                if (this.listeEnnemis.get(i) instanceof EnnemiSuperVaisseauSpatial) {
+                    System.out.println("AJOUT DE 2 ENNEMIS SUPER VAISSEAU SPATIALES");
+                    listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this, listeEnnemis.get(i).XProperty().getValue()-5, listeEnnemis.get(i).YProperty().getValue()-5));
+                    listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this, listeEnnemis.get(i).XProperty().getValue()+5, listeEnnemis.get(i).YProperty().getValue()+5));
+                }
                 this.listeEnnemis.remove(i);
                 this.nbEnnemiTue.setValue(this.nbEnnemiTue.getValue() + 1);
+
             }
         }
     }

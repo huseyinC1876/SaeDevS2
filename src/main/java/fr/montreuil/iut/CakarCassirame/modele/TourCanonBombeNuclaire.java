@@ -16,9 +16,9 @@ public class TourCanonBombeNuclaire extends Tour{
 
     public TourCanonBombeNuclaire(Environnement environnement, double x, double y) {
         super(environnement, x, y, 1750);
-        tempsRecharge = new SimpleIntegerProperty(500);
+        tempsRecharge = new SimpleIntegerProperty(50);
         degat = new SimpleIntegerProperty(50);
-        this.projectile = new ProjectileCanonBombeNucleaire(environnement, 20, new SimpleDoubleProperty(x), new SimpleDoubleProperty(y), 1);
+        this.projectile = new ProjectileCanonBombeNucleaire(environnement, 50, new SimpleDoubleProperty(x), new SimpleDoubleProperty(y), 1);
     }
 
 
