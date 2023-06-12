@@ -104,7 +104,6 @@ public class ControllerNiveau1 implements Initializable {
 
     @FXML
     private Label nbEnnemiMax;
-
     @FXML
     private Label finPartie;
 
@@ -117,7 +116,6 @@ public class ControllerNiveau1 implements Initializable {
 
         this.environnement = new Environnement();
         this.vueMap = new MapVue(this.tilePaneExterne);
-        //  this.vueEnnemie = new EnnemieVue(this.pane);
         this.ennemiExtraterrestreVue = new EnnemiExtraterrestreVue(this.pane);
         this.ennemiVaisseauSpatialVue = new EnnemiVaisseauSpatialVue(this.pane);
         this.ennemiSuperVaisseauSpatialVue = new EnnemiSuperVaisseauSpatialVue(this.pane);
@@ -391,7 +389,7 @@ public class ControllerNiveau1 implements Initializable {
             if (this.environnement.getMap().getTile((int) positionY / 32, (int) positionX / 32) == 3 && placement) {
                 positionX = ((int) positionX / 32) * 32;
                 positionY = ((int) positionY / 32) * 32;
-                if (this.environnement.verificationPlacement(positionX, positionY) == true) {
+                if (this.environnement.verificationPlacement(positionX, positionY)) {
                     this.environnement.ajouterTour(positionX + 16, positionY + 16, this.choixTour);
                     this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - Tour.prix.getValue());
                 }

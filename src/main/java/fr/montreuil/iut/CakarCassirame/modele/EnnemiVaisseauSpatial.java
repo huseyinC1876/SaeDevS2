@@ -11,13 +11,6 @@ public class EnnemiVaisseauSpatial extends Ennemi {
         super(environnement, 600, 3, 55, 65, 135);
     }
 
-
-    public void seDivise(){
-        if(this.getPv() == 0){
-            this.getEnvironnement().ajouterEnnemiDivision();
-        }
-    }
-
     public double getVitesseInitiale(){return vitesseInitiale;}
 
 }
