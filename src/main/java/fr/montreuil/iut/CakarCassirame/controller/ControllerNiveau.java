@@ -6,7 +6,6 @@ import fr.montreuil.iut.CakarCassirame.vue.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +14,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -26,7 +23,6 @@ import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PipedReader;
 import java.net.URL;
 import java.util.ResourceBundle;
 /*
@@ -37,7 +33,7 @@ import sun.audio.AudioStream;
  */
 
 
-public class ControllerNiveau1 implements Initializable {
+public class ControllerNiveau implements Initializable {
 
 
     private Environnement environnement;
@@ -149,6 +145,8 @@ public class ControllerNiveau1 implements Initializable {
     @FXML
     private Label prixAmeliorationMissile;
 
+    private EnnemieVaisseauSpatialDiviseVue ennemieVaisseauSpatialDiviseVue;
+
 
 
 
@@ -156,7 +154,11 @@ public class ControllerNiveau1 implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        this.environnement = new Environnement();
+        try {
+            this.environnement = new Environnement(ControllerSelectionNiveau.choixNiveau);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         this.vueMap = new MapVue(this.tilePaneExterne);
         //  this.vueEnnemie = new EnnemieVue(this.pane);
         this.ennemiExtraterrestreVue = new EnnemiExtraterrestreVue(this.pane);
@@ -170,6 +172,7 @@ public class ControllerNiveau1 implements Initializable {
         this.placementVue = new PlacementVue(tilePaneInterne);
         this.nbEnnemiMax.textProperty().bind(this.environnement.getNbEnnemiMaxProperty().asString());
         this.nbEnnemiTue.textProperty().bind(this.environnement.getNbEnnemiTueProperty().asString());
+        this.ennemieVaisseauSpatialDiviseVue = new EnnemieVaisseauSpatialDiviseVue(pane);
 
         this.infoBulleBoutonsTours = new InfoBulleBoutonsTours(canonLaser,canonMissile,champForce,canonNucleaire);
         menuAmelioration1.setVisible(false);
@@ -207,8 +210,11 @@ public class ControllerNiveau1 implements Initializable {
                                     ennemiVaisseauSpatialVue.creerSprite(ennemi);
                                 else if (ennemi instanceof EnnemiSuperVaisseauSpatial)
                                     ennemiSuperVaisseauSpatialVue.creerSprite(ennemi);
-                                else
+                                else if( ennemi instanceof EnnemiGalactusBoss)
                                     ennemiGalactusBossVue.creerSprite(ennemi);
+                                else if(ennemi instanceof EnnemiVaisseauSpacialDivise)
+                                    ennemieVaisseauSpatialDiviseVue.creerSprite(ennemi);
+
                             } catch (FileNotFoundException e) {
                                 throw new RuntimeException(e);
                             }
@@ -326,7 +332,7 @@ public class ControllerNiveau1 implements Initializable {
                             this.environnement.ajouterVagueEnnemis();
                         }
                     } else if (this.environnement.getVieProperty().getValue() < 1 || this.environnement.getNbEnnemiTue() == this.environnement.getNbEnnemiMax()) {
-                        if (temps > 500) {
+                        if (temps > 100) {
                             try {
                                 chargerPageAcceuil();
                             } catch (IOException e) {
@@ -467,7 +473,7 @@ public class ControllerNiveau1 implements Initializable {
                     positionX = ((int) positionX / 32) * 32;
                     positionY = ((int) positionY / 32) * 32;
                     if (this.environnement.verificationPlacement(positionX, positionY) == true) {
-                        this.environnement.ajouterTour(positionX, positionY, this.choixTour);
+                        this.environnement.ajouterTour(positionX + 16, positionY + 16, this.choixTour);
                         int prix = (choixTour == 1) ? TourCanonLaser.prixT.getValue() : (choixTour == 2) ? TourCanonMissile.prixT.getValue() : (choixTour == 3) ? TourCanonBombeNuclaire.prixT.getValue() : TourChampDeForce.prixT.getValue();
                         this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - prix);
                     }

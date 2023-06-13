@@ -58,7 +58,9 @@ public class TourCanonMissile extends TourPerimetre{
 
     public static void amelioration(/*int nvDegat, int temps*/){
         degat.setValue(degat.getValue() * 2); //nvDegat * 2
-        tempsRecharge.setValue(tempsRecharge.getValue() - 1);
+        if (tempsRecharge.getValue() > 0) {
+            tempsRecharge.setValue(tempsRecharge.getValue() - 1);
+        }
         prixA.setValue(prixA.getValue() * 2);
     }
 }

@@ -4,8 +4,6 @@ import fr.montreuil.iut.CakarCassirame.modele.Ennemi;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -42,8 +40,8 @@ public abstract class EnnemieVue {
     public void reduireTaille(ImageView imageView){
         imageView.setScaleX(16);
         imageView.setScaleY(16);
-        imageView.setFitWidth(16);
-        imageView.setFitHeight(16);
+        //imageView.setFitWidth(16);
+        //imageView.setFitHeight(16);
 
     }
 

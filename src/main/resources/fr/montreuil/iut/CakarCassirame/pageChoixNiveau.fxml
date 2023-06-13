@@ -17,12 +17,12 @@
             <Image url="@espace.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="414.0" layoutY="160.0" mnemonicParsing="false" onAction="#chargerNiveau1" prefHeight="61.0" prefWidth="76.0" text="NIV 1">
+      <Button fx:id="boutonNiveau1" layoutX="414.0" layoutY="160.0" mnemonicParsing="false" onAction="#chargerNiveau" prefHeight="61.0" prefWidth="76.0" text="NIV 1">
          <font>
             <Font size="19.0" />
          </font>
       </Button>
-      <Button layoutX="811.0" layoutY="160.0" mnemonicParsing="false" onAction="#chargerNiveau2" prefHeight="61.0" prefWidth="76.0" text="NIV 2">
+      <Button fx:id="boutonNiveau2" layoutX="811.0" layoutY="160.0" mnemonicParsing="false" onAction="#chargerNiveau" prefHeight="61.0" prefWidth="76.0" text="NIV 2">
          <font>
             <Font size="19.0" />
          </font>

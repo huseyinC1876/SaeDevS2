@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -16,6 +17,12 @@ public class ControllerSelectionNiveau implements Initializable {
 
     @FXML
     private Pane paneExterneSelection;
+
+    public static int choixNiveau;
+    @FXML
+    private Button boutonNiveau1;
+    @FXML
+    private Button boutonNiveau2;
 
 
     @Override
@@ -30,19 +37,27 @@ public class ControllerSelectionNiveau implements Initializable {
 
     }
 
-    public void chargerNiveau1() throws IOException {
+    public void chargerNiveau() throws IOException {
+        if(boutonNiveau1.isArmed())
+            choixNiveau = 1;
+        else if (boutonNiveau2.isArmed()) {
+            choixNiveau = 2;
+        }
         Scene scene = paneExterneSelection.getScene();
         Stage stage = (Stage) scene.getWindow();
-        ControllerNiveau1.load(stage);
+        ControllerNiveau.load(stage);
 
     }
 
+    /*
     public void chargerNiveau2() throws IOException {
         Scene scene = paneExterneSelection.getScene();
         Stage stage = (Stage) scene.getWindow();
         ControllerNiveau2.load(stage);
 
     }
+
+     */
 
     public static void load(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("pageChoixNiveau.fxml"));

@@ -11,21 +11,26 @@ public abstract class Ennemi {
     private IntegerProperty x,y;
     public static int compteur = 0;
     private String id;
-    private int xBackUp, yBackUp;
     private int[]  positionBackUp = new int[2];
     private Environnement environnement;
     private boolean enter;
 
 
-    public Ennemi(Environnement environnement, int pv, double v, int gain){
+    public Ennemi(Environnement environnement, int pv, double v, int gain, int x, int y){
         this.pv = pv;
         this.v = v;
         this.gain = gain;
+        this.environnement = environnement;
+        /*
         this.x = new SimpleIntegerProperty(65); //65
         this.y = new SimpleIntegerProperty(112); //135
+         */
+        //this.x = new SimpleIntegerProperty(this.environnement.getMap().debutMapEnnemie()[1] * 32);
+        //this.y = new SimpleIntegerProperty(this.environnement.getMap().debutMapEnnemie()[0] * 32);
+        this.x = new SimpleIntegerProperty(x);
+        this.y = new SimpleIntegerProperty(y);
         compteur +=1;
         this.id = String.valueOf(compteur);
-        this.environnement = environnement;
         positionBackUp[0] = this.y.getValue()/32;
         positionBackUp[1] = this.x.getValue()/32;
     }
@@ -46,6 +51,10 @@ public abstract class Ennemi {
         this.pv = pv;
     }
 
+    public void setGain(int gain) {
+        this.gain = gain;
+    }
+
     public boolean getEnter() { return this.enter; }
 
     public double getV() {
@@ -63,13 +72,38 @@ public abstract class Ennemi {
         }
         else if(this.environnement.getMap().getTileMap()[this.y.getValue()/32 + 1][(this.x.getValue()/32)] == 0){
             enter = true;
-            this.y.setValue(this.y.getValue() - this.v);
+            this.y.setValue(this.y.getValue() + this.v);
             System.out.println("OK enter");
                 this.pv = 0;
                 this.gain = 0;
 
         }
+        else if(this.environnement.getMap().getTileMap()[this.y.getValue()/32 - 1][(this.x.getValue()/32)] == 0){
+            enter = true;
+            this.y.setValue(this.y.getValue() - this.v);
+            System.out.println("OK enter");
+            this.pv = 0;
+            this.gain = 0;
+
+        }
+        else if(this.environnement.getMap().getTileMap()[this.y.getValue()/32 ][(this.x.getValue()/32) + 1] == 0){
+            enter = true;
+            this.y.setValue(this.x.getValue() + this.v);
+            System.out.println("OK enter");
+            this.pv = 0;
+            this.gain = 0;
+
+        }
+        else if(this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32) - 1] == 0){
+            enter = true;
+            this.y.setValue(this.x.getValue() - this.v);
+            System.out.println("OK enter");
+            this.pv = 0;
+            this.gain = 0;
+
+        }
         else if ((positionBackUp[0] != this.y.getValue()/32+1) &&  (this.environnement.getMap().getTileMap()[(this.y.getValue()/32) + 1][(this.x.getValue()/32)] == 2) && !enter){
+            this.positionBackUp[1] = this.x.getValue() /32;
             this.y.setValue(this.y.getValue() + this.v);
             if(this.y.getValue()/32 - this.positionBackUp[0] == 2){
                 this.positionBackUp[0]++;
@@ -81,8 +115,8 @@ public abstract class Ennemi {
             if(this.environnement.getMap().getTileMap()[(this.y.getValue()/32) - 1][(this.x.getValue()/32)] == 3){
                 int multiplicateur = (int) (32 - this.v);
                 multiplicateur = (int) (multiplicateur / this.v) ;
-                System.out.println("multiplicateur = " + multiplicateur);
-                System.out.println("calcul = " + this.v * multiplicateur);
+                //System.out.println("multiplicateur = " + multiplicateur);
+                //System.out.println("calcul = " + this.v * multiplicateur);
                 this.y.setValue(this.y.getValue() - this.v * multiplicateur) ;
             }
             if(this.positionBackUp[0] - this.y.getValue()/32 == 2){

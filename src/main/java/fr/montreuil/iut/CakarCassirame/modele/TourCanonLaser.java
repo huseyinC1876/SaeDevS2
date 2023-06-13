@@ -18,14 +18,14 @@ public class TourCanonLaser extends TourCanon{
          */
 public class TourCanonLaser extends TourPerimetre{
     public static  IntegerProperty tempsRecharge = new SimpleIntegerProperty(3);
-    public static IntegerProperty degat;
+    public static IntegerProperty degat = new SimpleIntegerProperty(9);
     public static IntegerProperty prixA = new SimpleIntegerProperty(200);
     public static IntegerProperty prixT = new SimpleIntegerProperty(100);
 
     public TourCanonLaser(Environnement environnement, double x, double y) {
         super(environnement, x, y, 200, 50);
         tempsRecharge = new SimpleIntegerProperty(3);
-        degat = new SimpleIntegerProperty(20);
+        degat = new SimpleIntegerProperty(2);
     }
 
     public int getDegat(){return degat.getValue();}
@@ -34,7 +34,9 @@ public class TourCanonLaser extends TourPerimetre{
 
     public static void amelioration(){
         degat.setValue(degat.getValue() + 1);
-        tempsRecharge.setValue(tempsRecharge.getValue() - 1);
+        if (tempsRecharge.getValue() > 0) {
+            tempsRecharge.setValue(tempsRecharge.getValue() - 1);
+        }
         prixA.setValue(prixA.getValue() * 2);
     }
 

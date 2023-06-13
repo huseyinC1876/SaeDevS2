@@ -8,8 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-//import javafx.media.*;
-//import javafx.scene.media.Media;
+
 /*
 
 import javafx.scene.media.*;
@@ -22,7 +21,6 @@ import javafx.scene.media.MediaView;
 
 public class HelloApplication extends Application {
 
-
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("pageAccueil.fxml"));
@@ -34,6 +32,10 @@ public class HelloApplication extends Application {
         Media media = new Media(file.toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
+         */
+        /*
+        Media media = new Media();
+        MediaPlayeur mediaPlayeur = new MediaPlayeur();
 
          */
 
