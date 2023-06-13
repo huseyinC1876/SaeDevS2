@@ -9,6 +9,7 @@ public class EnnemiSuperVaisseauSpatial extends Ennemi {
         this.bouclier = 100;
     }
 
+
    public void décrémenterBouclier(int PV){
         this.bouclier = this.bouclier - PV;
    }

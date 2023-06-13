@@ -1,25 +1,42 @@
 package fr.montreuil.iut.CakarCassirame.modele;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.DoubleProperty;
 
-public class Projectile {
+public abstract class Projectile {
+    private Environnement env;
+    private int degat;
+    private DoubleProperty x, y;
+    private String id;
+    private static int compteur = 0;
+    private int v;
+    private boolean hasAttacked;
 
-        private int degat;
-        private IntegerProperty x, y;
-        private String id;
-        private int compteur = 0;
+    public Projectile(Environnement env, int degat, DoubleProperty x, DoubleProperty y, int v){
+        this.env = env;
+        this.id = "P"+compteur;
+        compteur++;
+        this.x = x;
+        this.y = y;
+        this.degat = degat;
+        this.v = v;
+        this.hasAttacked = false;
+    }
 
-        public Projectile(int degat){
-            this.id = "P"+compteur;
-            compteur++;
-            this.x = new SimpleIntegerProperty();
-            this.y = new SimpleIntegerProperty();
-            this.degat = degat;
-        }
+    public DoubleProperty XProperty(){return this.x;}
+    public DoubleProperty YProperty(){return this.y;}
+    public String getId(){return this.id;}
+    public int getV(){return this.v;}
+    public Environnement getEnv(){return this.env;}
+    public int getDegat(){return this.degat;}
 
-        public IntegerProperty XProperty(){return this.x;}
-        public IntegerProperty YProperty(){return this.y;}
+    public abstract void seDeplacer();
 
-        public String getId(){return this.id;}
+    public abstract void attaquer();
+
+    public void setHasAttacked(boolean b){
+        hasAttacked = b;
+    }
+
+    public boolean getHasAttacked(){return hasAttacked;}
+
 }

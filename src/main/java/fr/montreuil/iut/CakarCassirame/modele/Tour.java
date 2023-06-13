@@ -15,8 +15,8 @@ public abstract class Tour {
 
     public Tour(Environnement environnement, double x, double y, int coutAmelioration) {
         this.coutAmelioration = coutAmelioration;
+        this.id = "T" + compteur;
         compteur++;
-        this.id = "A" + compteur;
         this.x = new SimpleDoubleProperty(x);
         this.y = new SimpleDoubleProperty(y);
         this.environnement = environnement;
@@ -42,5 +42,6 @@ public abstract class Tour {
         return environnement;
     }
 
-    public abstract void attaquer(Ennemi ennemi);
+    public abstract void attaquer();
+
 }

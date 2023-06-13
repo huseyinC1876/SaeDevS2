@@ -14,15 +14,16 @@ public class EnnemiVaisseauSpatial extends Ennemi {
 
  */
 
-    public void seDivise(){
-        if(this.getPv() < 1){
-            for (int i = 0; i < 2 ; i++) {
+    public void seDivise() {
+        if (this.getPv() < 1) {
+            for (int i = 0; i < 2; i++) {
                 System.out.println("enter");
-                Ennemi ennemiDivise = new EnnemiVaisseauSpacialDivise(this.getEnvironnement(),this.getPv() / 2,this.getV(),this.getGain() / 2 , this.XProperty().getValue(), this.YProperty().getValue());
+                Ennemi ennemiDivise = new EnnemiVaisseauSpacialDivise(this.getEnvironnement(), this.getPv() / 2, this.getV(), this.getGain() / 2, this.XProperty().getValue(), this.YProperty().getValue());
                 this.getEnvironnement().ajouterEnnemiDivision(ennemiDivise);
             }
         }
     }
+
 
     public double getVitesseInitiale(){return vitesseInitiale;}
 

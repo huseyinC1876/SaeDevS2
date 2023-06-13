@@ -29,6 +29,7 @@ public abstract class Ennemi {
         //this.y = new SimpleIntegerProperty(this.environnement.getMap().debutMapEnnemie()[0] * 32);
         this.x = new SimpleIntegerProperty(x);
         this.y = new SimpleIntegerProperty(y);
+
         compteur +=1;
         this.id = String.valueOf(compteur);
         positionBackUp[0] = this.y.getValue()/32;
@@ -73,9 +74,9 @@ public abstract class Ennemi {
         else if(this.environnement.getMap().getTileMap()[this.y.getValue()/32 + 1][(this.x.getValue()/32)] == 0){
             enter = true;
             this.y.setValue(this.y.getValue() + this.v);
-            System.out.println("OK enter");
-                this.pv = 0;
-                this.gain = 0;
+            //System.out.println("OK enter");
+            this.pv = 0;
+            this.gain = 0;
 
         }
         else if(this.environnement.getMap().getTileMap()[this.y.getValue()/32 - 1][(this.x.getValue()/32)] == 0){

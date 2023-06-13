@@ -1,7 +1,11 @@
 package fr.montreuil.iut.CakarCassirame.modele;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+
+import java.time.Period;
+import java.util.ArrayList;
 
 
 public class TourCanonBombeNuclaire extends Tour{
@@ -10,21 +14,18 @@ public class TourCanonBombeNuclaire extends Tour{
     public static IntegerProperty tempsRecharge = new SimpleIntegerProperty(10);
     public static IntegerProperty prixT = new SimpleIntegerProperty(1750);
     //TODO : ajout projectile. Pr l'instant, j'ai créé la classe projectile et la classe ProjectileVue. j'ai initialize les vues dans le controller
-    private Projectile projectile;
+    private ProjectileCanonBombeNucleaire projectile;
+
     public TourCanonBombeNuclaire(Environnement environnement, double x, double y) {
         super(environnement, x, y, 1750);
-        tempsRecharge = new SimpleIntegerProperty(10);
+        tempsRecharge = new SimpleIntegerProperty(50);
         degat = new SimpleIntegerProperty(50);
+        this.projectile = new ProjectileCanonBombeNucleaire(environnement, 50, new SimpleDoubleProperty(x), new SimpleDoubleProperty(y), 1);
     }
+
 
     public int getDegat(){return degat.getValue();}
 
-
-    public void attaquer(Ennemi ennemi) {
-        for(int i = 0 ; i < this.getEnvironnement().getListeEnnemis().size() ; i++){
-            this.getEnvironnement().getListeEnnemis().get(i).décrémenterPV(getDegat());
-        }
-    }
 
 
     //public static int degat = 50;
@@ -51,6 +52,11 @@ public class TourCanonBombeNuclaire extends Tour{
                 ennemi.décrémenterPV(this.degat);
 
      */
+    @Override
+    public void attaquer() {
+            this.projectile.attaquer();
+    }
+
 }
 
 

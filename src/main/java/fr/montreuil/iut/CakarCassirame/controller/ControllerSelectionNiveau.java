@@ -49,15 +49,7 @@ public class ControllerSelectionNiveau implements Initializable {
 
     }
 
-    /*
-    public void chargerNiveau2() throws IOException {
-        Scene scene = paneExterneSelection.getScene();
-        Stage stage = (Stage) scene.getWindow();
-        ControllerNiveau2.load(stage);
 
-    }
-
-     */
 
     public static void load(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("pageChoixNiveau.fxml"));

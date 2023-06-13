@@ -1,6 +1,7 @@
 package fr.montreuil.iut.CakarCassirame.modele;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 
@@ -22,11 +23,17 @@ public class TourCanonLaser extends TourPerimetre{
     public static IntegerProperty prixA = new SimpleIntegerProperty(200);
     public static IntegerProperty prixT = new SimpleIntegerProperty(100);
 
+    private ProjectileCanonLaser projectile;
+
     public TourCanonLaser(Environnement environnement, double x, double y) {
         super(environnement, x, y, 200, 50);
-        tempsRecharge = new SimpleIntegerProperty(3);
+        tempsRecharge = new SimpleIntegerProperty(100);
         degat = new SimpleIntegerProperty(2);
+
+        this.projectile = new ProjectileCanonLaser(environnement, 20, new SimpleDoubleProperty(x), new SimpleDoubleProperty(y), 1);
     }
+
+    public Projectile getProjectile() { return projectile;}
 
     public int getDegat(){return degat.getValue();}
 
@@ -40,13 +47,12 @@ public class TourCanonLaser extends TourPerimetre{
         prixA.setValue(prixA.getValue() * 2);
     }
 
-    @Override
+
     public void attaquer(Ennemi ennemi) {
-        if(valAbs(ennemi.XProperty().getValue() - this.XProperty().getValue()) <= this.getRayonPerimetreAction() && valAbs(ennemi.YProperty().getValue() - this.YProperty().getValue()) <= this.getRayonPerimetreAction() ){
-            if(ennemi instanceof EnnemiSuperVaisseauSpatial){
+        if (valAbs(ennemi.XProperty().getValue() - this.XProperty().getValue()) <= this.getRayonPerimetreAction() && valAbs(ennemi.YProperty().getValue() - this.YProperty().getValue()) <= this.getRayonPerimetreAction()) {
+            if (ennemi instanceof EnnemiSuperVaisseauSpatial) {
                 ((EnnemiSuperVaisseauSpatial) ennemi).décrémenterVie(this.degat.getValue());
-            }
-            else
+            } else
                 ennemi.décrémenterPV(this.degat.getValue());
         }
     }

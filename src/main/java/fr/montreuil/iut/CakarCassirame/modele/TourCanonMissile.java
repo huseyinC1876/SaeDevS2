@@ -1,6 +1,7 @@
 package fr.montreuil.iut.CakarCassirame.modele;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /*
@@ -37,16 +38,19 @@ public class TourCanonMissile extends TourPerimetre{
     public static IntegerProperty prixA = new SimpleIntegerProperty(400);
     public static IntegerProperty prixT = new SimpleIntegerProperty(200);
 
+    private ProjectileCanonMissile projectile;
     public TourCanonMissile(Environnement environnement, double x, double y) {
         super(environnement, x, y, 400, 20);
-        tempsRecharge = new SimpleIntegerProperty(5);
+        tempsRecharge = new SimpleIntegerProperty(500);
         degat = new SimpleIntegerProperty(20);
+        this.projectile = new ProjectileCanonMissile(environnement, 20, new SimpleDoubleProperty(x), new SimpleDoubleProperty(y), 1);
     }
+
+    public Projectile getProjectile() { return projectile;}
 
     public int getDegat(){return degat.getValue();}
 
 
-    @Override
     public void attaquer(Ennemi ennemi) {
         if (valAbs(ennemi.XProperty().getValue() - this.XProperty().getValue()) <= this.getRayonPerimetreAction() && valAbs(ennemi.YProperty().getValue() - this.YProperty().getValue()) <= this.getRayonPerimetreAction()) {
             if (ennemi instanceof EnnemiSuperVaisseauSpatial) {

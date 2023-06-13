@@ -1,6 +1,7 @@
 package fr.montreuil.iut.CakarCassirame.modele;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +25,7 @@ public class Environnement {
     private int nbEnnemisParVague;
 
     private IntegerProperty vie = new SimpleIntegerProperty(3);
+    private ObservableList<Projectile> listeProjectiles;
 
     private int[] debutMap;
 
@@ -42,9 +44,10 @@ public class Environnement {
         this.y = this.map.getTileMap()[0].length;
         this.nbEnnemiTue = new SimpleIntegerProperty(0);
         this.listeEnnemis = FXCollections.observableArrayList();
-        this.nbEnnemiSpawn = 0;
+        this.nbEnnemiSpawn =0;
         this.listeTours = FXCollections.observableArrayList();
         this.debutMap = this.map.debutMapEnnemie();
+        this.listeProjectiles = FXCollections.observableArrayList();
     }
 
     public int getNbEnnemisParVague() {
@@ -67,13 +70,17 @@ public class Environnement {
         return this.nbEnnemiTue.getValue();
     }
 
+    //public IntegerProperty getNbEnnemisSpawnedProperty(){return this.nbEnnemiSpawn;}
+
     public IntegerProperty getNbEnnemiTueProperty() {
         return this.nbEnnemiTue;
     }
 
+
     public int getNbEnnemiSpawn() {
         return nbEnnemiSpawn;
     }
+
 
     public IntegerProperty getVieProperty() {
         return this.vie;
@@ -91,29 +98,47 @@ public class Environnement {
         return this.ressource;
     }
 
+
     public void verfication() {
 
         int taille = this.listeEnnemis.size();
-        for (int i = 0; i < taille; i++){
-            if(this.listeEnnemis.get(i) instanceof EnnemiVaisseauSpatial){
+        for (int i = 0; i < taille; i++) {
+            if (this.listeEnnemis.get(i) instanceof EnnemiVaisseauSpatial) {
                 ((EnnemiVaisseauSpatial) this.listeEnnemis.get(i)).seDivise();
                 //System.out.println("enter");
             }
             taille = this.listeEnnemis.size();
         }
-
-
-
         for (int i = this.listeEnnemis.size() - 1; i >= 0; i--) {
             if (this.listeEnnemis.get(i).getPv() < 1) {
-                /*
-                if(this.listeEnnemis.get(i) instanceof EnnemiVaisseauSpatial){
-                    ((EnnemiVaisseauSpatial) this.listeEnnemis.get(i)).seDivise();
-                }
-
-                 */
                 this.ressource.setValue(this.getRessource().getValue() + this.listeEnnemis.get(i).getGain());
-                if(listeEnnemis.get(i) instanceof EnnemiVaisseauSpacialDivise){
+                if (listeEnnemis.get(i) instanceof EnnemiVaisseauSpacialDivise) {
+                    this.listeEnnemis.remove(i);
+                } else {
+                    this.listeEnnemis.remove(i);
+                    this.nbEnnemiTue.setValue(this.nbEnnemiTue.getValue() + 1);
+                }
+            }
+        }
+    }
+
+
+    public void verificationEnnemisMorts() {
+        for (int i = this.listeEnnemis.size() - 1; i >= 0; i--) {
+            if (this.listeEnnemis.get(i).getPv() < 1) {
+                this.ressource.setValue(this.getRessource().getValue() + this.listeEnnemis.get(i).getGain());
+//                System.out.println("ENNEMIS SPAWN " + this.nbEnnemiSpawn);
+                System.out.println(this.nbEnnemiSpawn < this.nbEnnemiMax.getValue() - 2);
+                if (this.listeEnnemis.get(i) instanceof EnnemiVaisseauSpatial) {
+//                    if (this.nbEnnemiSpawn.getValue() < this.nbEnnemiMax.getValue() - 2) {
+//                    System.out.println("ENNEMIS SPAWN  BIS " + this.nbEnnemiSpawn);
+//                    TODO : avec la condition ça marche pas, sans la condition, ça risque de dépasser qd on sera à 99, ça va faire 101
+                    System.out.println("AJOUT DE 2 ENNEMIS SUPER VAISSEAU SPATIALES");
+                    listeEnnemis.add(new EnnemiDivise(this, listeEnnemis.get(i).XProperty().getValue() - 5, listeEnnemis.get(i).YProperty().getValue() - 5));
+                    listeEnnemis.add(new EnnemiDivise(this, listeEnnemis.get(i).XProperty().getValue() + 5, listeEnnemis.get(i).YProperty().getValue() + 5));
+//                    }
+                }
+                if(this.listeEnnemis.get(i) instanceof EnnemiDivise) {
                     this.listeEnnemis.remove(i);
                 }
                 else {
@@ -124,9 +149,45 @@ public class Environnement {
         }
     }
 
+
+
+
+    public ObservableList<Projectile> getListeProjectiles() {
+        return this.listeProjectiles;
+    }
+
+
+    public void verifProjectileHasAttacked() {
+        for (int i = listeProjectiles.size() - 1; i >= 0; i--) {
+            System.out.println("projectile : " + listeProjectiles.get(i).getId() + " a attaqué : " + listeProjectiles.get(i).getHasAttacked());
+            if (listeProjectiles.get(i).getHasAttacked() == true) {
+                this.listeProjectiles.remove(i);
+            }
+        }
+    }
+
+
+    //TODO : AJUSTER LES DEGATS SOUHAITES
+    public void ajouterProjectile(int typeProjectile, double x, double y) {
+        if (this.listeTours.size() > 0) {
+            if (typeProjectile == 1) {
+                listeProjectiles.add(new ProjectileCanonLaser(this, 20, new SimpleDoubleProperty(x), new SimpleDoubleProperty(y), 1));
+//                System.out.println("ajouter proj 1 environnement");
+            }
+            if (typeProjectile == 2) {
+                listeProjectiles.add(new ProjectileCanonMissile(this, 20, new SimpleDoubleProperty(x), new SimpleDoubleProperty(y), 1));
+//                System.out.println("ajouter proj 2 environnement");
+            }
+            if (typeProjectile == 3) {
+                listeProjectiles.add(new ProjectileCanonBombeNucleaire(this, 20, new SimpleDoubleProperty(x), new SimpleDoubleProperty(y), 1));
+//                System.out.println("ajouter proj 3 environnement");
+            }
+        }
+    }
+
     public void ajouterEnnemie() {
         if (this.nbEnnemiSpawn < nbEnnemiMax.getValue()) {
-            if (getNbEnnemiSpawn() == getNbEnnemiMax() - 1) {
+            if (this.nbEnnemiSpawn == getNbEnnemiMax() - 1) {
                 ajouterEnnemiGalactus();
             } else {
                 double random = Math.random() * 3;
@@ -140,7 +201,6 @@ public class Environnement {
             }
         }
     }
-
 
     public void ajouterVagueEnnemis() {
         if (nbEnnemiSpawn < nbEnnemiMax.getValue() - 1) {
@@ -161,6 +221,7 @@ public class Environnement {
                     System.out.println("ajouter SUPER Vaisseau");
                     this.listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this, this.debutMap[1], this.debutMap[0]));
                     this.nbEnnemiSpawn++;
+
                 }
             }
         }
@@ -183,7 +244,7 @@ public class Environnement {
         this.nbEnnemiSpawn++;
     }
 
-    public void ajouterEnnemiVaisseauSpatial() {
+    public void ajouterEnnemiVaisseauSpatial(){
         this.listeEnnemis.add(new EnnemiVaisseauSpatial(this , this.debutMap[1], this.debutMap[0]));
         this.nbEnnemiSpawn++;
     }
@@ -205,6 +266,25 @@ public class Environnement {
             this.listeEnnemis.add(new EnnemiVaisseauSpacialDivise(this,pv, gain));
             //this.nbEnnemiSpawn++;
         }
+=======
+        this.listeEnnemis.add(new EnnemiExtraterrestre(this));
+        this.nbEnnemiSpawn.setValue(this.nbEnnemiSpawn.getValue()+1);
+    }
+
+    public void ajouterEnnemiVaisseauSpatial() {
+        this.listeEnnemis.add(new EnnemiVaisseauSpatial(this));
+        this.nbEnnemiSpawn.setValue(this.nbEnnemiSpawn.getValue()+1);
+    }
+
+    public void ajouterEnnemiSuperVaisseauSpatial() {
+        this.listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this));
+        this.nbEnnemiSpawn.setValue(this.nbEnnemiSpawn.getValue()+1);
+    }
+
+    public void ajouterEnnemiGalactus() {
+        this.listeEnnemis.add(new EnnemiGalactusBoss(this));
+        this.nbEnnemiSpawn.setValue(this.nbEnnemiSpawn.getValue()+1);
+>>>>>>> 0038d2d67a75f0c618de5a6b4df48a070a67496a
     }
 
      */
@@ -222,9 +302,10 @@ public class Environnement {
             this.listeTours.add(new TourCanonBombeNuclaire(this, x, y));
         else this.listeTours.add(new TourChampDeForce(this, x, y));
 
+
     }
 
-    public void deplacement() {
+    public void deplacementEnnemis() {
         for (Ennemi ennemi : this.listeEnnemis) {
             ennemi.seDeplacer();
             if (ennemi.getEnter()) {
@@ -233,22 +314,19 @@ public class Environnement {
         }
     }
 
+    public void deplacementProjectiles() {
+        for (Projectile projectile : this.listeProjectiles) {
+            projectile.seDeplacer();
+        }
+    }
+
     public void verifNbEnnemisParVague() {
-        if (this.nbEnnemiSpawn > 91) {
-            this.nbEnnemisParVague = 99 - nbEnnemiSpawn;
-        }
-
-    }
-
-
-    public void attaque() {
-        for (int i = 0; i < this.getListeTours().size(); i++) {
-            for (int j = 0; j < this.getListeEnnemis().size(); j++) {
-                this.getListeTours().get(i).attaquer(this.listeEnnemis.get(j));
-
-            }
+        if (this.nbEnnemiSpawn > nbEnnemiMax.getValue() - nbEnnemisParVague + 1) { //91
+            this.nbEnnemisParVague = (nbEnnemiMax.getValue() - 1) - nbEnnemiSpawn;
         }
     }
+
+
 
     public void ameliorationTour ( int choix){
         if (choix == 1) {
@@ -270,6 +348,22 @@ public class Environnement {
 
 
 
+
+    public void attaquer() {
+        for (int i = 0; i < this.listeTours.size(); i++) {
+            if (listeTours.get(i) instanceof TourChampDeForce)
+                listeTours.get(i).attaquer();
+        }
+        for (int j = 0; j < this.listeEnnemis.size(); j++) {
+            verifPerimetreChampDeForce(listeEnnemis.get(j));
+        }
+
+        for (int i = 0; i < listeProjectiles.size(); i++) {
+            listeProjectiles.get(i).attaquer();
+        }
+    }
+
+
     public void verifPerimetreChampDeForce(Ennemi ennemi) {
         boolean dansAucunPerimetreDeTourChampForce = true;
         for (int i = 0; i < this.listeTours.size(); i++) {
@@ -288,16 +382,12 @@ public class Environnement {
     }
 
 
-
-    public void unTour () {
-        //System.out.println(this.listeEnnemis.size());
-        for (int i = 0; i < this.listeEnnemis.size(); i++) {
-            System.out.print(this.listeEnnemis.get(i) + "       ");
-        }
-        System.out.println();
-        deplacement();
-        attaque();
-        verfication();
+    public void unTour() {
+        deplacementEnnemis();
+        deplacementProjectiles();
+        attaquer();
+        verificationEnnemisMorts();
+        verifProjectileHasAttacked();
     }
 
 

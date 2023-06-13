@@ -27,9 +27,11 @@ public static double pourcentageReduction = 0.75;
     }
 
 
-    public void attaquer(Ennemi ennemi) {
+    public void attaquer() {
         double vitesseInit;
-        if (ennemi instanceof EnnemiExtraterrestre)
+        for(int i = 0 ; i < this.getEnvironnement().getListeEnnemis().size() ; i++) {
+            Ennemi ennemi = this.getEnvironnement().getListeEnnemis().get(i);
+            if (ennemi instanceof EnnemiExtraterrestre)
             vitesseInit = EnnemiExtraterrestre.vitesseInitiale;
         else if (ennemi instanceof EnnemiVaisseauSpatial)
             vitesseInit = EnnemiVaisseauSpatial.vitesseInitiale;
@@ -51,8 +53,8 @@ public static double pourcentageReduction = 0.75;
          */
 
 
-        if (!(ennemi instanceof EnnemiGalactusBoss) && hasEnnemiDansPerimetre(ennemi) && ennemi.getV() == vitesseInit) {
-            ennemi.setVitesse(ennemi.getV()-1);
+            if (!(ennemi instanceof EnnemiGalactusBoss) && hasEnnemiDansPerimetre(ennemi) && ennemi.getV() == vitesseInit) {
+                ennemi.setVitesse(ennemi.getV() - 1);
 //            System.out.println("ennemi ID : "+ennemi.getId() + " - type : " + ennemi.getClass() + " - vitesse actuelle : " + ennemi.getV());
 //            if (ennemi instanceof EnnemiExtraterrestre)
 //                System.out.println("ennemi ID : "+ennemi.getId() + " - vitesse initiale : "+EnnemiExtraterrestre.vitesseInitiale);
@@ -61,6 +63,7 @@ public static double pourcentageReduction = 0.75;
 //            else
 //                System.out.println("ennemi ID : "+ennemi.getId() + " - vitesse initiale : "+EnnemiSuperVaisseauSpatial.vitesseInitiale);
 //            System.out.println();
+            }
         }
     }
 
