@@ -226,6 +226,7 @@
                <Insets left="10.0" right="10.0" />
             </padding>
          </HBox>
+<<<<<<< Updated upstream
          <HBox prefHeight="100.0" prefWidth="200.0">
             <children>
                <Button fx:id="buttonMenuAmelioration" mnemonicParsing="false" prefHeight="26.0" prefWidth="340.0" text="Amelioration" onAction="#affichageMenuAmelioration">
@@ -393,6 +394,12 @@
                <Font size="16.0" />
             </font>
          </Button>
+=======
+         <HBox>
+            <Button mnemonicParsing="false" onMouseClicked="#pause"   prefHeight="38.0" prefWidth="340.0" text="Pause"/>
+            <!--            <Button mnemonicParsing="false" onMouseClicked="#play"   prefHeight="38.0" prefWidth="340.0" text="Play"/>-->
+         </HBox>
+>>>>>>> Stashed changes
          <Button mnemonicParsing="false" onMouseClicked="#chargerPageAcceuil" prefHeight="38.0" prefWidth="340.0" text="Page d'accueil">
             <font>
                <Font size="16.0" />

@@ -1,7 +1,7 @@
 package fr.montreuil.iut.CakarCassirame.controller;
 
-import fr.montreuil.iut.CakarCassirame.modele.*;
-import fr.montreuil.iut.CakarCassirame.vue.*;
+import fr.montreuil.iut.CakarCassirame.modele.ennemis.*;
+import fr.montreuil.iut.CakarCassirame.vue.ennemiVue.*;
 import javafx.collections.ListChangeListener;
 import javafx.scene.layout.Pane;
 
