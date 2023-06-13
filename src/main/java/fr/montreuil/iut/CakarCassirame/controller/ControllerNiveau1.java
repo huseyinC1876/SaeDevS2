@@ -133,6 +133,9 @@ public class ControllerNiveau1 implements Initializable {
         this.projectileLaserVue = new ProjectileLaserVue(pane);
         this.projectileMissileVue = new ProjectileMissileVue(pane);
         this.projectileBombeNucleaireExplosionVue = new ProjectileBombeNucleaireExplosionVue(tilePaneBombe);
+        this.environnement.getListeTours().addListener(new ObsTours(pane));
+        this.environnement.getListeEnnemis().addListener(new ObsEnnemis(pane));
+        this.environnement.getListeProjectiles().addListener(new ObsProjectiles(pane, tilePaneBombe));
 
         try {
             this.placementVue.affichage(this.environnement.getMap());
@@ -141,124 +144,10 @@ public class ControllerNiveau1 implements Initializable {
         }
         this.placementVue.reset();
 
-
         try {
             this.vueMap.creerMap(this.environnement.getMap());
             initAnimation();
             gameLoop.play();
-            ListChangeListener<Ennemi> listenerEnnemie = new ListChangeListener<Ennemi>() {
-                @Override
-                public void onChanged(Change<? extends Ennemi> change) {
-                    while (change.next()) {
-                        for (Ennemi ennemi : change.getAddedSubList()) {
-                            try {
-                                if (ennemi instanceof EnnemiExtraterrestre)
-                                    ennemiExtraterrestreVue.creerSprite(ennemi);
-                                else if (ennemi instanceof EnnemiVaisseauSpatial)
-                                    ennemiVaisseauSpatialVue.creerSprite(ennemi);
-                                else if (ennemi instanceof EnnemiSuperVaisseauSpatial)
-                                    ennemiSuperVaisseauSpatialVue.creerSprite(ennemi);
-                                else if(ennemi instanceof EnnemiDivise)
-                                    ennemiDiviseVue.creerSprite(ennemi);
-                                else
-                                    ennemiGalactusBossVue.creerSprite(ennemi);
-                            } catch (FileNotFoundException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                        for (Ennemi ennemie : change.getRemoved()) {
-                            pane.getChildren().remove(pane.lookup("#" + ennemie.getId()));
-
-                        }
-                    }
-                }
-            };
-            this.environnement.getListeEnnemis().addListener(listenerEnnemie);
-
-
-            ListChangeListener<Tour> listenerTours = new ListChangeListener<Tour>() {
-                @Override
-                public void onChanged(Change<? extends Tour> change) {
-                    while (change.next()) {
-                        for (Tour tour : change.getAddedSubList()) {
-                            if (tour instanceof TourCanonLaser) {
-                                try {
-                                    tourCanonLaserVue.creerSprite(tour);
-                                    tourCanonLaserVue.creerSpritePerimetre((TourPerimetre) tour);
-
-                                } catch (FileNotFoundException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            } else if (tour instanceof TourCanonMissile) {
-                                try {
-                                    tourCanonMissileVue.creerSprite(tour);
-                                    tourCanonMissileVue.creerSpritePerimetre((TourPerimetre) tour);
-
-                                } catch (FileNotFoundException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            } else if (tour instanceof TourCanonBombeNuclaire) {
-                                try {
-                                    tourCanonBombeNucleaireVue.creerSprite(tour);
-                                } catch (FileNotFoundException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            } else {
-                                try {
-                                    tourChampDeForceVue.creerSprite(tour);
-                                    tourChampDeForceVue.creerSpritePerimetre((TourPerimetre) tour);
-                                } catch (FileNotFoundException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                        }
-                    }
-                }
-            };
-            this.environnement.getListeTours().addListener(listenerTours);
-
-
-            ListChangeListener<Projectile> listenerProjectile = new ListChangeListener<Projectile>() {
-                @Override
-                public void onChanged(Change<? extends Projectile> change) {
-                    while (change.next()) {
-                        for (Projectile projectile : change.getAddedSubList()) {
-                            if(projectile instanceof ProjectileCanonLaser) {
-                                try {
-                                    projectileLaserVue.creerSprite(projectile);
-                                } catch (FileNotFoundException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            } else if (projectile instanceof ProjectileCanonMissile) {
-                                try {
-                                    projectileMissileVue.creerSprite(projectile);
-                                } catch (FileNotFoundException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            } else if (projectile instanceof ProjectileCanonBombeNucleaire) {
-                                try {
-                                    projectileBombeNuclaireVue.creerSprite(projectile);
-                                } catch (FileNotFoundException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                        }
-                        for (Projectile projectile : change.getRemoved()) {
-                            pane.getChildren().remove(pane.lookup("#" + projectile.getId()));
-                            try {
-                                projectileBombeNucleaireExplosionVue.creerSprite(projectile);
-//                                System.out.println("CREATION SPRITE SPRITE SPRITE SPRITE SPRITE SPRITE SPRITE");
-                            } catch (FileNotFoundException e) {
-                                throw new RuntimeException(e);
-                            }
-
-//TODO : il faut enlever l'image !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (attention, pour l'instant, l'image est sur un 3ème tilepane et ça ne marche pas bien.
-                        }
-                    }
-                }
-            };
-            this.environnement.getListeProjectiles().addListener(listenerProjectile);
-
             prixCanonLaser.textProperty().bind(Tour.prix.asString());
             prixCanonMissile.textProperty().bind(Tour.prix.asString());
             prixChampDeForce.textProperty().bind(Tour.prix.asString());
