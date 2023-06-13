@@ -98,17 +98,22 @@ public class Environnement {
                 this.ressource.setValue(this.getRessource().getValue() + this.listeEnnemis.get(i).getGain());
 //                System.out.println("ENNEMIS SPAWN " + this.nbEnnemiSpawn);
                 System.out.println(this.nbEnnemiSpawn.getValue() < this.nbEnnemiMax.getValue() - 2);
-                if (this.nbEnnemiSpawn.getValue() < this.nbEnnemiMax.getValue() - 2) {
+                if (this.listeEnnemis.get(i) instanceof EnnemiVaisseauSpatial) {
+//                    if (this.nbEnnemiSpawn.getValue() < this.nbEnnemiMax.getValue() - 2) {
 //                    System.out.println("ENNEMIS SPAWN  BIS " + this.nbEnnemiSpawn);
-                    if (this.listeEnnemis.get(i) instanceof EnnemiSuperVaisseauSpatial) {
-//                        System.out.println("AJOUT DE 2 ENNEMIS SUPER VAISSEAU SPATIALES");
-                        listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this, listeEnnemis.get(i).XProperty().getValue() - 5, listeEnnemis.get(i).YProperty().getValue() - 5));
-                        listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this, listeEnnemis.get(i).XProperty().getValue() + 5, listeEnnemis.get(i).YProperty().getValue() + 5));
-                    }
+//                    TODO : avec la condition ça marche pas, sans la condition, ça risque de dépasser qd on sera à 99, ça va faire 101
+                        System.out.println("AJOUT DE 2 ENNEMIS SUPER VAISSEAU SPATIALES");
+                        listeEnnemis.add(new EnnemiDivise(this, listeEnnemis.get(i).XProperty().getValue() - 5, listeEnnemis.get(i).YProperty().getValue() - 5));
+                        listeEnnemis.add(new EnnemiDivise(this, listeEnnemis.get(i).XProperty().getValue() + 5, listeEnnemis.get(i).YProperty().getValue() + 5));
+//                    }
                 }
-                this.listeEnnemis.remove(i);
-                this.nbEnnemiTue.setValue(this.nbEnnemiTue.getValue() + 1);
-
+                if(this.listeEnnemis.get(i) instanceof EnnemiDivise) {
+                    this.listeEnnemis.remove(i);
+                }
+                else {
+                    this.listeEnnemis.remove(i);
+                    this.nbEnnemiTue.setValue(this.nbEnnemiTue.getValue() + 1);
+                }
             }
         }
     }

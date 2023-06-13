@@ -51,11 +51,6 @@
                <Font size="18.0" />
             </font>
          </Label>
-         <Label fx:id="nbEnnemisSpawned" textFill="WHITE">
-            <font>
-               <Font size="18.0" />
-            </font>
-         </Label>
          <Label fx:id="nbEnnemiMax" textFill="#f4f4f4">
             <font>
                <Font size="18.0" />

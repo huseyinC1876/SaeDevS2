@@ -73,6 +73,7 @@ public class ControllerNiveau1 implements Initializable {
     private EnnemiExtraterrestreVue ennemiExtraterrestreVue;
     private EnnemiVaisseauSpatialVue ennemiVaisseauSpatialVue;
     private EnnemiSuperVaisseauSpatialVue ennemiSuperVaisseauSpatialVue;
+    private EnnemiDiviseVue ennemiDiviseVue;
     private EnnemiGalactusBossVue ennemiGalactusBossVue;
     private ProjectileMissileVue projectileMissileVue;
     private ProjectileLaserVue projectileLaserVue;
@@ -119,6 +120,7 @@ public class ControllerNiveau1 implements Initializable {
         this.ennemiExtraterrestreVue = new EnnemiExtraterrestreVue(this.pane);
         this.ennemiVaisseauSpatialVue = new EnnemiVaisseauSpatialVue(this.pane);
         this.ennemiSuperVaisseauSpatialVue = new EnnemiSuperVaisseauSpatialVue(this.pane);
+        this.ennemiDiviseVue = new EnnemiDiviseVue(pane);
         this.ennemiGalactusBossVue = new EnnemiGalactusBossVue(this.pane);
         this.tourCanonLaserVue = new TourCanonLaserVue(pane);
         this.tourCanonMissileVue = new TourCanonMissileVue(pane);
@@ -156,6 +158,8 @@ public class ControllerNiveau1 implements Initializable {
                                     ennemiVaisseauSpatialVue.creerSprite(ennemi);
                                 else if (ennemi instanceof EnnemiSuperVaisseauSpatial)
                                     ennemiSuperVaisseauSpatialVue.creerSprite(ennemi);
+                                else if(ennemi instanceof EnnemiDivise)
+                                    ennemiDiviseVue.creerSprite(ennemi);
                                 else
                                     ennemiGalactusBossVue.creerSprite(ennemi);
                             } catch (FileNotFoundException e) {
