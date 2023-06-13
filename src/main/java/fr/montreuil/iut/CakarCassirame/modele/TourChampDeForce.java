@@ -21,7 +21,7 @@ public static double pourcentageReduction = 0.75;
 
     public TourChampDeForce(Environnement environnement, double x, double y) {
 
-        super(environnement, x, y, 750, 100);
+        super(environnement, x, y, 100);
 //        this.rayonPerimetreAction = 100;
 
     }

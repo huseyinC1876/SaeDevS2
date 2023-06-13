@@ -29,6 +29,11 @@ public class Environnement {
 
     private int[] debutMap;
 
+    private int niveauCanonLaser = 1;
+    private int niveauCanonMissile = 1;
+    private int niveauChampForce = 1;
+    private int niveauCanonNucleaire = 1;
+
     public Environnement(int niveau) throws IOException {
         if(niveau == 1){
             this.map = new MapNiv1();
@@ -96,6 +101,38 @@ public class Environnement {
 
     public IntegerProperty getRessource() {
         return this.ressource;
+    }
+
+    public int getNiveauCanonLaser() {
+        return niveauCanonLaser;
+    }
+
+    public int getNiveauCanonMissile() {
+        return niveauCanonMissile;
+    }
+
+    public int getNiveauChampForce() {
+        return niveauChampForce;
+    }
+
+    public int getNiveauCanonNucleaire() {
+        return niveauCanonNucleaire;
+    }
+
+    public void ameliorationCanonLaser(){
+        this.niveauCanonLaser++;
+    }
+
+    public void ameliorationCanonMissile(){
+        this.niveauCanonMissile++;
+    }
+
+    public void ameliorationChampForce(){
+        this.niveauChampForce++;
+    }
+
+    public void ameliorationCanonNucleaire(){
+        this.niveauCanonNucleaire++;
     }
 
 
@@ -221,7 +258,6 @@ public class Environnement {
                     System.out.println("ajouter SUPER Vaisseau");
                     this.listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this, this.debutMap[1], this.debutMap[0]));
                     this.nbEnnemiSpawn++;
-
                 }
             }
         }
@@ -330,17 +366,21 @@ public class Environnement {
 
     public void ameliorationTour ( int choix){
         if (choix == 1) {
-            this.ressource.setValue(this.ressource.getValue() - TourCanonLaser.prixA.getValue());
-            TourCanonLaser.amelioration();
+            this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationCanonLaser.getValue() * Math.pow(2,this.getNiveauCanonLaser() - 1));
+            this.ameliorationCanonLaser();
+            //TourCanonLaser.amelioration();
         } else if (choix == 2) {
-            this.ressource.setValue(this.ressource.getValue() - TourCanonMissile.prixA.getValue());
-            TourCanonMissile.amelioration(/*35,4*/);
+            this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationCanonMissile.getValue() * Math.pow(2, this.getNiveauCanonMissile() - 1));
+            this.ameliorationCanonMissile();
+            //TourCanonMissile.amelioration(/*35,4*/);
         } else if (choix == 3) {
-            //this.ressource.setValue(this.ressource.getValue() - TourCanonBombeNuclaire.prixA.getValue());
-            TourCanonBombeNuclaire.amelioration(300, 7);
+            this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationCanonNucleaire.getValue() * Math.pow(2, this.getNiveauCanonNucleaire() - 1));
+            this.ameliorationCanonNucleaire();
+            //TourCanonBombeNuclaire.amelioration();
         } else {
-            //this.ressource.setValue(this.ressource.getValue() - TourChampDeForce.prixA.getValue());
-            TourChampDeForce.amelioration(0.50);
+            this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationChampForce.getValue() * Math.pow(2 ,this.getNiveauChampForce() - 1));
+            this.ameliorationChampForce();
+            //TourChampDeForce.amelioration(0.50);
         }
 
 

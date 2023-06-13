@@ -4,6 +4,8 @@ import fr.montreuil.iut.CakarCassirame.modele.TourCanonBombeNuclaire;
 import fr.montreuil.iut.CakarCassirame.modele.TourCanonLaser;
 import fr.montreuil.iut.CakarCassirame.modele.TourCanonMissile;
 import fr.montreuil.iut.CakarCassirame.modele.TourChampDeForce;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 
@@ -18,7 +20,13 @@ public class InfoBulleBoutonsTours extends InfoBulleBouton{
 
     @Override
     public void infobulleLaser() {
-        Tooltip tooltip = new Tooltip("Atq -> "+ TourCanonLaser.degat  + "\n Temps de recharge -> " + TourCanonLaser.tempsRecharge.getValue() + "s");
+        IntegerProperty degat = new SimpleIntegerProperty();
+        degat.bind(TourCanonLaser.degat);
+        IntegerProperty tempsRecharge = new SimpleIntegerProperty();
+        degat.bind(TourCanonLaser.tempsRecharge);
+
+
+        Tooltip tooltip = new Tooltip("Atq -> "+ degat  + "\n Temps de recharge -> " + tempsRecharge + "s");
         super.getButtonCanonLaser().setTooltip(tooltip);
     }
 

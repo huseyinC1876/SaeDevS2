@@ -40,7 +40,7 @@ public class TourCanonMissile extends TourPerimetre{
 
     private ProjectileCanonMissile projectile;
     public TourCanonMissile(Environnement environnement, double x, double y) {
-        super(environnement, x, y, 400, 20);
+        super(environnement, x, y, 20);
         tempsRecharge = new SimpleIntegerProperty(500);
         degat = new SimpleIntegerProperty(20);
         this.projectile = new ProjectileCanonMissile(environnement, 20, new SimpleDoubleProperty(x), new SimpleDoubleProperty(y), 1);

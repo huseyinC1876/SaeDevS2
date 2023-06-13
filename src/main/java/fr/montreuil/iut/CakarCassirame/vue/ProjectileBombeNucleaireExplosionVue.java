@@ -24,11 +24,11 @@ public class ProjectileBombeNucleaireExplosionVue {
         imageViewsTour.setId(projectile.getId());
 //        imageViewsTour.translateXProperty().bind(projectile.XProperty().subtract(16));
 //        imageViewsTour.translateYProperty().bind(projectile.YProperty().subtract(16));
-        imageViewsTour.translateXProperty().bind(projectile.XProperty().subtract(128));
-        imageViewsTour.translateYProperty().bind(projectile.YProperty().subtract(128));
+        imageViewsTour.translateXProperty().bind(projectile.XProperty().subtract(480));//128
+        imageViewsTour.translateYProperty().bind(projectile.YProperty().subtract(320));
         imageViewsTour.setOpacity(0.5);
-        imageViewsTour.setFitWidth(256);
-        imageViewsTour.setFitHeight(256);
+        imageViewsTour.setFitWidth(960);
+        imageViewsTour.setFitHeight(640);
         this.tilePaneBombe.getChildren().add(imageViewsTour);
     }
 

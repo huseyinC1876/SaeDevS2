@@ -3,9 +3,9 @@ package fr.montreuil.iut.CakarCassirame.modele;
 public abstract class TourPerimetre extends Tour{
         private int rayonPerimetreAction;
 
-        public TourPerimetre(Environnement environnement, double x, double y, int coutAmelioration, int rayonPerimetreAction) {
+        public TourPerimetre(Environnement environnement, double x, double y,int rayonPerimetreAction) {
 
-            super(environnement, x, y, coutAmelioration);
+            super(environnement, x, y);
             this.rayonPerimetreAction = rayonPerimetreAction;
         }
 

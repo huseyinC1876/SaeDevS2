@@ -9,15 +9,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-/*
-
-import javafx.scene.media.*;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaStatus;
-import javafx.scene.media.MediaView;
-
- */
-
 
 public class HelloApplication extends Application {
 
@@ -33,11 +24,17 @@ public class HelloApplication extends Application {
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
          */
+
+
         /*
         Media media = new Media();
-        MediaPlayeur mediaPlayeur = new MediaPlayeur();
+        MediaPlayer mediaPlayeur = new MediaPlayer();
 
-         */
+        */
+
+
+
+
 
 
         stage.setScene(scene);

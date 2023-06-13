@@ -6,7 +6,6 @@ import fr.montreuil.iut.CakarCassirame.vue.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -201,13 +200,13 @@ public class ControllerNiveau implements Initializable {
             initAnimation();
             gameLoop.play();
 
-            prixCanonLaser.textProperty().bind(TourCanonLaser.prixT.asString());
-            prixCanonMissile.textProperty().bind(TourCanonMissile.prixT.asString());
-            prixChampDeForce.textProperty().bind(TourChampDeForce.prixT.asString());
-            prixCanonNucleaire.textProperty().bind(TourCanonBombeNuclaire.prixT.asString());
+            prixCanonLaser.textProperty().bind(Parametre.prixTourCanonLaser.asString());
+            prixCanonMissile.textProperty().bind(Parametre.prixTourCanonMissile.asString());
+            prixChampDeForce.textProperty().bind(Parametre.prixTourChampForce.asString());
+            prixCanonNucleaire.textProperty().bind(Parametre.prixTourCanonNucleaire.asString());
             nbRessources.textProperty().bind(this.environnement.getRessource().asString());
-            prixAmeliorationLaser.textProperty().bind(TourCanonLaser.prixA.asString());
-            prixAmeliorationMissile.textProperty().bind(TourCanonMissile.prixA.asString());
+            prixAmeliorationLaser.textProperty().bind(Parametre.prixAmeliorationCanonLaser.add(Parametre.prixAmeliorationCanonLaser.getValue() * Math.pow (2, this.environnement.getNiveauCanonLaser() - 1)).asString());
+            prixAmeliorationMissile.textProperty().bind(Parametre.prixTourCanonMissile.add(Parametre.prixTourCanonMissile.getValue() * Math.pow (2,this.environnement.getNiveauCanonMissile() - 1)).asString());
 
 
 
@@ -289,6 +288,9 @@ public class ControllerNiveau implements Initializable {
                             System.out.println("VAGUE VAGUE VAGUE");
                             this.environnement.ajouterVagueEnnemis();
                         }
+                        if(temps % 100 == 0){
+                            this.tilePaneBombe.getChildren().removeAll();
+                        }
                     } else if (this.environnement.getVieProperty().getValue() < 1 || this.environnement.getNbEnnemiTue() == this.environnement.getNbEnnemiMax()) {
                         if (temps > 100) {
                             try {
@@ -352,40 +354,52 @@ public class ControllerNiveau implements Initializable {
     }
 
     public void AffichageBoutonAmelioration(){
-        if(this.environnement.getRessource().getValue() < TourCanonLaser.prixA.getValue()){
+        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonLaser.getValue() * Math.pow(2, this.environnement.getNiveauCanonLaser() - 1)){
             ameliorationCanonLaser.setDisable(true);
         }
         else{
             ameliorationCanonLaser.setDisable(false);
         }
-        if(this.environnement.getRessource().getValue() < TourCanonMissile.prixA.getValue()){
+        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonMissile.getValue() * Math.pow(2, this.environnement.getNiveauCanonMissile() - 1)){
             ameliorationCanonMissile.setDisable(true);
         }
         else{
             ameliorationCanonMissile.setDisable(false);
         }
+        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonNucleaire.getValue() * Math.pow(2, this.environnement.getNiveauCanonNucleaire() - 1)){
+            ameliorationCanonNucleaire.setDisable(true);
+        }
+        else{
+            ameliorationCanonNucleaire.setDisable(false);
+        }
+        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationChampForce.getValue() * Math.pow(2, this.environnement.getNiveauChampForce() - 1)){
+            ameliorationChampDeForce.setDisable(true);
+        }
+        else{
+            ameliorationChampDeForce.setDisable(false);
+        }
     }
 
     public void AffichageBoutonTours(){
-        if(this.environnement.getRessource().getValue() < TourCanonLaser.prixT.getValue()){
+        if(this.environnement.getRessource().getValue() < Parametre.prixTourCanonLaser.getValue()){
             canonLaser.setDisable(true);
         }
         else{
             canonLaser.setDisable(false);
         }
-        if(this.environnement.getRessource().getValue() < TourCanonMissile.prixT.getValue()){
+        if(this.environnement.getRessource().getValue() < Parametre.prixTourCanonMissile.getValue()){
             canonMissile.setDisable(true);
         }
         else{
             canonMissile.setDisable(false);
         }
-        if(this.environnement.getRessource().getValue() < TourCanonBombeNuclaire.prixT.getValue()){
+        if(this.environnement.getRessource().getValue() < Parametre.prixTourCanonNucleaire.getValue()){
             canonNucleaire.setDisable(true);
         }
         else{
             canonNucleaire.setDisable(false);
         }
-        if(this.environnement.getRessource().getValue() < TourChampDeForce.prixT.getValue()){
+        if(this.environnement.getRessource().getValue() < Parametre.prixTourChampForce.getValue()){
             champForce.setDisable(true);
         }
         else{
@@ -412,7 +426,17 @@ public class ControllerNiveau implements Initializable {
     public void affichagePlacement() throws FileNotFoundException {
         if(!arretTemps) {
             choixTour = (canonLaser.isArmed()) ? 1 : (canonMissile.isArmed()) ? 2 : (canonNucleaire.isArmed()) ? 3 : 4;
-            int prix = (choixTour == 1) ? TourCanonLaser.prixT.getValue() : (choixTour == 2) ? TourCanonMissile.prixT.getValue() : (choixTour == 3) ? TourCanonBombeNuclaire.prixT.getValue() : TourChampDeForce.prixT.getValue();
+            int prix;
+            if(choixTour == 1)
+                prix = Parametre.prixTourCanonLaser.getValue();
+            else if (choixTour == 2)
+                prix = Parametre.prixTourCanonMissile.getValue();
+            else if (choixTour == 3)
+                prix = Parametre.prixTourCanonNucleaire.getValue();
+            else
+                prix = Parametre.prixTourChampForce.getValue();
+
+            //int prix = (choixTour == 1) ? Parametre.prixTourCanonLaser.getValue() : (choixTour == 2) ? TourCanonMissile.prixT.getValue() : (choixTour == 3) ? TourCanonBombeNuclaire.prixT.getValue() : TourChampDeForce.prixT.getValue();
             if (this.environnement.getRessource().getValue() >= prix) {
                 this.placementVue.affichaged();
                 this.placement = true;
@@ -432,7 +456,16 @@ public class ControllerNiveau implements Initializable {
                     positionY = ((int) positionY / 32) * 32;
                     if (this.environnement.verificationPlacement(positionX, positionY) == true) {
                         this.environnement.ajouterTour(positionX + 16, positionY + 16, this.choixTour);
-                        int prix = (choixTour == 1) ? TourCanonLaser.prixT.getValue() : (choixTour == 2) ? TourCanonMissile.prixT.getValue() : (choixTour == 3) ? TourCanonBombeNuclaire.prixT.getValue() : TourChampDeForce.prixT.getValue();
+                        int prix;
+                        if(choixTour == 1)
+                            prix = Parametre.prixTourCanonLaser.getValue();
+                        else if (choixTour == 2)
+                            prix = Parametre.prixTourCanonMissile.getValue();
+                        else if (choixTour == 3)
+                            prix = Parametre.prixTourCanonNucleaire.getValue();
+                        else
+                            prix = Parametre.prixTourChampForce.getValue();
+                        //int prix = (choixTour == 1) ? TourCanonLaser.prixT.getValue() : (choixTour == 2) ? TourCanonMissile.prixT.getValue() : (choixTour == 3) ? TourCanonBombeNuclaire.prixT.getValue() : TourChampDeForce.prixT.getValue();
                         this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - prix);
                     }
 
