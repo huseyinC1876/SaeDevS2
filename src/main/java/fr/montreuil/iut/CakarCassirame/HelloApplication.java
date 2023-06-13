@@ -39,6 +39,11 @@ public class HelloApplication extends Application {
 
         stage.setScene(scene);
         stage.show();
+
+//        String ssound = "sound.mp3";
+//        Media sound = new Media(ssound);
+//        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+//        mediaPlayer.play();
     }
 
     public static void main(String[] args) {

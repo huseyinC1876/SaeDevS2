@@ -1,13 +1,13 @@
 package fr.montreuil.iut.CakarCassirame.controller;
 
-import fr.montreuil.iut.CakarCassirame.modele.Projectile;
-import fr.montreuil.iut.CakarCassirame.modele.ProjectileCanonBombeNucleaire;
-import fr.montreuil.iut.CakarCassirame.modele.ProjectileCanonLaser;
-import fr.montreuil.iut.CakarCassirame.modele.ProjectileCanonMissile;
-import fr.montreuil.iut.CakarCassirame.vue.ProjectileBombeNuclaireVue;
-import fr.montreuil.iut.CakarCassirame.vue.ProjectileBombeNucleaireExplosionVue;
-import fr.montreuil.iut.CakarCassirame.vue.ProjectileLaserVue;
-import fr.montreuil.iut.CakarCassirame.vue.ProjectileMissileVue;
+import fr.montreuil.iut.CakarCassirame.modele.projectiles.Projectile;
+import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonBombeNucleaire;
+import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonLaser;
+import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonMissile;
+import fr.montreuil.iut.CakarCassirame.vue.projectileVue.ProjectileBombeNuclaireVue;
+import fr.montreuil.iut.CakarCassirame.vue.projectileVue.ProjectileBombeNucleaireExplosionVue;
+import fr.montreuil.iut.CakarCassirame.vue.projectileVue.ProjectileLaserVue;
+import fr.montreuil.iut.CakarCassirame.vue.projectileVue.ProjectileMissileVue;
 import javafx.collections.ListChangeListener;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
@@ -56,6 +56,7 @@ public class ObsProjectiles implements ListChangeListener<Projectile> {
             for (Projectile projectile : change.getRemoved()) {
                 pane.getChildren().remove(pane.lookup("#" + projectile.getId()));
                 try {
+                    if(projectile instanceof ProjectileCanonBombeNucleaire)
                     projectileBombeNucleaireExplosionVue.creerSprite(projectile);
 //                                System.out.println("CREATION SPRITE SPRITE SPRITE SPRITE SPRITE SPRITE SPRITE");
                 } catch (FileNotFoundException e) {

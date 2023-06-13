@@ -1,10 +1,10 @@
 package fr.montreuil.iut.CakarCassirame.controller;
 
-import fr.montreuil.iut.CakarCassirame.modele.*;
-import fr.montreuil.iut.CakarCassirame.vue.TourCanonBombeNucleaireVue;
-import fr.montreuil.iut.CakarCassirame.vue.TourCanonLaserVue;
-import fr.montreuil.iut.CakarCassirame.vue.TourCanonMissileVue;
-import fr.montreuil.iut.CakarCassirame.vue.TourChampDeForceVue;
+import fr.montreuil.iut.CakarCassirame.modele.tours.*;
+import fr.montreuil.iut.CakarCassirame.vue.tourVue.TourCanonBombeNucleaireVue;
+import fr.montreuil.iut.CakarCassirame.vue.tourVue.TourCanonLaserVue;
+import fr.montreuil.iut.CakarCassirame.vue.tourVue.TourCanonMissileVue;
+import fr.montreuil.iut.CakarCassirame.vue.tourVue.TourChampDeForceVue;
 import javafx.collections.ListChangeListener;
 import javafx.scene.layout.Pane;
 

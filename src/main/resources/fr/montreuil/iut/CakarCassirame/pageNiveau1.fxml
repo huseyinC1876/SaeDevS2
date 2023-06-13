@@ -393,6 +393,12 @@
                <Font size="16.0" />
             </font>
          </Button>
+=======
+         <HBox>
+            <Button mnemonicParsing="false" onMouseClicked="#pause"   prefHeight="38.0" prefWidth="340.0" text="Pause"/>
+            <!--            <Button mnemonicParsing="false" onMouseClicked="#play"   prefHeight="38.0" prefWidth="340.0" text="Play"/>-->
+         </HBox>
+>>>>>>> Stashed changes
          <Button mnemonicParsing="false" onMouseClicked="#chargerPageAcceuil" prefHeight="38.0" prefWidth="340.0" text="Page d'accueil">
             <font>
                <Font size="16.0" />
