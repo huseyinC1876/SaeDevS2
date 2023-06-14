@@ -28,7 +28,7 @@ public abstract class TourTeteChercheuse extends TourPerimetre{
                 ennemi = this.getEnvironnement().getListeEnnemis().get(i);
                 if (Math.sqrt(Math.pow(this.XProperty().getValue() - ennemi.XProperty().getValue(), 2) + Math.pow(this.YProperty().getValue() - ennemi.YProperty().getValue(), 2)) <= this.getRayonPerimetreAction()) {
                     this.getEnvironnement().ajouterProjectileTeteChercheuse(1, this.XProperty().getValue(), this.YProperty().getValue(), ennemi);
-                    System.out.println("AJOUTER PROJECTILE AJOUTER PROJECTILE");
+//                    System.out.println("AJOUTER PROJECTILE AJOUTER PROJECTILE");
                     quit = true;
                 }
                 if (quit) break;

@@ -10,14 +10,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class TourCanonBombeNuclaire extends Tour{
 
     public static IntegerProperty degat = new SimpleIntegerProperty(50);
-    public static IntegerProperty tempsRecharge = new SimpleIntegerProperty(10);
-    //TODO : ajout projectile. Pr l'instant, j'ai créé la classe projectile et la classe ProjectileVue. j'ai initialize les vues dans le controller
+    public static IntegerProperty tempsRecharge = new SimpleIntegerProperty(50);
     private ProjectileCanonBombeNucleaire projectile;
 
     public TourCanonBombeNuclaire(Environnement environnement, int x, int y) {
         super(environnement, x, y);
-        tempsRecharge = new SimpleIntegerProperty(50);
-        degat = new SimpleIntegerProperty(50);
         this.projectile = new ProjectileCanonBombeNucleaire(environnement, 50, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 1);
     }
 

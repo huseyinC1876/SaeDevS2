@@ -7,7 +7,7 @@ public class EnnemiVaisseauSpatial extends Ennemi {
     static double vitesseInitiale = 3;
 
     public EnnemiVaisseauSpatial(Environnement environnement, int x, int y) {
-        super(environnement, 600, 3, 55, x, y);
+        super(environnement, 600, 3, 55, x, y, 600);
     }
 
     public static double getVitesseInitiale(){return vitesseInitiale;}

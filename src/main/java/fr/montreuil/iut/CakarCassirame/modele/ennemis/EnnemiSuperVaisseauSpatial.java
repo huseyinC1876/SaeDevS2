@@ -7,7 +7,7 @@ public class EnnemiSuperVaisseauSpatial extends Ennemi {
     public static double vitesseInitiale = 3;
 
     public EnnemiSuperVaisseauSpatial(Environnement environnement, int x, int y) {
-        super(environnement, 500, 3, 80, x, y);
+        super(environnement, 500, 3, 80, x, y, 500);
         this.bouclier = 100;
     }
 

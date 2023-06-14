@@ -262,7 +262,7 @@ public class ControllerNiveau implements Initializable {
                                     }
                                 }
                                 if (this.environnement.getListeTours().get(i) instanceof TourCanonBombeNuclaire) {
-                                    if (temps % TourCanonBombeNuclaire.tempsRecharge.getValue() == 0) {
+                                    if (temps % TourCanonBombeNuclaire.tempsRecharge.getValue() == 0 && temps != 0) {
                                         this.environnement.ajouterProjectile(3, this.environnement.getListeTours().get(i).XProperty().getValue(), this.environnement.getListeTours().get(i).YProperty().getValue());
 //                                        System.out.println("ajouter proj 3 controller");
 //                                            }

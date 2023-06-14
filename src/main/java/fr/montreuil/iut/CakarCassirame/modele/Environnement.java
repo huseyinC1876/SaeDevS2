@@ -39,7 +39,7 @@ public class Environnement {
     public Environnement(int niveau) throws IOException {
         if (niveau == 1) {
             this.map = new MapNiv1();
-            this.nbEnnemiMax = new SimpleIntegerProperty(100);
+            this.nbEnnemiMax = new SimpleIntegerProperty(5);
             this.nbEnnemisParVague = 10;
         } else {
             this.map = new MapNiv2();
@@ -171,7 +171,7 @@ public class Environnement {
 
     public void verifProjectileHasAttacked() {
         for (int i = listeProjectiles.size() - 1; i >= 0; i--) {
-            System.out.println("projectile : " + listeProjectiles.get(i).getId() + " a attaqué : " + listeProjectiles.get(i).getHasAttacked());
+//            System.out.println("projectile : " + listeProjectiles.get(i).getId() + " a attaqué : " + listeProjectiles.get(i).getHasAttacked());
             if (listeProjectiles.get(i).getHasAttacked()) {
                 this.listeProjectiles.remove(i);
             }

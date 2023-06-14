@@ -4,12 +4,12 @@ import fr.montreuil.iut.CakarCassirame.modele.Environnement;
 import fr.montreuil.iut.CakarCassirame.modele.ennemis.Ennemi;
 
 public abstract class TourPerimetre extends Tour{
-        private static int rayonPerimetreAction;
+    private static int rayonPerimetreAction;
 
-        public TourPerimetre(Environnement environnement, int x, int y,int rayonPerimetreAction) {
-            super(environnement, x, y);
-            this.rayonPerimetreAction = rayonPerimetreAction;
-        }
+    public TourPerimetre(Environnement environnement, int x, int y,int rayonPerimetreAction) {
+        super(environnement, x, y);
+        this.rayonPerimetreAction = rayonPerimetreAction;
+    }
 
     @Override
     public void attaquer() {}

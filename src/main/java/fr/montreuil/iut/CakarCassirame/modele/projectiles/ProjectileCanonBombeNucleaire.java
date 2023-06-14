@@ -10,8 +10,6 @@ public class ProjectileCanonBombeNucleaire extends Projectile {
 
     @Override
     public void seDeplacer() {
-//    System.out.println( "height / 2 : " + this.getEnv().getMap().getTileMapHeight()*32 / 2 );
-//    System.out.println("width / 2 : " + this.getEnv().getMap().getTileMapWidth()*32 / 2 );
         // x droite
         if (this.XProperty().getValue() < this.getEnv().getMap().getTileMapWidth() * 32 / 2) {
             this.XProperty().setValue(this.XProperty().getValue() + this.getV());
@@ -30,10 +28,8 @@ public class ProjectileCanonBombeNucleaire extends Projectile {
 
     @Override
     public void attaquer() {
-//        System.out.println("RENTRE DANS METHODE ATTAQUER PROJECTILE");
         if(this.YProperty().getValue() == this.getEnv().getMap().getTileMapHeight() * 32 / 2 && this.XProperty().getValue() ==this.getEnv().getMap().getTileMapWidth() * 32 / 2 && getHasAttacked() == false) {
             for(int i = 0 ; i < this.getEnv().getListeEnnemis().size() ; i++) {
-//            System.out.println("AU CENTRE ATTAQUE ATTAQUE ATTAQUE ATTAQUE ATTAQUE ATTAQUE  ATTAQUE" + i);
                 this.getEnv().getListeEnnemis().get(i).décrémenterPV(this.getDegat());
             }
             setHasAttacked(true);

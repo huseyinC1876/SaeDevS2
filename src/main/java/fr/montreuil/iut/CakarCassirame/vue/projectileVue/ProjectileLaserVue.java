@@ -8,6 +8,6 @@ public class ProjectileLaserVue extends ProjectileVue {
 
     private String file;
     public ProjectileLaserVue(Pane pane){
-        super(pane, "src/main/resources/fr/montreuil/iut/CakarCassirame/projectile.png");
+        super(pane, "src/main/resources/fr/montreuil/iut/CakarCassirame/laserDot.png");
     }
 }

@@ -3,6 +3,7 @@ package fr.montreuil.iut.CakarCassirame.controller;
 import fr.montreuil.iut.CakarCassirame.modele.ennemis.*;
 import fr.montreuil.iut.CakarCassirame.vue.ennemiVue.*;
 import javafx.collections.ListChangeListener;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 
 import java.io.FileNotFoundException;
@@ -46,9 +47,9 @@ public class ObsEnnemis implements ListChangeListener<Ennemi> {
                     throw new RuntimeException(e);
                 }
             }
-            for (Ennemi ennemie : change.getRemoved()) {
-                pane.getChildren().remove(pane.lookup("#" + ennemie.getId()));
-
+            for (Ennemi ennemi : change.getRemoved()) {
+                pane.getChildren().remove(pane.lookup("#" + ennemi.getId()));
+                System.out.println(ennemi.getId());
             }
         }
     }

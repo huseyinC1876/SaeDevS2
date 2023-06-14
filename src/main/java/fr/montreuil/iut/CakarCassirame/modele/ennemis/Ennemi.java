@@ -2,12 +2,15 @@ package fr.montreuil.iut.CakarCassirame.modele.ennemis;
 
 import fr.montreuil.iut.CakarCassirame.modele.Environnement;
 import fr.montreuil.iut.CakarCassirame.modele.tours.TourPerimetre;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Ennemi {
 
-    private int pv;
+    private DoubleProperty pv;
+    private double pvMax;
     private double v;
     private int gain;
     private IntegerProperty x,y;
@@ -18,8 +21,9 @@ public abstract class Ennemi {
     private boolean enter;
 
 
-    public Ennemi(Environnement environnement, int pv, double v, int gain, int x, int y){
-        this.pv = pv;
+    public Ennemi(Environnement environnement, double pv, double v, int gain, int x, int y, double pvMax){
+        this.pv = new SimpleDoubleProperty(pv);
+        this.pvMax = pvMax;
         this.v = v;
         this.gain = gain;
         this.environnement = environnement;
@@ -44,13 +48,16 @@ public abstract class Ennemi {
 
     public String getId() { return this.id; }
 
-    public int getPv() { return pv; }
+    public double getPv() { return pv.getValue(); }
+    public double getPvMax (){return pvMax;}
+
+    public DoubleProperty PVProperty(){return this.pv;}
 
     public int getGain() {
         return gain;
     }
 
-    public void setPv(int pv) {
+    public void setPv(DoubleProperty pv) {
         this.pv = pv;
     }
 
@@ -77,7 +84,7 @@ public abstract class Ennemi {
             enter = true;
             this.y.setValue(this.y.getValue() + this.v);
             //System.out.println("OK enter");
-            this.pv = 0;
+            this.pv.setValue(0);
             this.gain = 0;
 
         }
@@ -85,7 +92,7 @@ public abstract class Ennemi {
             enter = true;
             this.y.setValue(this.y.getValue() - this.v);
             System.out.println("OK enter");
-            this.pv = 0;
+            this.pv.setValue(0);
             this.gain = 0;
 
         }
@@ -93,7 +100,7 @@ public abstract class Ennemi {
             enter = true;
             this.y.setValue(this.x.getValue() + this.v);
             System.out.println("OK enter");
-            this.pv = 0;
+            this.pv.setValue(0);
             this.gain = 0;
 
         }
@@ -101,7 +108,7 @@ public abstract class Ennemi {
             enter = true;
             this.y.setValue(this.x.getValue() - this.v);
             System.out.println("OK enter");
-            this.pv = 0;
+            this.pv.setValue(0);
             this.gain = 0;
 
         }
@@ -136,7 +143,7 @@ public abstract class Ennemi {
     }
 
     public void décrémenterPV(int PV){
-        this.pv = this.pv - PV;
+        this.pv.setValue(this.pv.getValue() - PV);
     }
 
 

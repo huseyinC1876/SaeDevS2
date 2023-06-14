@@ -1,5 +1,6 @@
 package fr.montreuil.iut.CakarCassirame.vue.ennemiVue;
 
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 
 public class EnnemiExtraterrestreVue extends EnnemieVue {
