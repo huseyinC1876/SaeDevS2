@@ -27,9 +27,9 @@ public class Parametre {
 
     public static final IntegerProperty tempsRechargeCanonNuclaire = new SimpleIntegerProperty(500);
 
-    public static final IntegerProperty degatCanonLaser = new SimpleIntegerProperty(3);
+    public static final IntegerProperty degatCanonLaser = new SimpleIntegerProperty(50);
 
-    public static final IntegerProperty degatCanonMissile = new SimpleIntegerProperty(5);
+    public static final IntegerProperty degatCanonMissile = new SimpleIntegerProperty(80);
 
     public static final IntegerProperty degatCanonNuclaire = new SimpleIntegerProperty(50);
 

@@ -33,7 +33,10 @@ public class Environnement {
     private IntegerProperty niveauCanonMissile = new SimpleIntegerProperty(1);
     private IntegerProperty niveauChampForce = new SimpleIntegerProperty(1);
     private IntegerProperty niveauCanonNucleaire = new SimpleIntegerProperty(1);
-
+    private int tempsLastEnnemiInVague;
+    private int intervalleEnnemiParVague;
+    private int tempsLastVague;
+    private int intervalleVague;
 
     public Environnement(int niveau) throws IOException {
         if (niveau == 1) {
@@ -53,6 +56,10 @@ public class Environnement {
         this.listeTours = FXCollections.observableArrayList();
         this.debutMap = this.map.debutMapEnnemie();
         this.listeProjectiles = FXCollections.observableArrayList();
+        this.tempsLastEnnemiInVague = 0;
+        this.intervalleEnnemiParVague = 50;
+        this.tempsLastVague = 0;
+        this.intervalleVague = 1000;
     }
 
     public Map getMap() {
@@ -94,6 +101,7 @@ public class Environnement {
     public ObservableList<Projectile> getListeProjectiles() {
         return this.listeProjectiles;
     }
+
     public IntegerProperty getRessource() {
         return this.ressource;
     }
@@ -114,14 +122,31 @@ public class Environnement {
         return niveauCanonNucleaire.getValue();
     }
 
-    public void vendreTour(int x, int y){
+    public int getNbEnnemisParVague() {
+        return this.nbEnnemisParVague;
+    }
+    public int getIntervalleEnnemiParVague() {
+        return this.intervalleEnnemiParVague;
+    }
+    public int getTempsLastVague() {
+        return this.tempsLastVague;
+    }
+    public void setTempsLastVague(int temps) {
+        this.tempsLastVague = temps;
+    }
+
+    public int getIntervalleVague() {
+        return this.intervalleVague;
+    }
+
+    public void vendreTour(int x, int y) {
         Tour tour = tourPlacement(x, y);
-        if(tour instanceof TourCanonLaser)
-            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonLaser.getValue()/2);
+        if (tour instanceof TourCanonLaser)
+            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonLaser.getValue() / 2);
         else if (tour instanceof TourCanonMissile)
             this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonMissile.getValue());
-        else if(tour instanceof TourCanonBombeNuclaire)
-            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonNucleaire.getValue()/2);
+        else if (tour instanceof TourCanonBombeNuclaire)
+            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonNucleaire.getValue() / 2);
         else
             this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourChampForce.getValue());
         this.listeTours.remove(tour);
@@ -130,15 +155,19 @@ public class Environnement {
     public IntegerProperty niveauCanonLaserProperty() {
         return niveauCanonLaser;
     }
-    public void ameliorationCanonLaser(){
+
+    public void ameliorationCanonLaser() {
         this.niveauCanonLaser.setValue(this.niveauCanonLaser.getValue() + 1);
     }
-    public void ameliorationCanonMissile(){
+
+    public void ameliorationCanonMissile() {
         this.niveauCanonMissile.setValue(this.niveauCanonMissile.getValue() + 1);
     }
-    public void ameliorationChampForce(){
+
+    public void ameliorationChampForce() {
         this.niveauChampForce.setValue(this.niveauCanonMissile.getValue() + 1);
     }
+
     public void ameliorationCanonNucleaire() {
         this.niveauCanonNucleaire.setValue(this.niveauCanonNucleaire.getValue() + 1);
     }
@@ -158,33 +187,16 @@ public class Environnement {
                 if (random < 1) {
                     this.listeEnnemis.add(new EnnemiExtraterrestre(this, this.debutMap[1], this.debutMap[0]));
                     this.nbEnnemiSpawn++;
+                    System.out.println("ENNEMI EXTRATERRESTRE AJOUTE");
                 } else if (random < 2) {
                     this.listeEnnemis.add(new EnnemiVaisseauSpatial(this, this.debutMap[1], this.debutMap[0]));
                     this.nbEnnemiSpawn++;
+                    System.out.println("ENNEMI VAISSEAU SPATIAL AJOUTE");
                 } else {
                     this.listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this, this.debutMap[1], this.debutMap[0]));
                     this.nbEnnemiSpawn++;
+                    System.out.println("ENNEMI SUPER VAISSEAU SPATIAL AJOUTE");
                 }
-            }
-        }
-    }
-
-    /**
-     * Ajoute nbENnemisParVagues (10 au niveau 1 et 15 au niveau 2) ennemis de manière aléatoire (pas de boss)
-     */
-    public void ajouterVagueEnnemis() {
-        verifNbEnnemisParVague();
-        for (int i = 0; i < this.nbEnnemisParVague; i++) {
-            double random = Math.random() * 3;
-            if (random < 1) {
-                this.listeEnnemis.add(new EnnemiExtraterrestre(this, this.debutMap[1], this.debutMap[0]));
-                this.nbEnnemiSpawn++;
-            } else if (random < 2) {
-                this.listeEnnemis.add(new EnnemiVaisseauSpatial(this, this.debutMap[1], this.debutMap[0]));
-                this.nbEnnemiSpawn++;
-            } else {
-                this.listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this, this.debutMap[1], this.debutMap[0]));
-                this.nbEnnemiSpawn++;
             }
         }
     }
@@ -335,22 +347,15 @@ public class Environnement {
         for (int i = this.listeEnnemis.size() - 1; i >= 0; i--) {
             if (this.listeEnnemis.get(i).getPv() < 1) {
                 this.ressource.setValue(this.getRessource().getValue() + this.listeEnnemis.get(i).getGain());
-                System.out.println(this.nbEnnemiSpawn < this.nbEnnemiMax.getValue() - 2);
                 if (this.listeEnnemis.get(i) instanceof EnnemiVaisseauSpatial) {
                     this.listeEnnemis.remove(i);
                     this.nbEnnemiTue.setValue(this.nbEnnemiTue.getValue() + 1);
-//                    if (this.nbEnnemiSpawn.getValue() < this.nbEnnemiMax.getValue() - 2) {
-//                    System.out.println("ENNEMIS SPAWN  BIS " + this.nbEnnemiSpawn);
-//                    TODO : avec la condition ça marche pas, sans la condition, ça risque de dépasser qd on sera à 99, ça va faire 101
                     //Lorsqu'un ennemiVaisseauSpatial meurt, 2 nouveaux vaisseaux apparaissent (ils ne comptent pas dans les listes des ennemis ajoutés et morts)
                     listeEnnemis.add(new EnnemiDivise(this, this.debutMap[1], this.debutMap[0]));
                     listeEnnemis.add(new EnnemiDivise(this, this.debutMap[1] + 16, this.debutMap[0] + 16));
-//                    }
-                }
-                else if (this.listeEnnemis.get(i) instanceof EnnemiDivise) {
+                } else if (this.listeEnnemis.get(i) instanceof EnnemiDivise) {
                     this.listeEnnemis.remove(i);
-                }
-                else {
+                } else {
                     this.listeEnnemis.remove(i);
                     this.nbEnnemiTue.setValue(this.nbEnnemiTue.getValue() + 1);
                 }
@@ -378,6 +383,7 @@ public class Environnement {
         verificationEnnemisMorts();
         verifProjectileHasAttacked();
         verifPerimetreChampDeForce();
+        verifNbEnnemisParVague();
     }
 
 }

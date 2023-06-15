@@ -37,7 +37,7 @@ public class InfoBulleBoutonsTours extends InfoBulleBouton{
 
     @Override
     public void infobulleNucleaire() {
-        Tooltip tooltip = new Tooltip("Atq -> "+ (Parametre.degatCanonNuclaire.getValue() + this.getEnvironnement().getNiveauCanonNucleaire())  + "\n Temps de recharge -> " + (TourCanonBombeNuclaire.tempsRecharge.getValue() - this.getEnvironnement().getNiveauCanonNucleaire()) * 10 + "s");
+        Tooltip tooltip = new Tooltip("Atq -> "+ (Parametre.degatCanonNuclaire.getValue() + this.getEnvironnement().getNiveauCanonNucleaire())  + "\n Temps de recharge -> " + (Parametre.tempsRechargeCanonNuclaire.getValue() - this.getEnvironnement().getNiveauCanonNucleaire()) * 10 + "s");
         super.getButtonCanonNucleaire().setTooltip(tooltip);
     }
 

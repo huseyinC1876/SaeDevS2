@@ -13,7 +13,8 @@ import java.io.FileNotFoundException;
 public abstract class EnnemieVue {
     private Pane pane;
     private String file;
-    public EnnemieVue(Pane pane, String file){
+
+    public EnnemieVue(Pane pane, String file) {
         this.pane = pane;
         this.file = file;
     }
@@ -23,9 +24,9 @@ public abstract class EnnemieVue {
         imageViewsSpaceChip.setId(ennemi.getId());
         imageViewsSpaceChip.translateXProperty().bind(ennemi.XProperty());
         imageViewsSpaceChip.translateYProperty().bind(ennemi.YProperty());
-        if(ennemi instanceof EnnemiDivise){
-            imageViewsSpaceChip.setFitHeight(16);
+        if (ennemi instanceof EnnemiDivise) {
             imageViewsSpaceChip.setFitWidth(16);
+            imageViewsSpaceChip.setFitHeight(16);
         }
         this.pane.getChildren().add(imageViewsSpaceChip);
 
