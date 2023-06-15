@@ -306,7 +306,7 @@ public class ControllerNiveau implements Initializable {
     }
 
     public static void load(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pageNiveau1.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pageNiveau.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 640);
         stage.setTitle("Space Defencer");
         stage.setScene(scene);

@@ -2,15 +2,15 @@ package fr.montreuil.iut.CakarCassirame.modele.tours;
 
 import fr.montreuil.iut.CakarCassirame.modele.Environnement;
 import fr.montreuil.iut.CakarCassirame.modele.Parametre;
-import fr.montreuil.iut.CakarCassirame.modele.ennemis.*;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import fr.montreuil.iut.CakarCassirame.modele.ennemis.Ennemi;
+import fr.montreuil.iut.CakarCassirame.modele.ennemis.EnnemiExtraterrestre;
+import fr.montreuil.iut.CakarCassirame.modele.ennemis.EnnemiGalactusBoss;
+import fr.montreuil.iut.CakarCassirame.modele.ennemis.EnnemiVaisseauSpatial;
 
 
 public class TourChampDeForce extends TourPerimetre {
 
     public static double pourcentageReduction = 0.75;
-    public static IntegerProperty prixT = new SimpleIntegerProperty(500);
 
     public TourChampDeForce(Environnement environnement, int x, int y) {
         super(environnement, x, y,  100);

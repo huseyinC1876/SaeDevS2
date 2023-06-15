@@ -4,12 +4,12 @@ import fr.montreuil.iut.CakarCassirame.modele.Environnement;
 import javafx.beans.property.IntegerProperty;
 
 public abstract class Projectile {
-    private Environnement env;
+    private final Environnement env;
     private int degat;
     private IntegerProperty x, y;
-    private String id;
+    private final String id;
     private static int compteur = 0;
-    private int v;
+    private final int v;
     private boolean hasAttacked;
 
     public Projectile(Environnement env, int degat, IntegerProperty x, IntegerProperty y, int v){

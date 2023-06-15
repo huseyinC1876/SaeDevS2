@@ -6,11 +6,10 @@ import javafx.beans.property.*;
 public abstract class Tour {
 
 
-    public IntegerProperty prix;
     private static int compteur = 0;
-    private String id;
+    private final String id;
     private IntegerProperty x, y;
-    private Environnement environnement;
+    private final Environnement environnement;
 
     public Tour(Environnement environnement, int x, int y) {
         this.id = "T" + compteur;

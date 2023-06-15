@@ -59,14 +59,6 @@
          </Label>
       </children>
    </HBox>
-   <Label fx:id="finPartie" textFill="#f70000">
-      <padding>
-         <Insets left="430.0" top="300.0" />
-      </padding>
-      <font>
-         <Font name="System Bold Italic" size="96.0" />
-      </font>
-   </Label>
    <ImageView fitHeight="640.0" fitWidth="340.0" layoutX="960.0" pickOnBounds="true">
       <image>
          <Image url="@Galactus.jpg" />

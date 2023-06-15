@@ -8,14 +8,14 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Ennemi {
 
-    private Environnement environnement;
+    private final Environnement environnement;
     private DoubleProperty pv;
-    private double pvMax;
+    private final double pvMax;
     private int v;
     private int gain;
     private IntegerProperty x,y;
     public static int compteur = 0;
-    private String id;
+    private final String id;
     private int[]  positionBackUp = new int[2];
     private boolean enter;
 
@@ -136,15 +136,15 @@ public abstract class Ennemi {
                 this.positionBackUp[1]--;
             }
             if(this.environnement.getMap().getTileMap()[(this.y.getValue()/32)][((this.x.getValue()/32) - 1)] == 3){
-                int multiplicateur = (int) (32 - this.v);
-                multiplicateur = (int) (multiplicateur / this.v) ;
+                int multiplicateur = (32 - this.v);
+                multiplicateur = (multiplicateur / this.v) ;
                 this.x.setValue(this.x.getValue() - this.v * multiplicateur) ;
             }
 
         }
     }
 
-    public void décrémenterPV(int PV){
+    public void decrementerPV(int PV){
         this.pv.setValue(this.pv.getValue() - PV);
     }
 

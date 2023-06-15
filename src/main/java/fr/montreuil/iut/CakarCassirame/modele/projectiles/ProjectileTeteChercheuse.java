@@ -7,7 +7,7 @@ import javafx.beans.property.IntegerProperty;
 
 public abstract class ProjectileTeteChercheuse extends Projectile {
 
-    private Ennemi ennemiCible;
+    private final Ennemi ennemiCible;
 
     public ProjectileTeteChercheuse(Environnement env, int degat, IntegerProperty x, IntegerProperty y, int v, Ennemi ennemi) {
         super(env, degat, x, y, v);
@@ -42,12 +42,12 @@ public abstract class ProjectileTeteChercheuse extends Projectile {
             //Si c'est un SuperVaisseauSpatial, on décrémente d'abord le bouclier
             if(ennemiCible instanceof EnnemiSuperVaisseauSpatial){
                 if(((EnnemiSuperVaisseauSpatial) ennemiCible).getBouclier() > 0) {
-                    ((EnnemiSuperVaisseauSpatial) ennemiCible).décrémenterBouclier(this.getDegat());
+                    ((EnnemiSuperVaisseauSpatial) ennemiCible).decrementerBouclier(this.getDegat());
                 }
                 // si le bouclier est épuisé on décrémente directement les PV
-                else ennemiCible.décrémenterPV(this.getDegat());
+                else ennemiCible.decrementerPV(this.getDegat());
             }
-            else this.ennemiCible.décrémenterPV(this.getDegat());
+            else this.ennemiCible.decrementerPV(this.getDegat());
             //hasAttacked devient true --> permet que le projectile soit supprimé de la liste et disparaisse de la Map
             setHasAttacked(true);
         }
