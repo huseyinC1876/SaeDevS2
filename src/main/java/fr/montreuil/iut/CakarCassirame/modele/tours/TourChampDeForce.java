@@ -38,8 +38,4 @@ public class TourChampDeForce extends TourPerimetre {
             }
         }
     }
-
-        public static void amelioration(double pourcentage){
-            pourcentageReduction = pourcentage;
-        }
 }

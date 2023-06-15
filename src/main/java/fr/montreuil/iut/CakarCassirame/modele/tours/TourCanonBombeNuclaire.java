@@ -8,7 +8,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class TourCanonBombeNuclaire extends Tour{
 
-
     public static IntegerProperty tempsRecharge = new SimpleIntegerProperty(50);
     private ProjectileCanonBombeNucleaire projectile;
 

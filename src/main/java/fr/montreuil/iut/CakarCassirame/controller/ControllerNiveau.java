@@ -89,8 +89,6 @@ public class ControllerNiveau implements Initializable {
     @FXML
     private Label nbEnnemiMax;
     @FXML
-    private Label finPartie;
-    @FXML
     private HBox menuAmelioration1;
     @FXML
     private HBox menuAmelioration2;
@@ -117,18 +115,10 @@ public class ControllerNiveau implements Initializable {
     private boolean enter = false;
     private int choixTour = 0;
     private boolean affichageMenu = false;
-
-
     private FinJeuVue finJeuVue;
-
     private VenteVue venteVue;
     private boolean autorisationVente = false;
-
-    @FXML
-    private Pane paneVente;
-
     private InfoBulleBoutonsAmelioraton infoBulleBoutonsAmelioraton;
-
     private InfoBulleBoutonsTours infoBulleBoutonsTours;
 
 
@@ -154,7 +144,6 @@ public class ControllerNiveau implements Initializable {
         this.nbEnnemiMax.textProperty().bind(this.environnement.getNbEnnemiMaxProperty().asString());
         this.nbEnnemiTue.textProperty().bind(this.environnement.getNbEnnemiTueProperty().asString());
         this.venteVue = new VenteVue(pane, this.environnement);
-        //this.venteVue.reset();
 
 
        this.infoBulleBoutonsTours = new InfoBulleBoutonsTours(canonLaser, canonMissile, champForce, canonNucleaire, environnement);
@@ -168,10 +157,7 @@ public class ControllerNiveau implements Initializable {
         this.environnement.getListeTours().addListener(new ObsTours(pane));
         this.environnement.getListeEnnemis().addListener(new ObsEnnemis(pane));
         this.environnement.getListeProjectiles().addListener(new ObsProjectiles(pane, tilePaneBombe));
-
         this.finJeuVue = new FinJeuVue(pane);
-        //this.oldGameloopFrame = 0;
-
 
         try {
             this.placementVue.affichage(this.environnement.getMap());
@@ -219,8 +205,6 @@ public class ControllerNiveau implements Initializable {
                         } catch (FileNotFoundException e) {
                             throw new RuntimeException(e);
                         }
-                        //this.finPartie.setText("Victory");
-                        //this.finPartie.setVisible(true);
                         temps = 0;
 
                     } else if (this.environnement.getVieProperty().getValue() > 0) {
@@ -242,7 +226,6 @@ public class ControllerNiveau implements Initializable {
                                 }
                             }
                         }
-
                         if (temps % 3 == 0) {
                             this.environnement.unTour();
                             AffichageBoutonAmelioration();
@@ -258,9 +241,6 @@ public class ControllerNiveau implements Initializable {
                                     this.hboxVie.getChildren().get(-(this.environnement.getVieProperty().getValue() + 1 - 3)).setVisible(false);
                             }
                             if (this.environnement.getVieProperty().getValue() < 1) {
-                                //this.finPartie.setText("You Dead");
-                                //this.finPartie.setAlignment(Pos.CENTER);
-                                //this.finPartie.setVisible(true);
                                 try {
                                     this.finJeuVue.defaite();
                                 } catch (FileNotFoundException e) {
@@ -268,7 +248,6 @@ public class ControllerNiveau implements Initializable {
                                 }
                                 temps = 0;
                             }
-
                             //ajout d'ennemi à un rythme continu
                         } else if (temps % 101 == 0) {
                             if (this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
@@ -276,7 +255,7 @@ public class ControllerNiveau implements Initializable {
                             }
                             //Envoie d'une vague d'ennemi à un rythme régulier (10 ennemis)
                         } else if (temps % 500 == 0 && this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
-                            this.environnement.ajouterVagueEnnemis(temps);
+                            this.environnement.ajouterVagueEnnemis();
                         }
                         if(temps % 100 == 0){
                             projectileBombeNucleaireExplosionVue.resetGIF();
@@ -302,7 +281,6 @@ public class ControllerNiveau implements Initializable {
         Scene scene = pane.getScene();
         Stage stage = (Stage) scene.getWindow();
         ControllerPageAcceuil.load(stage);
-
     }
 
     public static void load(Stage stage) throws IOException {
@@ -318,7 +296,6 @@ public class ControllerNiveau implements Initializable {
             arretTemps = false;
         else {
             arretTemps = true;
-
         }
         if (gameLoop.getStatus() == Animation.Status.RUNNING) {
             gameLoop.pause();
@@ -387,7 +364,6 @@ public class ControllerNiveau implements Initializable {
         }
     }
 
-
     public void ameliorationTours() {
         int choix = (ameliorationCanonLaser.isArmed()) ? 1 : (ameliorationCanonMissile.isArmed()) ? 2 : (ameliorationCanonNucleaire.isArmed()) ? 3 : 4;
         if (choix == 1)
@@ -419,8 +395,6 @@ public class ControllerNiveau implements Initializable {
                 prix = Parametre.prixTourCanonNucleaire.getValue();
             else
                 prix = Parametre.prixTourChampForce.getValue();
-
-            //int prix = (choixTour == 1) ? Parametre.prixTourCanonLaser.getValue() : (choixTour == 2) ? TourCanonMissile.prixT.getValue() : (choixTour == 3) ? TourCanonBombeNuclaire.prixT.getValue() : TourChampDeForce.prixT.getValue();
             if (this.environnement.getRessource().getValue() >= prix) {
                 this.placementVue.affichaged();
                 this.placement = true;
@@ -468,7 +442,6 @@ public class ControllerNiveau implements Initializable {
                     positionY = ((int) positionY / 32) * 32 + 16;
                     if (this.environnement.verificationPlacement(positionX, positionY) == false){
                         this.environnement.vendreTour((int)positionX ,(int) positionY);
-
                     }
                 }
             }

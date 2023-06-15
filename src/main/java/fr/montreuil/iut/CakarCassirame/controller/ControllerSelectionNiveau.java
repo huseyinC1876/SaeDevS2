@@ -44,8 +44,6 @@ public class ControllerSelectionNiveau implements Initializable {
         ControllerNiveau.load(stage);
     }
 
-
-
     public static void load(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pageChoixNiveau.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 640);

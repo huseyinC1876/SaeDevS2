@@ -4,8 +4,6 @@ import fr.montreuil.iut.CakarCassirame.modele.Environnement;
 import javafx.beans.property.*;
 
 public abstract class Tour {
-
-
     private static int compteur = 0;
     private final String id;
     private IntegerProperty x, y;
@@ -22,15 +20,11 @@ public abstract class Tour {
     public String getId() {
         return id;
     }
-
     public IntegerProperty XProperty(){ return this.x; }
-
     public IntegerProperty YProperty(){ return this.y; }
-
     public Environnement getEnvironnement() {
         return environnement;
     }
-
     public abstract void attaquer();
 
 }

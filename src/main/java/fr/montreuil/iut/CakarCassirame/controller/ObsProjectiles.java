@@ -56,7 +56,7 @@ public class ObsProjectiles implements ListChangeListener<Projectile> {
                 pane.getChildren().remove(pane.lookup("#" + projectile.getId()));
                 try {
                     if(projectile instanceof ProjectileCanonBombeNucleaire)
-                    projectileBombeNucleaireExplosionVue.creerSprite(projectile);
+                        projectileBombeNucleaireExplosionVue.creerSprite(projectile);
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }

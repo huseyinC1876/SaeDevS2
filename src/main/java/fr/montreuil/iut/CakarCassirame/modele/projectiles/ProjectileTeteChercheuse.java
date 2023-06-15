@@ -34,10 +34,12 @@ public abstract class ProjectileTeteChercheuse extends Projectile {
     }
 
 
-    //Les projectiles et les ennemis ont une vitesse différentes --> ils ne seront jamais à la même position.
-    //Si le projectile est situé à  - de 3 pixels de l'ennemi, l'ennemi est attaqué (PV décrémentés)
+    /**
+     * Si le projectile est à - de 3px de l'ennemi cible, les PV sont décrémentés
+     */
     @Override
     public void attaquer() {
+        //Les projectiles et les ennemis ont une vitesse différentes --> ils ne seront jamais à la même position --> Si le projectile est situé à  - de 3 pixels de l'ennemi, l'ennemi est attaqué (PV décrémentés)
         if (Math.abs(this.YProperty().getValue() - this.ennemiCible.YProperty().getValue()) < 3 && Math.abs(this.XProperty().getValue() - this.ennemiCible.XProperty().getValue()) < 3) {
             //Si c'est un SuperVaisseauSpatial, on décrémente d'abord le bouclier
             if(ennemiCible instanceof EnnemiSuperVaisseauSpatial){
