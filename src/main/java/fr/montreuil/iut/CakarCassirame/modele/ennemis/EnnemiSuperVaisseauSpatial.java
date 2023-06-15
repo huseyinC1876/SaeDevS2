@@ -3,11 +3,11 @@ package fr.montreuil.iut.CakarCassirame.modele.ennemis;
 import fr.montreuil.iut.CakarCassirame.modele.Environnement;
 
 public class EnnemiSuperVaisseauSpatial extends Ennemi {
-    private int bouclier;
+
+    private int bouclier = 50;
 
     public EnnemiSuperVaisseauSpatial(Environnement environnement, int x, int y) {
         super(environnement, 400, 3, 150, x, y, 400);
-        this.bouclier = 50;
     }
 
 

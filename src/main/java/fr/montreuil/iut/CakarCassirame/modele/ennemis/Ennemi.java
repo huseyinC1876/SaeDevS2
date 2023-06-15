@@ -56,10 +56,13 @@ public abstract class Ennemi {
     }
 
     public void seDeplacer(){
+        /*
         System.out.println("x = " + this.x.getValue());
         System.out.println("x/32 = "+ (this.x.getValue()/32));
         System.out.println("x/32 + 1 = " + ((this.x.getValue()/32)+1));
         System.out.println("y/32 = " + this.y.getValue()/32);
+
+         */
 
 
 

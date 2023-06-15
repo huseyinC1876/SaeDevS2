@@ -25,7 +25,7 @@ public abstract class EnnemieVue {
         this.pane.getChildren().add(imageViewsSpaceChip);
 
         ProgressBar HP = new ProgressBar();
-        HP.setId(ennemi.getId()+"-progress");
+        HP.setId(ennemi.getId() + "-progress");
         HP.progressProperty().bind(ennemi.PVProperty().divide(ennemi.getPvMax()));
         HP.translateYProperty().bind(ennemi.YProperty().subtract(15));
         HP.translateXProperty().bind(ennemi.XProperty().add(2.5));
