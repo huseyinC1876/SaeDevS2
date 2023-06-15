@@ -64,6 +64,7 @@ public class ObsProjectiles implements ListChangeListener<Projectile> {
                 }
 
 //TODO : il faut enlever l'image !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (attention, pour l'instant, l'image est sur un 3ème tilepane et ça ne marche pas bien.
+
             }
         }
     }

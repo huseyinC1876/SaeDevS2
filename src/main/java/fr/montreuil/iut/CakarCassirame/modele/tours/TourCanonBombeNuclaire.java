@@ -10,7 +10,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class TourCanonBombeNuclaire extends Tour{
 
     public static IntegerProperty degat = new SimpleIntegerProperty(50);
-    public static IntegerProperty tempsRecharge = new SimpleIntegerProperty(50);
+    public static IntegerProperty tempsRecharge = new SimpleIntegerProperty(500);
     private ProjectileCanonBombeNucleaire projectile;
 
     public TourCanonBombeNuclaire(Environnement environnement, int x, int y) {
@@ -18,10 +18,7 @@ public class TourCanonBombeNuclaire extends Tour{
         this.projectile = new ProjectileCanonBombeNucleaire(environnement, 50, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 1);
     }
 
-
     public int getDegat(){return degat.getValue();}
-
-
 
     public static void amelioration() {
         degat.setValue(degat.getValue() * 2);

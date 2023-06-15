@@ -30,17 +30,15 @@ public abstract class EnnemieVue {
         imageViewsSpaceChip.translateXProperty().bind(ennemi.XProperty());
         imageViewsSpaceChip.translateYProperty().bind(ennemi.YProperty());
         this.pane.getChildren().add(imageViewsSpaceChip);
-        System.out.println(ennemi.getId());
 
         ProgressBar HP = new ProgressBar();
-        HP.setId(ennemi.getId());
+        HP.setId(ennemi.getId()+"-progress");
         HP.progressProperty().bind(ennemi.PVProperty().divide(ennemi.getPvMax()));
         HP.translateYProperty().bind(ennemi.YProperty().subtract(15));
         HP.translateXProperty().bind(ennemi.XProperty().add(2.5));
         HP.setPrefHeight(15);
         HP.setPrefWidth(28);
         this.pane.getChildren().add(HP);
-        System.out.println(HP.getId());
 //
 //        Circle r;
 //        r = new Circle(4);

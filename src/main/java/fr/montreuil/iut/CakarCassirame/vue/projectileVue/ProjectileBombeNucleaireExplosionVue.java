@@ -18,10 +18,14 @@ public class ProjectileBombeNucleaireExplosionVue {
         this.file = "src/main/resources/fr/montreuil/iut/CakarCassirame/explosionBombe.gif";
     }
 
+    private long lastDrop = 0;
     public void creerSprite(Projectile projectile) throws FileNotFoundException {
-
+        lastDrop=System.currentTimeMillis();
+        if(tilePaneBombe.lookup("bombeNuclaire") != null){
+            return;
+        }
         ImageView imageViewsTour = new ImageView(new Image(new FileInputStream(this.file)));
-        imageViewsTour.setId(projectile.getId());
+        imageViewsTour.setId("bombeNucleaire");
         imageViewsTour.translateXProperty().bind(projectile.XProperty().subtract(480));
         imageViewsTour.translateYProperty().bind(projectile.YProperty().subtract(320));
         imageViewsTour.setOpacity(0.5);
@@ -31,11 +35,10 @@ public class ProjectileBombeNucleaireExplosionVue {
     }
 
     public void resetGIF(){
-        this.tilePaneBombe.setOpacity(0);
+        if (System.currentTimeMillis()-this.lastDrop<2000) {
+            return;
+        }
+        this.tilePaneBombe.getChildren().clear();
     }
 
-    public void afficherGIF(){
-        this.tilePaneBombe.setVisible(true);
-
-    }
 }

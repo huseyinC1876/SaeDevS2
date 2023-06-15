@@ -32,11 +32,13 @@ public abstract class ProjectileTeteChercheuse extends Projectile {
         }
     }
 
+
+    //Les projectiles et les ennemis ont une vitesse différentes --> ils ne seront jamais à la même position.
+    //Si le projectile est situé à  - de 3 pixels de l'ennemi, l'ennemi est attaqué (PV décrémentés)
+    //hasAttacked devient true, le projectile est supprimé de la liste et disparait de la Map
     @Override
     public void attaquer() {
-        System.out.println("ATTAQUER PROJ ATTAQUER PROJ ATTAQUER PROJ ATTAQUER PROJ ATTAQUER PROJ ATTAQUER PROJ");
             if (Math.abs(this.YProperty().getValue() - this.ennemiCible.YProperty().getValue()) <3 && Math.abs(this.XProperty().getValue() - this.ennemiCible.XProperty().getValue()) <3) {
-                System.out.println("DECREMENTE PV ENNEMI");
                 this.ennemiCible.décrémenterPV(this.getDegat());
                 setHasAttacked(true);
 //            }

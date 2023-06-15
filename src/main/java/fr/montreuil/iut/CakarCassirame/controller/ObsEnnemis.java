@@ -48,7 +48,9 @@ public class ObsEnnemis implements ListChangeListener<Ennemi> {
                 }
             }
             for (Ennemi ennemi : change.getRemoved()) {
+                pane.getChildren().remove(pane.lookup("#" + ennemi.getId()+"-progress"));
                 pane.getChildren().remove(pane.lookup("#" + ennemi.getId()));
+
                 System.out.println(ennemi.getId());
             }
         }

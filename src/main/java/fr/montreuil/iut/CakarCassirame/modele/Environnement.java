@@ -7,7 +7,6 @@ import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonLaser;
 import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonMissile;
 import fr.montreuil.iut.CakarCassirame.modele.tours.*;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -56,10 +55,6 @@ public class Environnement {
         this.listeProjectiles = FXCollections.observableArrayList();
     }
 
-    public int getNbEnnemisParVague() {
-        return this.nbEnnemisParVague;
-    }
-
     public Map getMap() {
         return map;
     }
@@ -76,10 +71,6 @@ public class Environnement {
         return this.nbEnnemiTue.getValue();
     }
 
-    public int getNbEnnemisSpawnedProperty() {
-        return this.nbEnnemiSpawn;
-    }
-
     public IntegerProperty getNbEnnemiTueProperty() {
         return this.nbEnnemiTue;
     }
@@ -87,7 +78,6 @@ public class Environnement {
     public int getNbEnnemiSpawn() {
         return nbEnnemiSpawn;
     }
-
 
     public IntegerProperty getVieProperty() {
         return this.vie;
@@ -137,57 +127,33 @@ public class Environnement {
         this.niveauCanonNucleaire++;
     }
 
-
-    public void verificationEnnemisMorts() {
-        for (int i = this.listeEnnemis.size() - 1; i >= 0; i--) {
-            if (this.listeEnnemis.get(i).getPv() < 1) {
-                this.ressource.setValue(this.getRessource().getValue() + this.listeEnnemis.get(i).getGain());
-//                System.out.println("ENNEMIS SPAWN " + this.nbEnnemiSpawn);
-                System.out.println(this.nbEnnemiSpawn < this.nbEnnemiMax.getValue() - 2);
-                if (this.listeEnnemis.get(i) instanceof EnnemiVaisseauSpatial) {
-//                    if (this.nbEnnemiSpawn.getValue() < this.nbEnnemiMax.getValue() - 2) {
-//                    System.out.println("ENNEMIS SPAWN  BIS " + this.nbEnnemiSpawn);
-//                    TODO : avec la condition ça marche pas, sans la condition, ça risque de dépasser qd on sera à 99, ça va faire 101
-                    System.out.println("AJOUT DE 2 ENNEMIS SUPER VAISSEAU SPATIALES");
-                    listeEnnemis.add(new EnnemiDivise(this, listeEnnemis.get(i).XProperty().getValue() - 5, listeEnnemis.get(i).YProperty().getValue() - 5));
-                    listeEnnemis.add(new EnnemiDivise(this, listeEnnemis.get(i).XProperty().getValue() + 5, listeEnnemis.get(i).YProperty().getValue() + 5));
-//                    }
-                }
-                if (this.listeEnnemis.get(i) instanceof EnnemiDivise) {
-                    this.listeEnnemis.remove(i);
-                } else {
-                    this.listeEnnemis.remove(i);
-                    this.nbEnnemiTue.setValue(this.nbEnnemiTue.getValue() + 1);
-                }
-            }
-        }
-    }
-
-
     public ObservableList<Projectile> getListeProjectiles() {
         return this.listeProjectiles;
     }
 
-
-    public void verifProjectileHasAttacked() {
-        for (int i = listeProjectiles.size() - 1; i >= 0; i--) {
-//            System.out.println("projectile : " + listeProjectiles.get(i).getId() + " a attaqué : " + listeProjectiles.get(i).getHasAttacked());
-            if (listeProjectiles.get(i).getHasAttacked()) {
-                this.listeProjectiles.remove(i);
-            }
-        }
-    }
-
-
     //TODO : AJUSTER LES DEGATS SOUHAITES
-    public void ajouterProjectile(int typeProjectile, int x, int y) {
+
+    /**
+     * Ajoute des projectiles bombe Nucleaire dans l'environnement
+     * @param typeProjectile
+     * @param x --> position X du projectile dans la map
+     * @param y --> position y du projectile dans la map
+     */
+
+    public void ajouterProjectileBombeNucleaire(int typeProjectile, int x, int y) {
         if (typeProjectile == 3) {
             listeProjectiles.add(new ProjectileCanonBombeNucleaire(this, 5, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 1));
 //                System.out.println("ajouter proj 3 environnement");
         }
     }
 
-
+    /**
+     * Ajoute des projectiles missile ou laser dans l'environnement
+     * @param typeProjectile
+     * @param x --> position X du projectile dans la map
+     * @param y --> position y du projectile dans la map
+     * @param ennemi --> ennemi à viser
+     */
     public void ajouterProjectileTeteChercheuse(int typeProjectile, int x, int y, Ennemi ennemi) {
         if (typeProjectile == 1) {
             listeProjectiles.add(new ProjectileCanonLaser(this, 10, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 5, ennemi));
@@ -198,6 +164,10 @@ public class Environnement {
     }
 
 
+    /**
+     * Ajoute de manière aléatoire des ennemis tant que le nombre d'ennemis présents ne dépasse pas le nombre d'ennemis max.
+     * S'il ne reste qu'un seul ennemi à ajouter : on ajoute le boss
+     */
     public void ajouterEnnemi() {
         if (this.nbEnnemiSpawn < nbEnnemiMax.getValue()) {
             if (getNbEnnemiSpawn() == getNbEnnemiMax() - 1) {
@@ -218,6 +188,7 @@ public class Environnement {
             }
         }
     }
+
 
     public void ajouterVagueEnnemis() {
         if (nbEnnemiSpawn < nbEnnemiMax.getValue() - 1) {
@@ -333,6 +304,47 @@ public class Environnement {
                 ennemi.setVitesse(EnnemiVaisseauSpatial.getVitesseInitiale());
             else if (ennemi instanceof EnnemiSuperVaisseauSpatial && ennemi.getV() != EnnemiSuperVaisseauSpatial.vitesseInitiale)
                 ennemi.setVitesse(EnnemiSuperVaisseauSpatial.vitesseInitiale);
+        }
+    }
+
+    /**
+     * Supprime les ennemis de la liste des ennemis présents lorsque leurs PV sont inférieurs à 1
+     * Selon le type d'ennemis morts, la méthode peut ajouter des nouveaux ennemis
+     */
+    public void verificationEnnemisMorts() {
+        for (int i = this.listeEnnemis.size() - 1; i >= 0; i--) {
+            if (this.listeEnnemis.get(i).getPv() < 1) {
+                this.ressource.setValue(this.getRessource().getValue() + this.listeEnnemis.get(i).getGain());
+                System.out.println(this.nbEnnemiSpawn < this.nbEnnemiMax.getValue() - 2);
+                if (this.listeEnnemis.get(i) instanceof EnnemiVaisseauSpatial) {
+//                    if (this.nbEnnemiSpawn.getValue() < this.nbEnnemiMax.getValue() - 2) {
+//                    System.out.println("ENNEMIS SPAWN  BIS " + this.nbEnnemiSpawn);
+//                    TODO : avec la condition ça marche pas, sans la condition, ça risque de dépasser qd on sera à 99, ça va faire 101
+                    //Lorsqu'un ennemiVaisseauSpatial meurt, 2 nouveaux vaisseaux apparaissent (ils ne comptent pas dans la liste des ennemis ajoutés ou mort s'ils meurent)
+                    listeEnnemis.add(new EnnemiDivise(this, listeEnnemis.get(i).XProperty().getValue() - 5, listeEnnemis.get(i).YProperty().getValue() - 5));
+                    listeEnnemis.add(new EnnemiDivise(this, listeEnnemis.get(i).XProperty().getValue() + 5, listeEnnemis.get(i).YProperty().getValue() + 5));
+//                    }
+                }
+                if (this.listeEnnemis.get(i) instanceof EnnemiDivise) {
+                    this.listeEnnemis.remove(i);
+                } else {
+                    this.listeEnnemis.remove(i);
+                    this.nbEnnemiTue.setValue(this.nbEnnemiTue.getValue() + 1);
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Vérifie pour chaque projectile présent sur la map s'il a déjà attaqué ou non
+     */
+    public void verifProjectileHasAttacked() {
+        for (int i = listeProjectiles.size() - 1; i >= 0; i--) {
+//            System.out.println("projectile : " + listeProjectiles.get(i).getId() + " a attaqué : " + listeProjectiles.get(i).getHasAttacked());
+            if (listeProjectiles.get(i).getHasAttacked()) {
+                this.listeProjectiles.remove(i);
+            }
         }
     }
 

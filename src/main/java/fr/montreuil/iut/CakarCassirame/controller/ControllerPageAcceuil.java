@@ -1,15 +1,11 @@
 package fr.montreuil.iut.CakarCassirame.controller;
 
-import fr.montreuil.iut.CakarCassirame.HelloApplication;
+import fr.montreuil.iut.CakarCassirame.Main;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -22,12 +18,8 @@ public class ControllerPageAcceuil implements Initializable {
     @FXML
     private Pane paneExterne;
 
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     public void quitter(){
@@ -41,7 +33,7 @@ public class ControllerPageAcceuil implements Initializable {
     }
 
     public static void load(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("pageAccueil.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pageAccueil.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 640);
         stage.setTitle("Space Defencer");
         stage.setScene(scene);

@@ -9,7 +9,6 @@ public class TourCanonMissile extends TourTeteChercheuse{
     public static IntegerProperty prixA = new SimpleIntegerProperty(400);
     public static IntegerProperty prixT = new SimpleIntegerProperty(200);
 
-    private ProjectileCanonMissile projectile;
     public TourCanonMissile(Environnement environnement, int x, int y) {
         super(environnement, x, y, 50, 500, 20);
     }

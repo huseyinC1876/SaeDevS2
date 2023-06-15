@@ -27,17 +27,10 @@ public abstract class Ennemi {
         this.v = v;
         this.gain = gain;
         this.environnement = environnement;
-        /*
-        this.x = new SimpleIntegerProperty(65); //65
-        this.y = new SimpleIntegerProperty(112); //135
-         */
-        //this.x = new SimpleIntegerProperty(this.environnement.getMap().debutMapEnnemie()[1] * 32);
-        //this.y = new SimpleIntegerProperty(this.environnement.getMap().debutMapEnnemie()[0] * 32);
         this.x = new SimpleIntegerProperty(x);
         this.y = new SimpleIntegerProperty(y);
-
-        compteur +=1;
-        this.id = String.valueOf(compteur);
+        this.id = "E" +compteur;
+        compteur ++;
         positionBackUp[0] = this.y.getValue()/32;
         positionBackUp[1] = this.x.getValue()/32;
     }
@@ -55,14 +48,6 @@ public abstract class Ennemi {
 
     public int getGain() {
         return gain;
-    }
-
-    public void setPv(DoubleProperty pv) {
-        this.pv = pv;
-    }
-
-    public void setGain(int gain) {
-        this.gain = gain;
     }
 
     public boolean getEnter() { return this.enter; }
@@ -146,23 +131,11 @@ public abstract class Ennemi {
         this.pv.setValue(this.pv.getValue() - PV);
     }
 
-
-    public void setVitessePourcentage(double nb){ this.v =(int) (this.v * nb);}
-
     public void setVitesse(double v) {
         if(v >= 1)
             this.v = v;
     }
 
     public Environnement getEnvironnement(){return this.environnement;}
-
-
-    //TODO : utiliser pythagore pr savoir si un point est dans un cercle
-    public boolean estDansPerimetre(TourPerimetre tour){
-        return Math.sqrt(Math.pow(this.XProperty().getValue() - tour.XProperty().getValue(), 2) + Math.pow(this.YProperty().getValue() - tour.YProperty().getValue(), 2)) <= tour.getRayonPerimetreAction();
-    }
-
-
-
 
 }

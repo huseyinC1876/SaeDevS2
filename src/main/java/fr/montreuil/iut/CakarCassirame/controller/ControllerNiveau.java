@@ -1,11 +1,10 @@
 package fr.montreuil.iut.CakarCassirame.controller;
 
-import fr.montreuil.iut.CakarCassirame.HelloApplication;
+import fr.montreuil.iut.CakarCassirame.Main;
 import fr.montreuil.iut.CakarCassirame.modele.*;
 import fr.montreuil.iut.CakarCassirame.modele.tours.*;
 import fr.montreuil.iut.CakarCassirame.vue.*;
 import fr.montreuil.iut.CakarCassirame.vue.ennemiVue.*;
-import fr.montreuil.iut.CakarCassirame.vue.infobulleVue.InfoBulleBoutonsTours;
 import fr.montreuil.iut.CakarCassirame.vue.projectileVue.ProjectileBombeNuclaireVue;
 import fr.montreuil.iut.CakarCassirame.vue.projectileVue.ProjectileBombeNucleaireExplosionVue;
 import fr.montreuil.iut.CakarCassirame.vue.projectileVue.ProjectileLaserVue;
@@ -30,6 +29,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -124,13 +124,10 @@ public class ControllerNiveau implements Initializable {
     private Label nbEnnemiMax;
     @FXML
     private Label finPartie;
-    private double oldGameloopFrame;
 
     private boolean enter = false;
     //private AudioInputStream media;
     private int choixTour = 0;
-
-    private InfoBulleBoutonsTours infoBulleBoutonsTours;
 
     private boolean arretTemps = false;
 
@@ -160,9 +157,6 @@ public class ControllerNiveau implements Initializable {
     @FXML
     private Label prixAmeliorationMissile;
 
-    private EnnemieVaisseauSpatialDiviseVue ennemieVaisseauSpatialDiviseVue;
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -184,7 +178,6 @@ public class ControllerNiveau implements Initializable {
         this.placementVue = new PlacementVue(tilePaneInterne);
         this.nbEnnemiMax.textProperty().bind(this.environnement.getNbEnnemiMaxProperty().asString());
         this.nbEnnemiTue.textProperty().bind(this.environnement.getNbEnnemiTueProperty().asString());
-        this.ennemieVaisseauSpatialDiviseVue = new EnnemieVaisseauSpatialDiviseVue(pane);
 
 //        this.infoBulleBoutonsTours = new InfoBulleBoutonsTours(canonLaser, canonMissile, champForce, canonNucleaire);
         menuAmelioration1.setVisible(false);
@@ -196,8 +189,6 @@ public class ControllerNiveau implements Initializable {
         this.environnement.getListeTours().addListener(new ObsTours(pane));
         this.environnement.getListeEnnemis().addListener(new ObsEnnemis(pane));
         this.environnement.getListeProjectiles().addListener(new ObsProjectiles(pane, tilePaneBombe));
-        //this.oldGameloopFrame = 0;
-
 
         try {
             this.placementVue.affichage(this.environnement.getMap());
@@ -239,11 +230,6 @@ public class ControllerNiveau implements Initializable {
                 (ev -> {
                     if (environnement.getNbEnnemiTue() == environnement.getNbEnnemiMax() && enter == false) {
                         System.out.println("fini");
-//                        try {
-//                            chargerPageAcceuil();
-//                        } catch (IOException e) {
-//                            throw new RuntimeException(e);
-//                        }
                         enter = true;
                         this.finPartie.setText("Victory");
                         this.finPartie.setVisible(true);
@@ -255,19 +241,17 @@ public class ControllerNiveau implements Initializable {
                         if (this.environnement.getListeTours().size() != 0) {
                             for (int i = 0; i < this.environnement.getListeTours().size(); i++) {
                                 if (this.environnement.getListeTours().get(i) instanceof TourTeteChercheuse) {
-                                    if (temps % ((TourTeteChercheuse) this.environnement.getListeTours().get(i)).getTempsRecharge() == 0 && temps != 0) {
-                                        System.out.println("RECHERCHE CIBLE ENVIRONNEMENT");
-                                        ((TourTeteChercheuse) this.environnement.getListeTours().get(i)).recupererEnnemiCible(temps);
-                                        oldGameloopFrame = this.gameLoop.getCurrentRate();
+                                    TourTeteChercheuse tour = (TourTeteChercheuse) this.environnement.getListeTours().get(i);
+                                    //Ici, on vérifie si le temps de recharge de la tour a été dépassé. Si oui, on vérifie si un ennemi présent dans le périmètre
+                                    //TODO : j'ai ajouté un attribut LastTemps pr savoir quand il a tiré. CORRIGER
+                                    if (Math.abs(temps - tour.getTempsLastEnnemi()) >= tour.getTempsRecharge()) {
+                                         tour.recupererEnnemiCible(temps);
                                     }
                                 }
+                                //Les tours bombe nucléaires envoient une bombe si leur temps de recharge est passé
                                 if (this.environnement.getListeTours().get(i) instanceof TourCanonBombeNuclaire) {
                                     if (temps % TourCanonBombeNuclaire.tempsRecharge.getValue() == 0 && temps != 0) {
-                                        this.environnement.ajouterProjectile(3, this.environnement.getListeTours().get(i).XProperty().getValue(), this.environnement.getListeTours().get(i).YProperty().getValue());
-//                                        System.out.println("ajouter proj 3 controller");
-//                                            }
-//                                        }
-//                                    }
+                                        this.environnement.ajouterProjectileBombeNucleaire(3, this.environnement.getListeTours().get(i).XProperty().getValue(), this.environnement.getListeTours().get(i).YProperty().getValue());
                                     }
                                 }
                             }
@@ -289,16 +273,17 @@ public class ControllerNiveau implements Initializable {
                                 temps = 0;
                             }
 
+                            //ajout d'ennemi à un rythme continu
                         } else if (temps % 23 == 0) {
                             if (this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
                                 environnement.ajouterEnnemi();
                             }
-                        } else if (temps % 500 == 0 && temps != 0 && this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
-                            System.out.println("VAGUE VAGUE VAGUE");
+                            //Envoie d'une vague d'ennemi à un rythme régulier (10 ennemis)
+                        } else if (temps % 500 == 0 && this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
                             this.environnement.ajouterVagueEnnemis();
                         }
                         if(temps % 100 == 0){
-                            this.tilePaneBombe.getChildren().removeAll();
+                            projectileBombeNucleaireExplosionVue.resetGIF();
                         }
                     } else if (this.environnement.getVieProperty().getValue() < 1 || this.environnement.getNbEnnemiTue() == this.environnement.getNbEnnemiMax()) {
                         if (temps > 100) {
@@ -314,8 +299,6 @@ public class ControllerNiveau implements Initializable {
                 })
         );
         gameLoop.getKeyFrames().add(kf);
-
-
     }
 
 
@@ -327,7 +310,7 @@ public class ControllerNiveau implements Initializable {
     }
 
     public static void load(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("pageNiveau1.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pageNiveau1.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 640);
         stage.setTitle("Space Defencer");
         stage.setScene(scene);
@@ -422,6 +405,9 @@ public class ControllerNiveau implements Initializable {
     }
 
 
+    /**
+     *Affiche les emplacments disponibles pour placer une tour
+     */
     @FXML
     public void affichagePlacement() throws FileNotFoundException {
         if (!arretTemps) {
@@ -445,6 +431,10 @@ public class ControllerNiveau implements Initializable {
         }
     }
 
+    /**
+     * Récupère la position de la souris et place une tour à la position souhaitée
+     * @param mouseEvent
+     */
     @FXML
     public void placerTour(MouseEvent mouseEvent) {
         if (!arretTemps) {

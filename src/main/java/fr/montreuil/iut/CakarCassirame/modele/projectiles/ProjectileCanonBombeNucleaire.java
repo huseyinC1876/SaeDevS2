@@ -8,16 +8,17 @@ public class ProjectileCanonBombeNucleaire extends Projectile {
         super(env, degat, x, y, v);
     }
 
+    //La méthode compare la position du projectile par rapport au centre de la Map et le fait se diriger vers le centre
     @Override
     public void seDeplacer() {
-        // x droite
+        // x à droite du centre
         if (this.XProperty().getValue() < this.getEnv().getMap().getTileMapWidth() * 32 / 2) {
             this.XProperty().setValue(this.XProperty().getValue() + this.getV());
         } else { // x gauche
             this.XProperty().setValue(this.XProperty().getValue() - this.getV());
         }
 
-        // y haut
+        // y en haut du centre
         if (this.YProperty().getValue() < this.getEnv().getMap().getTileMapHeight() * 32 / 2) {
             this.YProperty().setValue(this.YProperty().getValue() + this.getV());
         } else { // y bas
@@ -26,12 +27,14 @@ public class ProjectileCanonBombeNucleaire extends Projectile {
     }
 
 
+    //Le projectile décrémente la vie de tous les ennemis présents sur la Map une fois qu'il a atteint le centre de la Map
     @Override
     public void attaquer() {
         if(this.YProperty().getValue() == this.getEnv().getMap().getTileMapHeight() * 32 / 2 && this.XProperty().getValue() ==this.getEnv().getMap().getTileMapWidth() * 32 / 2 && getHasAttacked() == false) {
             for(int i = 0 ; i < this.getEnv().getListeEnnemis().size() ; i++) {
                 this.getEnv().getListeEnnemis().get(i).décrémenterPV(this.getDegat());
             }
+            //si le projectile a attaqué il pourra être supprimé de la liste des projectiles et son sprite sera supprimé
             setHasAttacked(true);
         }
     }

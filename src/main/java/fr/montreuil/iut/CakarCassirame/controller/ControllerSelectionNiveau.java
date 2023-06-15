@@ -1,6 +1,6 @@
 package fr.montreuil.iut.CakarCassirame.controller;
 
-import fr.montreuil.iut.CakarCassirame.HelloApplication;
+import fr.montreuil.iut.CakarCassirame.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -52,7 +52,7 @@ public class ControllerSelectionNiveau implements Initializable {
 
 
     public static void load(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("pageChoixNiveau.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pageChoixNiveau.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 640);
         stage.setTitle("Space Defencer");
         stage.setScene(scene);
