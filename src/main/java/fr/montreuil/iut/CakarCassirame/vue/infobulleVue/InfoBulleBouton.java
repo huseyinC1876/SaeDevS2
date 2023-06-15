@@ -1,5 +1,6 @@
 package fr.montreuil.iut.CakarCassirame.vue.infobulleVue;
 
+import fr.montreuil.iut.CakarCassirame.modele.Environnement;
 import javafx.scene.control.Button;
 
 public abstract class InfoBulleBouton {
@@ -9,11 +10,14 @@ public abstract class InfoBulleBouton {
     private Button buttonChampDeForce;
     private Button buttonCanonNucleaire;
 
-    public InfoBulleBouton(Button buttonCanonLaser, Button buttonCanonMissile, Button buttonChampDeForce, Button buttonCanonNucleaire) {
+    private Environnement environnement;
+
+    public InfoBulleBouton(Button buttonCanonLaser, Button buttonCanonMissile, Button buttonChampDeForce, Button buttonCanonNucleaire, Environnement environnement) {
         this.buttonCanonLaser = buttonCanonLaser;
         this.buttonCanonMissile = buttonCanonMissile;
         this.buttonChampDeForce = buttonChampDeForce;
         this.buttonCanonNucleaire = buttonCanonNucleaire;
+        this.environnement = environnement;
         /*
         infobulleLaser();
         infobulleMissile();
@@ -37,6 +41,10 @@ public abstract class InfoBulleBouton {
 
     public Button getButtonCanonNucleaire() {
         return buttonCanonNucleaire;
+    }
+
+    public Environnement getEnvironnement() {
+        return environnement;
     }
 
     public abstract void infobulleLaser();
@@ -67,6 +75,7 @@ public abstract class InfoBulleBouton {
         this.buttonCanonNucleaire.setTooltip(tooltip);
     }
     */
+    public abstract void mAJ();
 
 
 }

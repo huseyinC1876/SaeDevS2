@@ -1,10 +1,16 @@
 package fr.montreuil.iut.CakarCassirame.controller;
 
 import fr.montreuil.iut.CakarCassirame.HelloApplication;
-import fr.montreuil.iut.CakarCassirame.modele.*;
-import fr.montreuil.iut.CakarCassirame.modele.tours.*;
-import fr.montreuil.iut.CakarCassirame.vue.*;
+import fr.montreuil.iut.CakarCassirame.modele.Environnement;
+import fr.montreuil.iut.CakarCassirame.modele.Parametre;
+import fr.montreuil.iut.CakarCassirame.modele.tours.TourCanonBombeNuclaire;
+import fr.montreuil.iut.CakarCassirame.modele.tours.TourTeteChercheuse;
+import fr.montreuil.iut.CakarCassirame.vue.FinJeuVue;
+import fr.montreuil.iut.CakarCassirame.vue.MapVue;
+import fr.montreuil.iut.CakarCassirame.vue.PlacementVue;
+import fr.montreuil.iut.CakarCassirame.vue.VenteVue;
 import fr.montreuil.iut.CakarCassirame.vue.ennemiVue.*;
+import fr.montreuil.iut.CakarCassirame.vue.infobulleVue.InfoBulleBoutonsAmelioraton;
 import fr.montreuil.iut.CakarCassirame.vue.infobulleVue.InfoBulleBoutonsTours;
 import fr.montreuil.iut.CakarCassirame.vue.projectileVue.ProjectileBombeNuclaireVue;
 import fr.montreuil.iut.CakarCassirame.vue.projectileVue.ProjectileBombeNucleaireExplosionVue;
@@ -20,7 +26,6 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -162,6 +167,16 @@ public class ControllerNiveau implements Initializable {
 
     private EnnemieVaisseauSpatialDiviseVue ennemieVaisseauSpatialDiviseVue;
 
+    private FinJeuVue finJeuVue;
+
+    private VenteVue venteVue;
+    private boolean autorisationVente = false;
+
+    @FXML
+    private Pane paneVente;
+
+    private InfoBulleBoutonsAmelioraton infoBulleBoutonsAmelioraton;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -185,8 +200,11 @@ public class ControllerNiveau implements Initializable {
         this.nbEnnemiMax.textProperty().bind(this.environnement.getNbEnnemiMaxProperty().asString());
         this.nbEnnemiTue.textProperty().bind(this.environnement.getNbEnnemiTueProperty().asString());
         this.ennemieVaisseauSpatialDiviseVue = new EnnemieVaisseauSpatialDiviseVue(pane);
+        this.venteVue = new VenteVue(pane, this.environnement);
+        //this.venteVue.reset();
 
-//        this.infoBulleBoutonsTours = new InfoBulleBoutonsTours(canonLaser, canonMissile, champForce, canonNucleaire);
+       this.infoBulleBoutonsTours = new InfoBulleBoutonsTours(canonLaser, canonMissile, champForce, canonNucleaire, environnement);
+       this.infoBulleBoutonsAmelioraton = new InfoBulleBoutonsAmelioraton(ameliorationCanonLaser, ameliorationCanonMissile, ameliorationChampDeForce, ameliorationCanonNucleaire, environnement);
         menuAmelioration1.setVisible(false);
         menuAmelioration2.setVisible(false);
         this.projectileBombeNuclaireVue = new ProjectileBombeNuclaireVue(pane);
@@ -196,6 +214,7 @@ public class ControllerNiveau implements Initializable {
         this.environnement.getListeTours().addListener(new ObsTours(pane));
         this.environnement.getListeEnnemis().addListener(new ObsEnnemis(pane));
         this.environnement.getListeProjectiles().addListener(new ObsProjectiles(pane, tilePaneBombe));
+        this.finJeuVue = new FinJeuVue(pane);
         //this.oldGameloopFrame = 0;
 
 
@@ -216,8 +235,9 @@ public class ControllerNiveau implements Initializable {
             prixChampDeForce.textProperty().bind(Parametre.prixTourChampForce.asString());
             prixCanonNucleaire.textProperty().bind(Parametre.prixTourCanonNucleaire.asString());
             nbRessources.textProperty().bind(this.environnement.getRessource().asString());
-            prixAmeliorationLaser.textProperty().bind(Parametre.prixAmeliorationCanonLaser.add(Parametre.prixAmeliorationCanonLaser.getValue() * Math.pow (2, this.environnement.getNiveauCanonLaser() - 1)).asString());
+            prixAmeliorationLaser.textProperty().bind(Parametre.prixAmeliorationCanonLaser.add(Parametre.prixAmeliorationCanonLaser.multiply(Math.pow (2, this.environnement.niveauCanonLaserProperty().subtract(1).getValue()))).asString());
             prixAmeliorationMissile.textProperty().bind(Parametre.prixTourCanonMissile.add(Parametre.prixTourCanonMissile.getValue() * Math.pow (2,this.environnement.getNiveauCanonMissile() - 1)).asString());
+
 
 
         } catch (FileNotFoundException e) {
@@ -245,8 +265,13 @@ public class ControllerNiveau implements Initializable {
 //                            throw new RuntimeException(e);
 //                        }
                         enter = true;
-                        this.finPartie.setText("Victory");
-                        this.finPartie.setVisible(true);
+                        try {
+                            this.finJeuVue.victoire();
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                        //this.finPartie.setText("Victory");
+                        //this.finPartie.setVisible(true);
                         temps = 0;
 
 
@@ -283,9 +308,14 @@ public class ControllerNiveau implements Initializable {
                                 this.hboxVie.getChildren().get(-(this.environnement.getVieProperty().getValue() + 1 - 3)).setVisible(false);
                             }
                             if (this.environnement.getVieProperty().getValue() < 1) {
-                                this.finPartie.setText("You Dead");
-                                this.finPartie.setAlignment(Pos.CENTER);
-                                this.finPartie.setVisible(true);
+                                //this.finPartie.setText("You Dead");
+                                //this.finPartie.setAlignment(Pos.CENTER);
+                                //this.finPartie.setVisible(true);
+                                try {
+                                    this.finJeuVue.defaite();
+                                } catch (FileNotFoundException e) {
+                                    throw new RuntimeException(e);
+                                }
                                 temps = 0;
                             }
 
@@ -419,6 +449,8 @@ public class ControllerNiveau implements Initializable {
             this.environnement.ameliorationTour(choix);
         else
             this.environnement.ameliorationTour(choix);
+        this.infoBulleBoutonsTours.mAJ();
+        this.infoBulleBoutonsAmelioraton.mAJ();
     }
 
 
@@ -445,8 +477,15 @@ public class ControllerNiveau implements Initializable {
         }
     }
 
+    public void affichagePlacementVente(){
+        if(!arretTemps){
+            this.venteVue.affichaged();
+            this.autorisationVente = true;
+        }
+    }
+
     @FXML
-    public void placerTour(MouseEvent mouseEvent) {
+    public void placerTour(MouseEvent mouseEvent) throws FileNotFoundException {
         if (!arretTemps) {
             double positionX = mouseEvent.getX();
             double positionY = mouseEvent.getY();
@@ -469,9 +508,19 @@ public class ControllerNiveau implements Initializable {
                     }
 
                 }
+                if(autorisationVente){
+                    positionX = ((int) positionX / 32) * 32 + 16;
+                    positionY = ((int) positionY / 32) * 32 + 16;
+                    if (this.environnement.verificationPlacement(positionX, positionY) == false){
+                        this.environnement.vendreTour((int)positionX ,(int) positionY);
+
+                    }
+                }
             }
             this.placementVue.reset();
             placement = false;
+            this.venteVue.reset();
+            this.autorisationVente = false;
         }
 
     }

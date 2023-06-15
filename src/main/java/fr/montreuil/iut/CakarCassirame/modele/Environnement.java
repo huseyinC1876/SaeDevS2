@@ -7,7 +7,6 @@ import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonLaser;
 import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonMissile;
 import fr.montreuil.iut.CakarCassirame.modele.tours.*;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,10 +30,10 @@ public class Environnement {
 
     private int[] debutMap;
 
-    private int niveauCanonLaser = 1;
-    private int niveauCanonMissile = 1;
-    private int niveauChampForce = 1;
-    private int niveauCanonNucleaire = 1;
+    private IntegerProperty niveauCanonLaser = new SimpleIntegerProperty(1);
+    private IntegerProperty niveauCanonMissile = new SimpleIntegerProperty(1);
+    private IntegerProperty niveauChampForce = new SimpleIntegerProperty(1);
+    private IntegerProperty niveauCanonNucleaire = new SimpleIntegerProperty(1);
 
     public Environnement(int niveau) throws IOException {
         if (niveau == 1) {
@@ -106,35 +105,64 @@ public class Environnement {
     }
 
     public int getNiveauCanonLaser() {
-        return niveauCanonLaser;
+        return niveauCanonLaser.getValue();
     }
 
     public int getNiveauCanonMissile() {
-        return niveauCanonMissile;
+        return niveauCanonMissile.getValue();
     }
 
     public int getNiveauChampForce() {
+        return niveauChampForce.getValue();
+    }
+    public int getNiveauCanonNucleaire() {
+        return niveauCanonNucleaire.getValue();
+    }
+
+    public void vendreTour(int x, int y){
+        Tour tour = tourPlacement(x, y);
+        if(tour instanceof TourCanonLaser)
+            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonLaser.getValue()/2);
+        else if (tour instanceof TourCanonMissile)
+            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonMissile.getValue());
+        else if(tour instanceof TourCanonBombeNuclaire)
+            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonNucleaire.getValue()/2);
+        else
+            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourChampForce.getValue());
+        this.listeTours.remove(tour);
+        //System.out.println("vendre "+ this.listeTours.remove(tour));
+    }
+
+    public IntegerProperty niveauCanonLaserProperty() {
+        return niveauCanonLaser;
+    }
+
+    public IntegerProperty niveauCanonMissileProperty() {
+        return niveauCanonMissile;
+    }
+
+    public IntegerProperty niveauChampForceProperty() {
         return niveauChampForce;
     }
 
-    public int getNiveauCanonNucleaire() {
+    public IntegerProperty niveauCanonNucleaireProperty() {
         return niveauCanonNucleaire;
     }
 
     public void ameliorationCanonLaser(){
-        this.niveauCanonLaser++;
+        this.niveauCanonLaser.setValue(this.niveauCanonLaser.getValue() + 1);
     }
 
     public void ameliorationCanonMissile(){
-        this.niveauCanonMissile++;
+        this.niveauCanonMissile.setValue(this.niveauCanonMissile.getValue() + 1);
     }
 
     public void ameliorationChampForce(){
-        this.niveauChampForce++;
+        this.niveauChampForce.setValue(this.niveauCanonMissile.getValue() + 1);
     }
 
     public void ameliorationCanonNucleaire(){
-        this.niveauCanonNucleaire++;
+        this.niveauCanonNucleaire.setValue(this.niveauCanonNucleaire.getValue() + 1);
     }
 
 
@@ -249,6 +277,15 @@ public class Environnement {
             }
         }
         return true;
+    }
+
+    public Tour tourPlacement(int x, int y) {
+        for (Tour tour : this.listeTours) {
+            if (tour.XProperty().getValue() == x && tour.YProperty().getValue() == y) {
+                return tour;
+            }
+        }
+        return null;
     }
 
     public void ajouterTour(int x, int y, int nbChoixTour) {

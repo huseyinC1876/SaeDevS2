@@ -6,7 +6,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class TourTeteChercheuse extends TourPerimetre{
-    public static IntegerProperty tempsRecharge;
+    private IntegerProperty tempsRecharge;
     public static IntegerProperty degat;
 
     public TourTeteChercheuse(Environnement environnement, int x, int y, int rayonPerimetreAction, int tempsRecharge, int degat) {

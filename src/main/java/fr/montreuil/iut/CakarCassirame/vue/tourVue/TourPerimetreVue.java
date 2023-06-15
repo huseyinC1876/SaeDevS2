@@ -22,7 +22,7 @@ public class TourPerimetreVue extends TourVue{
         r.setOpacity(0.3);
         r.translateXProperty().bind(tour.XProperty());
         r.translateYProperty().bind(tour.YProperty());
-        r.setId(tour.getId());
+        r.setId(tour.getId() + "perimetre");
         this.pane.getChildren().add(r);
     }
 }

@@ -17,6 +17,7 @@
    <TilePane fx:id="tilePaneBombe" prefHeight="640" prefWidth="960">
    </TilePane>
    <TilePane fx:id="tilePaneInterne" prefHeight="640.0" prefWidth="960.0" />
+   <Pane fx:id="paneVente" prefHeight="640.0" prefWidth="960.0" />
    <HBox fx:id="hboxVie" prefHeight="33.0" prefWidth="107.0">
       <children>
          <ImageView fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
@@ -228,10 +229,22 @@
          </HBox>
          <HBox prefHeight="100.0" prefWidth="200.0">
             <children>
-               <Button fx:id="buttonMenuAmelioration" mnemonicParsing="false" prefHeight="26.0" prefWidth="340.0" text="Amelioration" onAction="#affichageMenuAmelioration">
+               <Button fx:id="buttonMenuAmelioration" mnemonicParsing="false" onAction="#affichageMenuAmelioration" prefHeight="30.0" prefWidth="253.0" text="Amelioration">
                   <font>
                      <Font size="14.0" />
                   </font>
+               </Button>
+               <Button fx:id="butonVente" mnemonicParsing="false" onAction="#affichagePlacementVente" prefHeight="26.0" prefWidth="102.0">
+                  <HBox.margin>
+                     <Insets left="5.0" />
+                  </HBox.margin>
+                  <graphic>
+                     <ImageView fitHeight="26.0" fitWidth="86.0" pickOnBounds="true" smooth="false">
+                        <image>
+                           <Image url="@vente.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
                </Button>
             </children>
          </HBox>
