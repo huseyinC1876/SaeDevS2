@@ -274,7 +274,7 @@ public class ControllerNiveau implements Initializable {
                             }
 
                             //ajout d'ennemi à un rythme continu
-                        } else if (temps % 23 == 0) {
+                        } else if (temps % 101 == 0) {
                             if (this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
                                 environnement.ajouterEnnemi();
                             }
