@@ -1,6 +1,7 @@
 package fr.montreuil.iut.CakarCassirame.modele.projectiles;
 
 import fr.montreuil.iut.CakarCassirame.modele.Environnement;
+import fr.montreuil.iut.CakarCassirame.modele.ennemis.EnnemiSuperVaisseauSpatial;
 import javafx.beans.property.IntegerProperty;
 
 public class ProjectileCanonBombeNucleaire extends Projectile {
@@ -8,18 +9,17 @@ public class ProjectileCanonBombeNucleaire extends Projectile {
         super(env, degat, x, y, v);
     }
 
+    //La méthode compare la position du projectile par rapport au centre de la Map et le fait se diriger vers le centre
     @Override
     public void seDeplacer() {
-//    System.out.println( "height / 2 : " + this.getEnv().getMap().getTileMapHeight()*32 / 2 );
-//    System.out.println("width / 2 : " + this.getEnv().getMap().getTileMapWidth()*32 / 2 );
-        // x droite
+        // x à droite du centre
         if (this.XProperty().getValue() < this.getEnv().getMap().getTileMapWidth() * 32 / 2) {
             this.XProperty().setValue(this.XProperty().getValue() + this.getV());
         } else { // x gauche
             this.XProperty().setValue(this.XProperty().getValue() - this.getV());
         }
 
-        // y haut
+        // y en haut du centre
         if (this.YProperty().getValue() < this.getEnv().getMap().getTileMapHeight() * 32 / 2) {
             this.YProperty().setValue(this.YProperty().getValue() + this.getV());
         } else { // y bas
@@ -27,15 +27,22 @@ public class ProjectileCanonBombeNucleaire extends Projectile {
         }
     }
 
-
+    //Le projectile décrémente la vie de tous les ennemis présents sur la Map une fois qu'il a atteint le centre de la Map
     @Override
     public void attaquer() {
-//        System.out.println("RENTRE DANS METHODE ATTAQUER PROJECTILE");
         if(this.YProperty().getValue() == this.getEnv().getMap().getTileMapHeight() * 32 / 2 && this.XProperty().getValue() ==this.getEnv().getMap().getTileMapWidth() * 32 / 2 && getHasAttacked() == false) {
             for(int i = 0 ; i < this.getEnv().getListeEnnemis().size() ; i++) {
-//            System.out.println("AU CENTRE ATTAQUE ATTAQUE ATTAQUE ATTAQUE ATTAQUE ATTAQUE  ATTAQUE" + i);
-                this.getEnv().getListeEnnemis().get(i).décrémenterPV(this.getDegat());
+                //Si c'est un SuperVaisseauSpatial, on décrémente d'abord le bouclier
+                if(this.getEnv().getListeEnnemis().get(i) instanceof EnnemiSuperVaisseauSpatial){
+                    if(((EnnemiSuperVaisseauSpatial) this.getEnv().getListeEnnemis().get(i)).getBouclier() > 0) {
+                        ((EnnemiSuperVaisseauSpatial) this.getEnv().getListeEnnemis().get(i)).décrémenterBouclier(this.getDegat());
+                    }
+                    // si le bouclier est épuisé on décrémente directement les PV
+                    else this.getEnv().getListeEnnemis().get(i).décrémenterPV(this.getDegat());
+                }
+                else this.getEnv().getListeEnnemis().get(i).décrémenterPV(this.getDegat());
             }
+            //hasAttacked devient true --> permet que le projectile soit supprimé de la liste et disparaisse de la Map
             setHasAttacked(true);
         }
     }

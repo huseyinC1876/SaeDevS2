@@ -33,7 +33,6 @@ public class ObsTours implements ListChangeListener<Tour> {
                     try {
                         tourCanonLaserVue.creerSprite(tour);
                         tourCanonLaserVue.creerSprite((TourPerimetre) tour);
-
                     } catch (FileNotFoundException e) {
                         throw new RuntimeException(e);
                     }
@@ -41,7 +40,6 @@ public class ObsTours implements ListChangeListener<Tour> {
                     try {
                         tourCanonMissileVue.creerSprite(tour);
                         tourCanonMissileVue.creerSprite((TourPerimetre) tour);
-
                     } catch (FileNotFoundException e) {
                         throw new RuntimeException(e);
                     }

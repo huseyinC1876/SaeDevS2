@@ -29,15 +29,11 @@ public abstract class Projectile {
     public int getV(){return this.v;}
     public Environnement getEnv(){return this.env;}
     public int getDegat(){return this.degat;}
-
     public abstract void seDeplacer();
-
     public abstract void attaquer();
-
     public void setHasAttacked(boolean b){
         hasAttacked = b;
     }
-
     public boolean getHasAttacked(){return hasAttacked;}
 
 }

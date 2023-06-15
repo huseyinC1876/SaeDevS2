@@ -3,7 +3,6 @@ package fr.montreuil.iut.CakarCassirame.vue;
 import fr.montreuil.iut.CakarCassirame.modele.Map;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 
 import java.io.FileInputStream;
@@ -17,7 +16,6 @@ public class PlacementVue {
     }
 
     public void affichage(Map map) throws FileNotFoundException {
-
         int[][] terrain = map.getTileMap();
         for(int i = 0 ; i < terrain.length ; i++) {
             for (int j = 0; j < terrain[i].length; j++) {
@@ -42,6 +40,5 @@ public class PlacementVue {
 
     public void affichaged(){
         this.tilePaneInterne.setVisible(true);
-
     }
 }

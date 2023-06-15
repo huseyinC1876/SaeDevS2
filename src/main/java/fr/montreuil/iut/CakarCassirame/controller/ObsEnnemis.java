@@ -17,7 +17,6 @@ public class ObsEnnemis implements ListChangeListener<Ennemi> {
     private Pane pane;
 
     public ObsEnnemis(Pane pane) {
-
         this.pane = pane;
         this.ennemiExtraterrestreVue = new EnnemiExtraterrestreVue(pane);
         this.ennemiVaisseauSpatialVue = new EnnemiVaisseauSpatialVue(pane);
@@ -46,9 +45,9 @@ public class ObsEnnemis implements ListChangeListener<Ennemi> {
                     throw new RuntimeException(e);
                 }
             }
-            for (Ennemi ennemie : change.getRemoved()) {
-                pane.getChildren().remove(pane.lookup("#" + ennemie.getId()));
-
+            for (Ennemi ennemi : change.getRemoved()) {
+                pane.getChildren().remove(pane.lookup("#" + ennemi.getId()+"-progress"));
+                pane.getChildren().remove(pane.lookup("#" + ennemi.getId()));
             }
         }
     }

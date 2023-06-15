@@ -12,8 +12,6 @@ public abstract class Tour {
     private IntegerProperty x, y;
     private Environnement environnement;
 
-
-
     public Tour(Environnement environnement, int x, int y) {
         this.id = "T" + compteur;
         compteur++;
@@ -25,15 +23,7 @@ public abstract class Tour {
     public String getId() {
         return id;
     }
-    public IntegerProperty getPrixProperty(){
-        return this.prix;
-    }
 
-
-
-    public double valAbs(double val){
-        return (val < 0) ? -val : val;
-    }
     public IntegerProperty XProperty(){ return this.x; }
 
     public IntegerProperty YProperty(){ return this.y; }

@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
 public class MapVue {
 
     private TilePane tilePane;
-
     public MapVue(TilePane tilePane){
         this.tilePane = tilePane;
     }
@@ -44,9 +43,4 @@ public class MapVue {
             }
         }
     }
-
-
-
-
-
 }

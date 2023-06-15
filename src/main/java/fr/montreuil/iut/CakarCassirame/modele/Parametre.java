@@ -17,7 +17,7 @@ public class Parametre {
 
     public static final IntegerProperty prixTourCanonMissile = new SimpleIntegerProperty(400);
 
-    public static final IntegerProperty prixTourCanonNucleaire = new SimpleIntegerProperty(1750);
+    public static final IntegerProperty prixTourCanonNucleaire = new SimpleIntegerProperty(1500);
 
     public static final IntegerProperty prixTourChampForce = new SimpleIntegerProperty(500);
 
@@ -34,5 +34,11 @@ public class Parametre {
     public static final IntegerProperty degatCanonMissile = new SimpleIntegerProperty(5);
 
     public static final IntegerProperty degatCanonNuclaire = new SimpleIntegerProperty(50);
+
+    public static final int vitesseInitExtraterrestre = 2;
+
+    public static final int vitesseInitVaisseauSpatial = 3;
+
+    public static final int vitesseInitSuperVaisseauSpatial = 3;
 
 }

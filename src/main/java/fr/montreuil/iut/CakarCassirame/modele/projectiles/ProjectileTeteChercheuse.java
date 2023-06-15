@@ -2,6 +2,7 @@ package fr.montreuil.iut.CakarCassirame.modele.projectiles;
 
 import fr.montreuil.iut.CakarCassirame.modele.Environnement;
 import fr.montreuil.iut.CakarCassirame.modele.ennemis.Ennemi;
+import fr.montreuil.iut.CakarCassirame.modele.ennemis.EnnemiSuperVaisseauSpatial;
 import javafx.beans.property.IntegerProperty;
 
 public abstract class ProjectileTeteChercheuse extends Projectile {
@@ -32,14 +33,23 @@ public abstract class ProjectileTeteChercheuse extends Projectile {
         }
     }
 
+
+    //Les projectiles et les ennemis ont une vitesse différentes --> ils ne seront jamais à la même position.
+    //Si le projectile est situé à  - de 3 pixels de l'ennemi, l'ennemi est attaqué (PV décrémentés)
     @Override
     public void attaquer() {
-        System.out.println("ATTAQUER PROJ ATTAQUER PROJ ATTAQUER PROJ ATTAQUER PROJ ATTAQUER PROJ ATTAQUER PROJ");
-            if (Math.abs(this.YProperty().getValue() - this.ennemiCible.YProperty().getValue()) <3 && Math.abs(this.XProperty().getValue() - this.ennemiCible.XProperty().getValue()) <3) {
-                System.out.println("DECREMENTE PV ENNEMI");
-                this.ennemiCible.décrémenterPV(this.getDegat());
-                setHasAttacked(true);
-//            }
+        if (Math.abs(this.YProperty().getValue() - this.ennemiCible.YProperty().getValue()) < 3 && Math.abs(this.XProperty().getValue() - this.ennemiCible.XProperty().getValue()) < 3) {
+            //Si c'est un SuperVaisseauSpatial, on décrémente d'abord le bouclier
+            if(ennemiCible instanceof EnnemiSuperVaisseauSpatial){
+                if(((EnnemiSuperVaisseauSpatial) ennemiCible).getBouclier() > 0) {
+                    ((EnnemiSuperVaisseauSpatial) ennemiCible).décrémenterBouclier(this.getDegat());
+                }
+                // si le bouclier est épuisé on décrémente directement les PV
+                else ennemiCible.décrémenterPV(this.getDegat());
+            }
+            else this.ennemiCible.décrémenterPV(this.getDegat());
+            //hasAttacked devient true --> permet que le projectile soit supprimé de la liste et disparaisse de la Map
+            setHasAttacked(true);
         }
     }
 
