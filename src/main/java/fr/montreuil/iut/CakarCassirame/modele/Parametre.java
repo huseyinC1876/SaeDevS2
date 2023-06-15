@@ -17,7 +17,7 @@ public class Parametre {
 
     public static final IntegerProperty prixTourCanonMissile = new SimpleIntegerProperty(400);
 
-    public static final IntegerProperty prixTourCanonNucleaire = new SimpleIntegerProperty(1500);
+    public static final IntegerProperty prixTourCanonNucleaire = new SimpleIntegerProperty(100); //TODO : ICI, le temps est dans la tour
 
     public static final IntegerProperty prixTourChampForce = new SimpleIntegerProperty(500);
 

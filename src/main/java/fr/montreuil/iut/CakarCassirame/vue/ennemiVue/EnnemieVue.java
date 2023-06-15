@@ -1,6 +1,7 @@
 package fr.montreuil.iut.CakarCassirame.vue.ennemiVue;
 
 import fr.montreuil.iut.CakarCassirame.modele.ennemis.Ennemi;
+import fr.montreuil.iut.CakarCassirame.modele.ennemis.EnnemiSuperVaisseauSpatial;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
@@ -30,7 +31,7 @@ public abstract class EnnemieVue {
         this.pane.getChildren().add(imageViewsSpaceChip);
 
         ProgressBar HP = new ProgressBar();
-        HP.setId(ennemi.getId()+"-progress");
+        HP.setId(ennemi.getId() + "-progress");
         HP.progressProperty().bind(ennemi.PVProperty().divide(ennemi.getPvMax()));
         HP.translateYProperty().bind(ennemi.YProperty().subtract(15));
         HP.translateXProperty().bind(ennemi.XProperty().add(2.5));

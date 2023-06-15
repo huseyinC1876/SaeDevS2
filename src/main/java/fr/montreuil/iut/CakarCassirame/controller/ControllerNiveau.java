@@ -231,7 +231,7 @@ public class ControllerNiveau implements Initializable {
                             }
                             //Envoie d'une vague d'ennemi à un rythme régulier (10 ennemis)
                         } else if (temps % 500 == 0 && this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
-                            this.environnement.ajouterVagueEnnemis();
+                            this.environnement.ajouterVagueEnnemis(temps);
                         }
                         if(temps % 100 == 0){
                             projectileBombeNucleaireExplosionVue.resetGIF();
@@ -377,7 +377,6 @@ public class ControllerNiveau implements Initializable {
             if (this.environnement.getRessource().getValue() >= prix) {
                 this.placementVue.affichaged();
                 this.placement = true;
-
             }
         }
     }
