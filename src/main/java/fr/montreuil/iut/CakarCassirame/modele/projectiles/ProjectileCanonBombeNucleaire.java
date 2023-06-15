@@ -38,9 +38,9 @@ public class ProjectileCanonBombeNucleaire extends Projectile {
                         ((EnnemiSuperVaisseauSpatial) this.getEnv().getListeEnnemis().get(i)).décrémenterBouclier(this.getDegat());
                     }
                     // si le bouclier est épuisé on décrémente directement les PV
-                    else this.getEnv().getListeEnnemis().get(i).décrémenterPV(this.getDegat());
+                    else this.getEnv().getListeEnnemis().get(i).decrementerPV(this.getDegat());
                 }
-                else this.getEnv().getListeEnnemis().get(i).décrémenterPV(this.getDegat());
+                else this.getEnv().getListeEnnemis().get(i).decrementerPV(this.getDegat());
             }
             //hasAttacked devient true --> permet que le projectile soit supprimé de la liste et disparaisse de la Map
             setHasAttacked(true);

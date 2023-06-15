@@ -10,13 +10,14 @@ public abstract class TourPerimetre extends Tour{
         super(environnement, x, y);
         this.rayonPerimetreAction = rayonPerimetreAction;
     }
-
     @Override
     public void attaquer() {}
 
     public static int getRayonPerimetreAction(){return rayonPerimetreAction;}
 
-    //Verifie si un ennemi est présent dans le périmètre de la tour
+    /**
+     * Verifie si un ennemi est présent dans le périmètre de la tour
+     */
     public boolean hasEnnemiDansPerimetre(Ennemi ennemi){
         return Math.sqrt(Math.pow(this.XProperty().getValue() - ennemi.XProperty().getValue(), 2) + Math.pow(this.YProperty().getValue() - ennemi.YProperty().getValue(), 2)) <= this.getRayonPerimetreAction();
     }

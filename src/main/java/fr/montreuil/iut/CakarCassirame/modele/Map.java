@@ -8,11 +8,11 @@ import java.io.IOException;
 
 public abstract class Map {
 
-    private int[][] tileMap = new int[20][30];
-            // 1 = base ennemie
-            // 0 = notre base
-            // 2 = chemin
-            // 3 = vide intersideral
+    private int[][] tileMap;
+    // 1 = base ennemie
+    // 0 = notre base
+    // 2 = chemin
+    // 3 = vide intersideral
     public Map(String lien) throws IOException {
         this.tileMap = map(lien);
     }

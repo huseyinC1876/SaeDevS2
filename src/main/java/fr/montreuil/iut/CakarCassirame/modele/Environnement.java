@@ -125,23 +125,10 @@ public class Environnement {
         else
             this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourChampForce.getValue());
         this.listeTours.remove(tour);
-        //System.out.println("vendre "+ this.listeTours.remove(tour));
     }
 
     public IntegerProperty niveauCanonLaserProperty() {
         return niveauCanonLaser;
-    }
-
-    public IntegerProperty niveauCanonMissileProperty() {
-        return niveauCanonMissile;
-    }
-
-    public IntegerProperty niveauChampForceProperty() {
-        return niveauChampForce;
-    }
-
-    public IntegerProperty niveauCanonNucleaireProperty() {
-        return niveauCanonNucleaire;
     }
     public void ameliorationCanonLaser(){
         this.niveauCanonLaser.setValue(this.niveauCanonLaser.getValue() + 1);
@@ -182,9 +169,10 @@ public class Environnement {
         }
     }
 
-
-    public void ajouterVagueEnnemis(int temps) {
-        System.out.println("VAGUE VAGUE VAGUE VAGUE VAGUE VAGUE VAGUE");
+    /**
+     * Ajoute nbENnemisParVagues (10 au niveau 1 et 15 au niveau 2) ennemis de manière aléatoire (pas de boss)
+     */
+    public void ajouterVagueEnnemis() {
         verifNbEnnemisParVague();
         for (int i = 0; i < this.nbEnnemisParVague; i++) {
             double random = Math.random() * 3;
@@ -280,19 +268,15 @@ public class Environnement {
         if (choix == 1) {
             this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationCanonLaser.getValue() * Math.pow(2, this.getNiveauCanonLaser() - 1));
             this.ameliorationCanonLaser();
-            //TourCanonLaser.amelioration();
         } else if (choix == 2) {
             this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationCanonMissile.getValue() * Math.pow(2, this.getNiveauCanonMissile() - 1));
             this.ameliorationCanonMissile();
-            //TourCanonMissile.amelioration(/*35,4*/);
         } else if (choix == 3) {
             this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationCanonNucleaire.getValue() * Math.pow(2, this.getNiveauCanonNucleaire() - 1));
             this.ameliorationCanonNucleaire();
-            //TourCanonBombeNuclaire.amelioration();
         } else {
             this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationChampForce.getValue() * Math.pow(2, this.getNiveauChampForce() - 1));
             this.ameliorationChampForce();
-            //TourChampDeForce.amelioration(0.50);
         }
     }
 
@@ -384,7 +368,6 @@ public class Environnement {
             }
         }
     }
-
 
     public void unTour() {
         deplacementEnnemis();

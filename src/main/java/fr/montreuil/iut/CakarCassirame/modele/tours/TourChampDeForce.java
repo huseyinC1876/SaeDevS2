@@ -10,7 +10,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class TourChampDeForce extends TourPerimetre {
 
     public static double pourcentageReduction = 0.75;
-    public static IntegerProperty prixT = new SimpleIntegerProperty(500);
 
     public TourChampDeForce(Environnement environnement, int x, int y) {
         super(environnement, x, y,  100);
@@ -38,8 +37,4 @@ public class TourChampDeForce extends TourPerimetre {
             }
         }
     }
-
-        public static void amelioration(double pourcentage){
-            pourcentageReduction = pourcentage;
-        }
 }

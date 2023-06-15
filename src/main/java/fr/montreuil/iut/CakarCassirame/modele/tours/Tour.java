@@ -5,7 +5,6 @@ import javafx.beans.property.*;
 
 public abstract class Tour {
 
-
     public IntegerProperty prix;
     private static int compteur = 0;
     private String id;
@@ -23,15 +22,11 @@ public abstract class Tour {
     public String getId() {
         return id;
     }
-
     public IntegerProperty XProperty(){ return this.x; }
-
     public IntegerProperty YProperty(){ return this.y; }
-
     public Environnement getEnvironnement() {
         return environnement;
     }
-
     public abstract void attaquer();
 
 }

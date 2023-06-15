@@ -9,7 +9,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class TourTeteChercheuse extends TourPerimetre {
     public static IntegerProperty tempsRecharge;
-
     public static IntegerProperty degat;
     private int tempsLastEnnemi;
 
@@ -25,10 +24,8 @@ public abstract class TourTeteChercheuse extends TourPerimetre {
     }
 
     /**
-     * La méthode vérifie le temps de jeu
-     * Si le temps est correct, on vérifie si un ennemi est présent dans le périmètre d'action de la tour
-     * Dès qu'un ennemi est récupéré, on ajoute un nouveau projectile qui va viser cet ennemi.
-     *
+     * On vérifie si un ennemi est présent dans le périmètre d'action de la tour
+     * Dès qu'un ennemi est récupéré, on ajoute un nouveau projectile qui va viser cet ennemi + le tempsLastEnnemi est mis à jour
      * @param temps
      */
     public void recupererEnnemiCible(int temps) {

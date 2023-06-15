@@ -56,16 +56,6 @@ public abstract class Ennemi {
     }
 
     public void seDeplacer(){
-        /*
-        System.out.println("x = " + this.x.getValue());
-        System.out.println("x/32 = "+ (this.x.getValue()/32));
-        System.out.println("x/32 + 1 = " + ((this.x.getValue()/32)+1));
-        System.out.println("y/32 = " + this.y.getValue()/32);
-
-         */
-
-
-
         if((positionBackUp[1] != this.x.getValue()/32+1)  && this.environnement.getMap().getTileMap()[(this.y.getValue()/32)][((this.x.getValue()/32)+ 1)] == 2 && !enter){
             if(positionBackUp[1] != this.x.getValue() / 32) {
                 this.positionBackUp[0] = this.y.getValue() / 32;
@@ -144,7 +134,7 @@ public abstract class Ennemi {
         }
     }
 
-    public void décrémenterPV(int PV){
+    public void decrementerPV(int PV){
         this.pv.setValue(this.pv.getValue() - PV);
     }
 
