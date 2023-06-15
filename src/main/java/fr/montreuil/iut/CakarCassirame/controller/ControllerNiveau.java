@@ -197,7 +197,7 @@ public class ControllerNiveau implements Initializable {
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev -> {
-                    if (environnement.getNbEnnemiTue() == environnement.getNbEnnemiMax() && enter == false) {
+                    if (environnement.getNbEnnemiTue() == environnement.getNbEnnemiMax() && !enter) {
                         System.out.println("fini");
                         enter = true;
                         try {
@@ -280,7 +280,7 @@ public class ControllerNiveau implements Initializable {
     public void chargerPageAcceuil() throws IOException {
         Scene scene = pane.getScene();
         Stage stage = (Stage) scene.getWindow();
-        ControllerPageAcceuil.load(stage);
+        ControllerPageAccueil.load(stage);
     }
 
     public static void load(Stage stage) throws IOException {
@@ -292,11 +292,7 @@ public class ControllerNiveau implements Initializable {
     }
 
     public void pause() {
-        if (arretTemps)
-            arretTemps = false;
-        else {
-            arretTemps = true;
-        }
+        arretTemps = !arretTemps;
         if (gameLoop.getStatus() == Animation.Status.RUNNING) {
             gameLoop.pause();
         } else
@@ -422,7 +418,7 @@ public class ControllerNiveau implements Initializable {
                 if (this.environnement.getMap().getTile((int) positionY / 32, (int) positionX / 32) == 3 && placement) {
                     positionX = ((int) positionX / 32) * 32;
                     positionY = ((int) positionY / 32) * 32;
-                    if (this.environnement.verificationPlacement(positionX, positionY) == true) {
+                    if (this.environnement.verificationPlacement(positionX, positionY)) {
                         this.environnement.ajouterTour((int)positionX + 16, (int)positionY + 16, this.choixTour);
                         int prix;
                         if(choixTour == 1)
@@ -440,7 +436,7 @@ public class ControllerNiveau implements Initializable {
                 if(autorisationVente){
                     positionX = ((int) positionX / 32) * 32 + 16;
                     positionY = ((int) positionY / 32) * 32 + 16;
-                    if (this.environnement.verificationPlacement(positionX, positionY) == false){
+                    if (!this.environnement.verificationPlacement(positionX, positionY)){
                         this.environnement.vendreTour((int)positionX ,(int) positionY);
                     }
                 }

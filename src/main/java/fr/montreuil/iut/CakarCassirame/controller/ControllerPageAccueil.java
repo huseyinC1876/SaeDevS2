@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControllerPageAcceuil implements Initializable {
+public class ControllerPageAccueil implements Initializable {
 
     @FXML
     private Pane paneExterne;

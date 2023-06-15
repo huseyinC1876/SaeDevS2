@@ -15,6 +15,7 @@ public class EnnemiSuperVaisseauSpatial extends Ennemi {
        //Si les PV du bouclier sont inférieurs aux dégats pris, on décrémente aussi les PV de l'ennemi
        if(this.getBouclier() < PV){
            int difference = PV - getBouclier();
+           this.bouclier = 0;
            this.decrementerPV(difference);
        }
        else this.bouclier = this.bouclier - PV;

@@ -13,7 +13,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="paneExterne" prefHeight="640.0" prefWidth="1300.0" style="-fx-background-image: url('C:/Users/husey/Downloads/TowerDefense/TowerDefense/src/main/resources/fr/montreuil/iut/CakarCassirame/espace.jpg');" styleClass="paneAcceuil" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.montreuil.iut.CakarCassirame.controller.ControllerPageAcceuil">
+<Pane fx:id="paneExterne" prefHeight="640.0" prefWidth="1300.0" style="-fx-background-image: url('C:/Users/husey/Downloads/TowerDefense/TowerDefense/src/main/resources/fr/montreuil/iut/CakarCassirame/espace.jpg');" styleClass="paneAcceuil" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.montreuil.iut.CakarCassirame.controller.ControllerPageAccueil">
    <stylesheets>
       <URL value="@style.css" />
    </stylesheets>

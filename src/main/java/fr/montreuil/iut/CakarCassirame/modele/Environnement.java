@@ -337,18 +337,20 @@ public class Environnement {
                 this.ressource.setValue(this.getRessource().getValue() + this.listeEnnemis.get(i).getGain());
                 System.out.println(this.nbEnnemiSpawn < this.nbEnnemiMax.getValue() - 2);
                 if (this.listeEnnemis.get(i) instanceof EnnemiVaisseauSpatial) {
+                    this.listeEnnemis.remove(i);
+                    this.nbEnnemiTue.setValue(this.nbEnnemiTue.getValue() + 1);
 //                    if (this.nbEnnemiSpawn.getValue() < this.nbEnnemiMax.getValue() - 2) {
 //                    System.out.println("ENNEMIS SPAWN  BIS " + this.nbEnnemiSpawn);
 //                    TODO : avec la condition ça marche pas, sans la condition, ça risque de dépasser qd on sera à 99, ça va faire 101
                     //Lorsqu'un ennemiVaisseauSpatial meurt, 2 nouveaux vaisseaux apparaissent (ils ne comptent pas dans les listes des ennemis ajoutés et morts)
                     listeEnnemis.add(new EnnemiDivise(this, this.debutMap[1], this.debutMap[0]));
-                    listeEnnemis.add(new EnnemiDivise(this, this.debutMap[1], this.debutMap[0]));
+                    listeEnnemis.add(new EnnemiDivise(this, this.debutMap[1] + 16, this.debutMap[0] + 16));
 //                    }
-                } else if (this.listeEnnemis.get(i) instanceof EnnemiDivise) {
+                }
+                else if (this.listeEnnemis.get(i) instanceof EnnemiDivise) {
                     this.listeEnnemis.remove(i);
-                } else if (this.listeEnnemis.get(i) instanceof EnnemiSuperVaisseauSpatial) {
-                    this.listeEnnemis.remove(i);
-                } else {
+                }
+                else {
                     this.listeEnnemis.remove(i);
                     this.nbEnnemiTue.setValue(this.nbEnnemiTue.getValue() + 1);
                 }
