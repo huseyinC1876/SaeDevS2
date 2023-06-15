@@ -38,11 +38,11 @@ public class Environnement {
     public Environnement(int niveau) throws IOException {
         if (niveau == 1) {
             this.map = new MapNiv1();
-            this.nbEnnemiMax = new SimpleIntegerProperty(5);
+            this.nbEnnemiMax = new SimpleIntegerProperty(100);
             this.nbEnnemisParVague = 10;
         } else {
             this.map = new MapNiv2();
-            this.nbEnnemiMax = new SimpleIntegerProperty(100);
+            this.nbEnnemiMax = new SimpleIntegerProperty(200);
             this.nbEnnemisParVague = 15;
         }
         this.x = this.map.getTileMap().length;
@@ -58,108 +58,59 @@ public class Environnement {
     public Map getMap() {
         return map;
     }
-
     public int getNbEnnemiMax() {
         return this.nbEnnemiMax.getValue();
     }
-
     public IntegerProperty getNbEnnemiMaxProperty() {
         return this.nbEnnemiMax;
     }
-
     public int getNbEnnemiTue() {
         return this.nbEnnemiTue.getValue();
     }
-
     public IntegerProperty getNbEnnemiTueProperty() {
         return this.nbEnnemiTue;
     }
-
     public int getNbEnnemiSpawn() {
         return nbEnnemiSpawn;
     }
-
     public IntegerProperty getVieProperty() {
         return this.vie;
     }
-
     public ObservableList<Ennemi> getListeEnnemis() {
         return this.listeEnnemis;
     }
-
     public ObservableList<Tour> getListeTours() {
         return this.listeTours;
     }
-
-    public IntegerProperty getRessource() {
-        return this.ressource;
-    }
-
-    public int getNiveauCanonLaser() {
-        return niveauCanonLaser;
-    }
-
-    public int getNiveauCanonMissile() {
-        return niveauCanonMissile;
-    }
-
-    public int getNiveauChampForce() {
-        return niveauChampForce;
-    }
-
-    public int getNiveauCanonNucleaire() {
-        return niveauCanonNucleaire;
-    }
-
-    public void ameliorationCanonLaser(){
-        this.niveauCanonLaser++;
-    }
-
-    public void ameliorationCanonMissile(){
-        this.niveauCanonMissile++;
-    }
-
-    public void ameliorationChampForce(){
-        this.niveauChampForce++;
-    }
-
-    public void ameliorationCanonNucleaire(){
-        this.niveauCanonNucleaire++;
-    }
-
     public ObservableList<Projectile> getListeProjectiles() {
         return this.listeProjectiles;
     }
-
-
-    /**
-     * Ajoute des projectiles bombe Nucleaire dans l'environnement
-     * @param typeProjectile
-     * @param x --> position X du projectile dans la map
-     * @param y --> position y du projectile dans la map
-     */
-
-    public void ajouterProjectileBombeNucleaire(int typeProjectile, int x, int y) {
-        if (typeProjectile == 3) {
-            listeProjectiles.add(new ProjectileCanonBombeNucleaire(this, 5, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 1));
-        }
+    public IntegerProperty getRessource() {
+        return this.ressource;
     }
-
-    /**
-     * Ajoute des projectiles missile ou laser dans l'environnement
-     * @param typeProjectile
-     * @param x --> position X du projectile dans la map
-     * @param y --> position y du projectile dans la map
-     * @param ennemi --> ennemi à viser
-     */
-    //TODO : AJUSTER LES DEGATS SOUHAITES
-    public void ajouterProjectileTeteChercheuse(int typeProjectile, int x, int y, Ennemi ennemi) {
-        if (typeProjectile == 1) {
-            listeProjectiles.add(new ProjectileCanonLaser(this, 10, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 5, ennemi));
-        }
-        if (typeProjectile == 2) {
-            listeProjectiles.add(new ProjectileCanonMissile(this, 20, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 5, ennemi));
-        }
+    public int getNiveauCanonLaser() {
+        return niveauCanonLaser;
+    }
+    public int getNiveauCanonMissile() {
+        return niveauCanonMissile;
+    }
+    public int getNiveauChampForce() {
+        return niveauChampForce;
+    }
+    public int getNiveauCanonNucleaire() {
+        return niveauCanonNucleaire;
+    }
+    public void ameliorationCanonLaser(){
+        this.niveauCanonLaser++;
+    }
+    public void ameliorationCanonMissile(){
+        this.niveauCanonMissile++;
+    }
+    public void ameliorationChampForce(){
+        this.niveauChampForce++;
+    }
+    public void ameliorationCanonNucleaire(){
+        this.niveauCanonNucleaire++;
     }
 
 
@@ -211,6 +162,36 @@ public class Environnement {
         }
     }
 
+    /**
+     * Ajoute des projectiles bombe Nucleaire dans l'environnement
+     * @param typeProjectile
+     * @param x --> position X du projectile dans la map
+     * @param y --> position y du projectile dans la map
+     */
+    public void ajouterProjectileBombeNucleaire(int typeProjectile, int x, int y) {
+        if (typeProjectile == 3) {
+            listeProjectiles.add(new ProjectileCanonBombeNucleaire(this, 5, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 1));
+        }
+    }
+
+    /**
+     * Ajoute des projectiles missile ou laser dans l'environnement
+     * @param typeProjectile
+     * @param x --> position X du projectile dans la map
+     * @param y --> position y du projectile dans la map
+     * @param ennemi --> ennemi à viser
+     */
+    //TODO : AJUSTER LES DEGATS SOUHAITES
+    public void ajouterProjectileTeteChercheuse(int typeProjectile, int x, int y, Ennemi ennemi) {
+        if (typeProjectile == 1) {
+            listeProjectiles.add(new ProjectileCanonLaser(this, 10, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 5, ennemi));
+        }
+        if (typeProjectile == 2) {
+            listeProjectiles.add(new ProjectileCanonMissile(this, 20, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 5, ennemi));
+        }
+    }
+
+
 
     public boolean verificationPlacement(double x, double y) {
         for (Tour tour : this.listeTours) {
@@ -221,6 +202,12 @@ public class Environnement {
         return true;
     }
 
+    /**
+     * Ajoute un tour dans l'environnement
+     * @param x
+     * @param y
+     * @param nbChoixTour
+     */
     public void ajouterTour(int x, int y, int nbChoixTour) {
         if (nbChoixTour == 1)
             this.listeTours.add(new TourCanonLaser(this, x, y));
@@ -243,12 +230,6 @@ public class Environnement {
     public void deplacementProjectiles() {
         for (Projectile projectile : this.listeProjectiles) {
             projectile.seDeplacer();
-        }
-    }
-
-    public void verifNbEnnemisParVague() {
-        if (this.nbEnnemiSpawn > nbEnnemiMax.getValue() - nbEnnemisParVague + 1) { //91
-            this.nbEnnemisParVague = (nbEnnemiMax.getValue() - 1) - nbEnnemiSpawn;
         }
     }
 
@@ -276,7 +257,6 @@ public class Environnement {
 
     public void attaquer() {
         for (int i = 0; i < this.listeTours.size(); i++) {
-//            rechercheCible();
             listeTours.get(i).attaquer();
 
         }
@@ -303,6 +283,17 @@ public class Environnement {
                 ennemi.setVitesse(EnnemiVaisseauSpatial.getVitesseInitiale());
             else if (ennemi instanceof EnnemiSuperVaisseauSpatial && ennemi.getV() != EnnemiSuperVaisseauSpatial.vitesseInitiale)
                 ennemi.setVitesse(EnnemiSuperVaisseauSpatial.vitesseInitiale);
+        }
+    }
+
+    /**
+     * Vérifie le que le nombre d'ennemis spawnés est inférieur au nombre d'ennemis max - 1 pour le boss
+     * si oui --> on ajoute une
+     */
+    public void verifNbEnnemisParVague() {
+        if (this.nbEnnemiSpawn > (nbEnnemiMax.getValue() - (nbEnnemisParVague + 1))) { //89
+            this.nbEnnemisParVague = (nbEnnemiMax.getValue() - 1) - nbEnnemiSpawn;
+            System.out.println("NB ENNEMIS / VAGUE : " + this.nbEnnemisParVague);
         }
     }
 

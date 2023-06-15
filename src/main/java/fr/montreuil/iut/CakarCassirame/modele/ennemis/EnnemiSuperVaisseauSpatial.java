@@ -7,26 +7,21 @@ public class EnnemiSuperVaisseauSpatial extends Ennemi {
     public static double vitesseInitiale = 3;
 
     public EnnemiSuperVaisseauSpatial(Environnement environnement, int x, int y) {
-        super(environnement, 500, 3, 80, x, y, 500);
-        this.bouclier = 100;
+        super(environnement, 400, 3, 150, x, y, 400);
+        this.bouclier = 50;
     }
 
 
    public void décrémenterBouclier(int PV){
-        this.bouclier = this.bouclier - PV;
+       //Si les PV du bouclier sont inférieurs aux dégats pris, on décrémente aussi les PV de l'ennemi
+       if(this.getBouclier() < PV){
+           int difference = PV - getBouclier();
+           this.décrémenterPV(difference);
+       }
+       else this.bouclier = this.bouclier - PV;
    }
 
-   public void décrémenterVie(int pv){
-        if (this.bouclier > pv){
-            this.bouclier -= pv;
-        }
-        else if(this.bouclier > 0){
-            this.bouclier = 0;
-        }
-        else{
-            this.décrémenterPV(pv);
-        }
-   }
+   public int getBouclier(){return this.bouclier;}
 
     public double getVitesseInitiale(){return this.vitesseInitiale;}
 

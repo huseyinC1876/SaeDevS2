@@ -6,11 +6,11 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class TourCanonMissile extends TourTeteChercheuse{
-    public static IntegerProperty prixA = new SimpleIntegerProperty(400);
+    public static IntegerProperty prixA = new SimpleIntegerProperty(250);
     public static IntegerProperty prixT = new SimpleIntegerProperty(200);
 
     public TourCanonMissile(Environnement environnement, int x, int y) {
-        super(environnement, x, y, 50, 500, 20);
+        super(environnement, x, y, 80, 130, 80);
     }
 
     public static void amelioration(/*int nvDegat, int temps*/){

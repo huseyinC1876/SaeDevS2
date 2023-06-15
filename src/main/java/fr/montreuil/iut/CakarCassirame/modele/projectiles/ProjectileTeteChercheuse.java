@@ -2,6 +2,7 @@ package fr.montreuil.iut.CakarCassirame.modele.projectiles;
 
 import fr.montreuil.iut.CakarCassirame.modele.Environnement;
 import fr.montreuil.iut.CakarCassirame.modele.ennemis.Ennemi;
+import fr.montreuil.iut.CakarCassirame.modele.ennemis.EnnemiSuperVaisseauSpatial;
 import javafx.beans.property.IntegerProperty;
 
 public abstract class ProjectileTeteChercheuse extends Projectile {
@@ -38,7 +39,15 @@ public abstract class ProjectileTeteChercheuse extends Projectile {
     @Override
     public void attaquer() {
         if (Math.abs(this.YProperty().getValue() - this.ennemiCible.YProperty().getValue()) < 3 && Math.abs(this.XProperty().getValue() - this.ennemiCible.XProperty().getValue()) < 3) {
-            this.ennemiCible.décrémenterPV(this.getDegat());
+            //Si c'est un SuperVaisseauSpatial, on décrémente d'abord le bouclier
+            if(ennemiCible instanceof EnnemiSuperVaisseauSpatial){
+                if(((EnnemiSuperVaisseauSpatial) ennemiCible).getBouclier() > 0) {
+                    ((EnnemiSuperVaisseauSpatial) ennemiCible).décrémenterBouclier(this.getDegat());
+                }
+                // si le bouclier est épuisé on décrémente directement les PV
+                else ennemiCible.décrémenterPV(this.getDegat());
+            }
+            else this.ennemiCible.décrémenterPV(this.getDegat());
             //hasAttacked devient true --> permet que le projectile soit supprimé de la liste et disparaisse de la Map
             setHasAttacked(true);
         }

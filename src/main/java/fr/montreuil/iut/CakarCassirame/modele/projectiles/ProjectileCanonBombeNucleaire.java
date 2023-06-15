@@ -1,6 +1,7 @@
 package fr.montreuil.iut.CakarCassirame.modele.projectiles;
 
 import fr.montreuil.iut.CakarCassirame.modele.Environnement;
+import fr.montreuil.iut.CakarCassirame.modele.ennemis.EnnemiSuperVaisseauSpatial;
 import javafx.beans.property.IntegerProperty;
 
 public class ProjectileCanonBombeNucleaire extends Projectile {
@@ -31,9 +32,17 @@ public class ProjectileCanonBombeNucleaire extends Projectile {
     public void attaquer() {
         if(this.YProperty().getValue() == this.getEnv().getMap().getTileMapHeight() * 32 / 2 && this.XProperty().getValue() ==this.getEnv().getMap().getTileMapWidth() * 32 / 2 && getHasAttacked() == false) {
             for(int i = 0 ; i < this.getEnv().getListeEnnemis().size() ; i++) {
-                this.getEnv().getListeEnnemis().get(i).décrémenterPV(this.getDegat());
+                //Si c'est un SuperVaisseauSpatial, on décrémente d'abord le bouclier
+                if(this.getEnv().getListeEnnemis().get(i) instanceof EnnemiSuperVaisseauSpatial){
+                    if(((EnnemiSuperVaisseauSpatial) this.getEnv().getListeEnnemis().get(i)).getBouclier() > 0) {
+                        ((EnnemiSuperVaisseauSpatial) this.getEnv().getListeEnnemis().get(i)).décrémenterBouclier(this.getDegat());
+                    }
+                    // si le bouclier est épuisé on décrémente directement les PV
+                    else this.getEnv().getListeEnnemis().get(i).décrémenterPV(this.getDegat());
+                }
+                else this.getEnv().getListeEnnemis().get(i).décrémenterPV(this.getDegat());
             }
-            //si le projectile a attaqué il pourra être supprimé de la liste des projectiles et son sprite sera supprimé
+            //hasAttacked devient true --> permet que le projectile soit supprimé de la liste et disparaisse de la Map
             setHasAttacked(true);
         }
     }
