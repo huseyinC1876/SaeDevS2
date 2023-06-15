@@ -131,7 +131,6 @@ public class Environnement {
         return this.listeProjectiles;
     }
 
-    //TODO : AJUSTER LES DEGATS SOUHAITES
 
     /**
      * Ajoute des projectiles bombe Nucleaire dans l'environnement
@@ -143,7 +142,6 @@ public class Environnement {
     public void ajouterProjectileBombeNucleaire(int typeProjectile, int x, int y) {
         if (typeProjectile == 3) {
             listeProjectiles.add(new ProjectileCanonBombeNucleaire(this, 5, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 1));
-//                System.out.println("ajouter proj 3 environnement");
         }
     }
 
@@ -154,12 +152,13 @@ public class Environnement {
      * @param y --> position y du projectile dans la map
      * @param ennemi --> ennemi à viser
      */
+    //TODO : AJUSTER LES DEGATS SOUHAITES
     public void ajouterProjectileTeteChercheuse(int typeProjectile, int x, int y, Ennemi ennemi) {
         if (typeProjectile == 1) {
             listeProjectiles.add(new ProjectileCanonLaser(this, 10, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 5, ennemi));
         }
         if (typeProjectile == 2) {
-            listeProjectiles.add(new ProjectileCanonMissile(this, 20, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 1, ennemi));
+            listeProjectiles.add(new ProjectileCanonMissile(this, 20, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 5, ennemi));
         }
     }
 

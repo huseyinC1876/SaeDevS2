@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
 public abstract class TourVue {
 
     Pane pane;
-
     private String file;
     public TourVue(Pane pane, String file){
         this.pane = pane;
@@ -26,16 +25,6 @@ public abstract class TourVue {
         imageViewsTour.setFitWidth(32);
         imageViewsTour.setFitHeight(32);
         this.pane.getChildren().add(imageViewsTour);
-
-//        Circle r;
-//        r = new Circle(tour.getRayonPerimetreAction());
-//        r.setFill(Color.DARKBLUE);
-//        r.setOpacity(0.3);
-//        r.translateXProperty().bind(tour.XProperty());
-//        r.translateYProperty().bind(tour.YProperty());
-//        r.setId(tour.getId());
-//        this.pane.getChildren().add(r);
-
     }
 
 }

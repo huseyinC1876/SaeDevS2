@@ -11,15 +11,14 @@ import java.io.FileNotFoundException;
 public class ProjectileVue {
 
     Pane pane;
-
     private String file;
+
     public ProjectileVue(Pane pane, String file){
         this.pane = pane;
         this.file = file;
     }
 
     public void creerSprite(Projectile projectile) throws FileNotFoundException {
-
         ImageView imageViewsTour = new ImageView(new Image(new FileInputStream(this.file)));
         imageViewsTour.setId(projectile.getId());
         imageViewsTour.translateXProperty().bind(projectile.XProperty().subtract(16));
@@ -27,14 +26,5 @@ public class ProjectileVue {
         imageViewsTour.setFitWidth(32);
         imageViewsTour.setFitHeight(32);
         this.pane.getChildren().add(imageViewsTour);
-
-//        Circle r;
-//        r = new Circle(3);
-//        r.setFill(Color.GREEN);
-//        r.setOpacity(0.3);
-//        r.translateXProperty().bind(projectile.XProperty());
-//        r.translateYProperty().bind(projectile.YProperty());
-//        r.setId(projectile.getId());
-//        this.pane.getChildren().add(r);
     }
 }

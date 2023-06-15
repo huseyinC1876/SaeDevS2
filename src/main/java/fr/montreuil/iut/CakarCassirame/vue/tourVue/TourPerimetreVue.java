@@ -9,20 +9,18 @@ import java.io.FileNotFoundException;
 
 public class TourPerimetreVue extends TourVue{
 
-
     public TourPerimetreVue(Pane pane, String file) {
         super(pane, file);
     }
 
     public void creerSprite(TourPerimetre tour) throws FileNotFoundException {
-
         Circle r;
         r = new Circle(tour.getRayonPerimetreAction());
         r.setFill(Color.DARKBLUE);
         r.setOpacity(0.3);
         r.translateXProperty().bind(tour.XProperty());
         r.translateYProperty().bind(tour.YProperty());
-        r.setId(tour.getId());
+        r.setId(tour.getId() + "perimetre");
         this.pane.getChildren().add(r);
     }
 }

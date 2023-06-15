@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Ennemi {
 
+    private Environnement environnement;
     private DoubleProperty pv;
     private double pvMax;
     private double v;
@@ -17,7 +18,6 @@ public abstract class Ennemi {
     public static int compteur = 0;
     private String id;
     private int[]  positionBackUp = new int[2];
-    private Environnement environnement;
     private boolean enter;
 
 

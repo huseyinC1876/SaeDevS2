@@ -21,7 +21,6 @@ public class ObsProjectiles implements ListChangeListener<Projectile> {
     private ProjectileBombeNuclaireVue projectileBombeNuclaireVue;
     private ProjectileBombeNucleaireExplosionVue projectileBombeNucleaireExplosionVue;
     private Pane pane;
-    private TilePane tilePane;
     public ObsProjectiles(Pane pane, TilePane tilePane) {
         this.pane = pane;
         this.projectileLaserVue = new ProjectileLaserVue(pane);
@@ -58,13 +57,9 @@ public class ObsProjectiles implements ListChangeListener<Projectile> {
                 try {
                     if(projectile instanceof ProjectileCanonBombeNucleaire)
                     projectileBombeNucleaireExplosionVue.creerSprite(projectile);
-//                                System.out.println("CREATION SPRITE SPRITE SPRITE SPRITE SPRITE SPRITE SPRITE");
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-
-//TODO : il faut enlever l'image !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (attention, pour l'instant, l'image est sur un 3ème tilepane et ça ne marche pas bien.
-
             }
         }
     }

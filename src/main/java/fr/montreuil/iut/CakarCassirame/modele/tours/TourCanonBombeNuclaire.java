@@ -3,7 +3,6 @@ package fr.montreuil.iut.CakarCassirame.modele.tours;
 import fr.montreuil.iut.CakarCassirame.modele.Environnement;
 import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonBombeNucleaire;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 
@@ -17,8 +16,6 @@ public class TourCanonBombeNuclaire extends Tour{
         super(environnement, x, y);
         this.projectile = new ProjectileCanonBombeNucleaire(environnement, 50, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 1);
     }
-
-    public int getDegat(){return degat.getValue();}
 
     public static void amelioration() {
         degat.setValue(degat.getValue() * 2);

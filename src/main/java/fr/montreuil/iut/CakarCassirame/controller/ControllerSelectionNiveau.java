@@ -17,7 +17,6 @@ public class ControllerSelectionNiveau implements Initializable {
 
     @FXML
     private Pane paneExterneSelection;
-
     public static int choixNiveau;
     @FXML
     private Button boutonNiveau1;
@@ -26,15 +25,12 @@ public class ControllerSelectionNiveau implements Initializable {
 
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
+    public void initialize(URL url, ResourceBundle resourceBundle) {}
 
     public void chargerPageAccueil() throws IOException {
         Scene scene = paneExterneSelection.getScene();
         Stage stage = (Stage) scene.getWindow();
         ControllerPageAcceuil.load(stage);
-
     }
 
     public void chargerNiveau() throws IOException {
@@ -46,7 +42,6 @@ public class ControllerSelectionNiveau implements Initializable {
         Scene scene = paneExterneSelection.getScene();
         Stage stage = (Stage) scene.getWindow();
         ControllerNiveau.load(stage);
-
     }
 
 
@@ -54,7 +49,7 @@ public class ControllerSelectionNiveau implements Initializable {
     public static void load(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pageChoixNiveau.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 640);
-        stage.setTitle("Space Defencer");
+        stage.setTitle("Space Defender");
         stage.setScene(scene);
         stage.show();
     }

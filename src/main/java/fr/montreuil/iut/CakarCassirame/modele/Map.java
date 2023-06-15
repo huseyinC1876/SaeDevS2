@@ -15,8 +15,6 @@ public abstract class Map {
             // 3 = vide intersideral
     public Map(String lien) throws IOException {
         this.tileMap = map(lien);
-
-
     }
 
     public int getTile(int x, int y){
@@ -53,7 +51,6 @@ public abstract class Map {
     }
 
     public int[][] map(String lien) throws IOException {
-        //System.out.println(lien);
         int[][] map = new int[20][30];
         File file = new File(lien);
         // Créer l'objet File Reader
@@ -67,34 +64,22 @@ public abstract class Map {
         while((strng = br.readLine()) != null) {
             sb.append(strng);
             sb.append("\n");
-            //System.out.println(strng);
-            //System.out.println(strng.length());
-            //System.out.println(strng.charAt(1));
-            //System.out.println(strng.indexOf(11));
             int c = 0;
 
             for(int j = 0; j < strng.length(); j++) {
                 if (strng.charAt(j) != ',') {
                     String val = String.valueOf(strng.charAt(j));
                     map[i][c] = Integer.parseInt(val);
-                    //System.out.println(map[i][c]);
                     c++;
                 }
-                //System.out.println(Arrays.toString(map));
             }
-
-
-            //System.out.println(Arrays.toString(map));
             i++;
-
         }
-
         return map;
     }
 
+    public double getTileMapHeight(){return this.tileMap.length;}
 
-    public double getTileMapHeight(){return this.tileMap.length;} //20
-
-    public double getTileMapWidth(){return this.tileMap[0].length;} //30
+    public double getTileMapWidth(){return this.tileMap[0].length;}
 
 }

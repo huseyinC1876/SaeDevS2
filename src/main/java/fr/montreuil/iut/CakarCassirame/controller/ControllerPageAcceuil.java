@@ -35,13 +35,9 @@ public class ControllerPageAcceuil implements Initializable {
     public static void load(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pageAccueil.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 640);
-        stage.setTitle("Space Defencer");
+        stage.setTitle("Space Defender");
         stage.setScene(scene);
         stage.show();
     }
-
-
-
-
 
 }

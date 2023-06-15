@@ -34,10 +34,13 @@ public abstract class TourTeteChercheuse extends TourPerimetre {
         for (int i = 0; i < this.getEnvironnement().getListeEnnemis().size(); i++) {
             ennemi = this.getEnvironnement().getListeEnnemis().get(i);
             if (Math.sqrt(Math.pow(this.XProperty().getValue() - ennemi.XProperty().getValue(), 2) + Math.pow(this.YProperty().getValue() - ennemi.YProperty().getValue(), 2)) <= this.getRayonPerimetreAction()) {
-                System.out.println("ENNEMI DANS LE PERIMETRE");
-                this.getEnvironnement().ajouterProjectileTeteChercheuse(1, this.XProperty().getValue(), this.YProperty().getValue(), ennemi);
+                if(this instanceof TourCanonLaser) {
+                    this.getEnvironnement().ajouterProjectileTeteChercheuse(1, this.XProperty().getValue(), this.YProperty().getValue(), ennemi);
+                }
+                if(this instanceof TourCanonMissile){
+                    this.getEnvironnement().ajouterProjectileTeteChercheuse(2, this.XProperty().getValue(), this.YProperty().getValue(), ennemi);
+                }
                 this.tempsLastEnnemi = temps;
-                System.out.println("TEMPS LAST ENNEMI APRES DE TOUR : " + this.getId() + " : " + tempsLastEnnemi);
                 quit = true;
             }
             if (quit) break;

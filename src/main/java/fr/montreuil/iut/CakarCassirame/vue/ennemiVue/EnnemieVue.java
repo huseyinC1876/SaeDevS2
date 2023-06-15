@@ -15,14 +15,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public abstract class EnnemieVue {
-
     private Pane pane;
     private String file;
     public EnnemieVue(Pane pane, String file){
         this.pane = pane;
         this.file = file;
     }
-
 
     public void creerSprite(Ennemi ennemi) throws FileNotFoundException {
         ImageView imageViewsSpaceChip = new ImageView(new Image(new FileInputStream(this.file)));
@@ -39,24 +37,5 @@ public abstract class EnnemieVue {
         HP.setPrefHeight(15);
         HP.setPrefWidth(28);
         this.pane.getChildren().add(HP);
-//
-//        Circle r;
-//        r = new Circle(4);
-//        r.setFill(Color.ORANGERED);
-//        r.translateXProperty().bind(ennemi.XProperty().add(16));
-//        r.translateYProperty().bind(ennemi.YProperty().add(16));
-//        r.setId(ennemi.getId());
-//        this.pane.getChildren().add(r);
-//        System.out.println(r.getId());
     }
-
-    public void rotation90(ImageView imageView){
-        imageView.setRotate(90);
-
-    }
-
-    public void rotationM90(ImageView imageView){
-        imageView.setRotate(-90);
-    }
-
 }

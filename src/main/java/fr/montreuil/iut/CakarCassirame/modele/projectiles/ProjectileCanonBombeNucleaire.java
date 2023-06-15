@@ -26,7 +26,6 @@ public class ProjectileCanonBombeNucleaire extends Projectile {
         }
     }
 
-
     //Le projectile décrémente la vie de tous les ennemis présents sur la Map une fois qu'il a atteint le centre de la Map
     @Override
     public void attaquer() {

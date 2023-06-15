@@ -8,5 +8,4 @@ public class TourCanonLaser extends TourTeteChercheuse {
         super(environnement, x, y, 50, 200, 2);
     }
 
-
 }

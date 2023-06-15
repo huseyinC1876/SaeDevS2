@@ -32,16 +32,14 @@ public class ObsTours implements ListChangeListener<Tour> {
                 if (tour instanceof TourCanonLaser) {
                     try {
                         tourCanonLaserVue.creerSprite(tour);
-                        tourCanonLaserVue.creerSpritePerimetre((TourPerimetre) tour);
-
+                        tourCanonLaserVue.creerSprite((TourPerimetre) tour);
                     } catch (FileNotFoundException e) {
                         throw new RuntimeException(e);
                     }
                 } else if (tour instanceof TourCanonMissile) {
                     try {
                         tourCanonMissileVue.creerSprite(tour);
-                        tourCanonMissileVue.creerSpritePerimetre((TourPerimetre) tour);
-
+                        tourCanonMissileVue.creerSprite((TourPerimetre) tour);
                     } catch (FileNotFoundException e) {
                         throw new RuntimeException(e);
                     }
@@ -54,7 +52,7 @@ public class ObsTours implements ListChangeListener<Tour> {
                 } else {
                     try {
                         tourChampDeForceVue.creerSprite(tour);
-                        tourChampDeForceVue.creerSpritePerimetre((TourPerimetre) tour);
+                        tourChampDeForceVue.creerSprite((TourPerimetre) tour);
                     } catch (FileNotFoundException e) {
                         throw new RuntimeException(e);
                     }

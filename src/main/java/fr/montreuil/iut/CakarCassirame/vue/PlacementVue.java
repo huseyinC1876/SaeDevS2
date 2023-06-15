@@ -17,7 +17,6 @@ public class PlacementVue {
     }
 
     public void affichage(Map map) throws FileNotFoundException {
-
         int[][] terrain = map.getTileMap();
         for(int i = 0 ; i < terrain.length ; i++) {
             for (int j = 0; j < terrain[i].length; j++) {
@@ -42,6 +41,5 @@ public class PlacementVue {
 
     public void affichaged(){
         this.tilePaneInterne.setVisible(true);
-
     }
 }
