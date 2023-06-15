@@ -65,13 +65,21 @@ public abstract class Ennemi {
     }
 
     public void seDeplacer(){
+        System.out.println("Ancien x : "+ positionBackUp[1]);
+        System.out.println("Actuelle x : " +this.x.getValue()/32);
+        System.out.println("Ancien y : "+ positionBackUp[0]);
+        System.out.println("Actuelle y : " +this.y.getValue()/32);
+
 
         if((positionBackUp[1] != this.x.getValue()/32+1)  && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32)+ 1] == 2 && !enter){
-            this.positionBackUp[0] = this.y.getValue()/32;
+            if(positionBackUp[1] != this.x.getValue() / 32 &&  this.positionBackUp[0] == this.y.getValue() / 32) {
+                this.positionBackUp[0] = this.y.getValue() / 32;
+            }
             this.x.setValue(this.x.getValue() + this.v);
             if(this.x.getValue()/32 - this.positionBackUp[1] == 2){
                 this.positionBackUp[1]++;
             }
+            System.out.println("enter");
         }
         else if(this.environnement.getMap().getTileMap()[this.y.getValue()/32 + 1][(this.x.getValue()/32)] == 0){
             enter = true;
@@ -106,14 +114,19 @@ public abstract class Ennemi {
 
         }
         else if ((positionBackUp[0] != this.y.getValue()/32+1) &&  (this.environnement.getMap().getTileMap()[(this.y.getValue()/32) + 1][(this.x.getValue()/32)] == 2) && !enter){
-            this.positionBackUp[1] = this.x.getValue() /32;
+            if(positionBackUp[0] != this.y.getValue() / 32 && this.positionBackUp[1] == this.x.getValue() / 32) {
+                this.positionBackUp[1] = this.x.getValue() / 32;
+            }
+            //this.positionBackUp[1] = this.x.getValue() /32;
             this.y.setValue(this.y.getValue() + this.v);
             if(this.y.getValue()/32 - this.positionBackUp[0] == 2){
                 this.positionBackUp[0]++;
             }
+
         }
         else if ((positionBackUp[0] != this.y.getValue()/32-1) &&  (this.environnement.getMap().getTileMap()[(this.y.getValue()/32) - 1][(this.x.getValue()/32)] == 2) && !enter){
-            this.positionBackUp[1] = this.x.getValue() /32;
+            if(positionBackUp[0] != this.y.getValue() / 32 && this.positionBackUp[1] == this.x.getValue() /32)
+                this.positionBackUp[1] = this.x.getValue() /32;
             this.y.setValue(this.y.getValue() - this.v);
             if(this.environnement.getMap().getTileMap()[(this.y.getValue()/32) - 1][(this.x.getValue()/32)] == 3){
                 int multiplicateur = (int) (32 - this.v);
@@ -123,14 +136,22 @@ public abstract class Ennemi {
             if(this.positionBackUp[0] - this.y.getValue()/32 == 2){
                 this.positionBackUp[0]--;
             }
+
         }
         else if((positionBackUp[1] != this.x.getValue()/32- 1) && this.environnement.getMap().getTileMap()[this.y.getValue()/32][(this.x.getValue()/32) - 1] == 2 && !enter){
-            this.positionBackUp[0] = this.y.getValue() /32;
-            System.out.println(positionBackUp[1]);
+            if(positionBackUp[1] != this.x.getValue() / 32 && this.positionBackUp[0] == this.y.getValue() / 32) {
+                this.positionBackUp[0] = this.y.getValue() / 32;
+            }
             this.x.setValue(this.x.getValue() - this.v);
             if(this.positionBackUp[1] - this.x.getValue()/32 == 2){
                 this.positionBackUp[1]--;
             }
+            if(this.environnement.getMap().getTileMap()[(this.y.getValue()/32)][(this.x.getValue()/32) - 1] == 3){
+                int multiplicateur = (int) (32 - this.v);
+                multiplicateur = (int) (multiplicateur / this.v) ;
+                this.x.setValue(this.x.getValue() - this.v * multiplicateur) ;
+            }
+
         }
     }
 

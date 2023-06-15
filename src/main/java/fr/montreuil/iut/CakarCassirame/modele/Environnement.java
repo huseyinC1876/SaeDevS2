@@ -38,11 +38,11 @@ public class Environnement {
     public Environnement(int niveau) throws IOException {
         if (niveau == 1) {
             this.map = new MapNiv1();
-            this.nbEnnemiMax = new SimpleIntegerProperty(100);
+            this.nbEnnemiMax = new SimpleIntegerProperty(1);
             this.nbEnnemisParVague = 10;
         } else {
             this.map = new MapNiv2();
-            this.nbEnnemiMax = new SimpleIntegerProperty(100);
+            this.nbEnnemiMax = new SimpleIntegerProperty(1);
             this.nbEnnemisParVague = 15;
         }
         this.x = this.map.getTileMap().length;
