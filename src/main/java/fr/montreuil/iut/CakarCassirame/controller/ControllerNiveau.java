@@ -130,6 +130,7 @@ public class ControllerNiveau implements Initializable {
     private Label prixAmeliorationChamps;
 
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -218,9 +219,30 @@ public class ControllerNiveau implements Initializable {
                             throw new RuntimeException(e);
                         }
                         temps = 0;
+                    }
+                    else if (this.environnement.getVieProperty().getValue() < 1  && !enter) {
+                        enter = true;
+                        try {
+                            //affichade de la page de défaite
+                            this.finJeuVue.defaite();
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                        temps = 0;
+                    }
+                    if (enter) {
+                        if (temps > 100) {
+                            try {
+                                chargerPageAcceuil();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            gameLoop.stop();
+                        }
+                    }
 
                         //Si l'ennemi a encore des vies
-                    } else if (this.environnement.getVieProperty().getValue() > 0) {
+                     if (this.environnement.getVieProperty().getValue() > 0 && !enter) {
 
                         if (this.environnement.getListeTours().size() != 0) {
                             for (int i = 0; i < this.environnement.getListeTours().size(); i++) {
@@ -244,7 +266,8 @@ public class ControllerNiveau implements Initializable {
                                 }
                             }
                         }
-                        if (temps % 3 == 0) {
+
+                        if (temps % 3 == 0 && !enter) {
                             this.environnement.unTour();
                             AffichageBoutonAmelioration();
                             AffichageBoutonTours();
@@ -257,45 +280,27 @@ public class ControllerNiveau implements Initializable {
                                 } else
                                     this.hboxVie.getChildren().get(-(this.environnement.getVieProperty().getValue() + 1 - 3)).setVisible(false);
                             }
-                            if (this.environnement.getVieProperty().getValue() < 1) {
-                                try {
-                                    //affichade de la page de défaite
-                                    this.finJeuVue.defaite();
-                                } catch (FileNotFoundException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                temps = 0;
-                            }
 
                         }
                         //ajout d'ennemi à un rythme continu
-                        if (temps % 100 == 0) {
+                        if (temps % 100 == 0 && !enter) {
                             if (this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
                                 environnement.ajouterEnnemi();
                             }
                             projectileBombeNucleaireExplosionVue.resetGIF();
                         }
                         //si le temps de "recharge vague" est passé, on doit creer nbEnnemisParVague
-                        if (temps - this.environnement.getTempsLastVague() >= this.environnement.getIntervalleVague() && this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
+                        if (temps - this.environnement.getTempsLastVague() >= this.environnement.getIntervalleVague() && this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax() && !enter) {
                             nbEnnemiACreer += this.environnement.getNbEnnemisParVague();
                             this.environnement.setTempsLastVague(temps);
                         }
                         //S'il y a des ennemis à créer, on les ajoute selon l'intervalle précisé pour constituer la vague d'ennemis
-                        if(nbEnnemiACreer > 0 && temps - tempsLastEnnemiCree > this.environnement.getIntervalleEnnemiParVague()){
+                        if(nbEnnemiACreer > 0 && temps - tempsLastEnnemiCree > this.environnement.getIntervalleEnnemiParVague() && !enter){
                             tempsLastEnnemiCree = temps;
                             this.environnement.ajouterEnnemi();
                             this.nbEnnemiACreer--;
                         }
                         //s'il ne reste plus de vie à l'ennemi ou que le joueur a tué tous les ennemis
-                    } else if (this.environnement.getVieProperty().getValue() < 1 || this.environnement.getNbEnnemiTue() == this.environnement.getNbEnnemiMax()) {
-                        if (temps > 100) {
-                            try {
-                                chargerPageAcceuil();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                            gameLoop.stop();
-                        }
                     }
                     temps++;
                 })
@@ -389,17 +394,19 @@ public class ControllerNiveau implements Initializable {
     }
 
     public void ameliorationTours() {
-        int choix = (ameliorationCanonLaser.isArmed()) ? 1 : (ameliorationCanonMissile.isArmed()) ? 2 : (ameliorationCanonNucleaire.isArmed()) ? 3 : 4;
-        if (choix == 1)
-            this.environnement.ameliorationTour(choix);
-        else if (choix == 2)
-            this.environnement.ameliorationTour(choix);
-        else if (choix == 3)
-            this.environnement.ameliorationTour(choix);
-        else
-            this.environnement.ameliorationTour(choix);
-        this.infoBulleBoutonsTours.mAJ();
-        this.infoBulleBoutonsAmelioraton.mAJ();
+        if(!arretTemps) {
+            int choix = (ameliorationCanonLaser.isArmed()) ? 1 : (ameliorationCanonMissile.isArmed()) ? 2 : (ameliorationCanonNucleaire.isArmed()) ? 3 : 4;
+            if (choix == 1)
+                this.environnement.ameliorationTour(choix);
+            else if (choix == 2)
+                this.environnement.ameliorationTour(choix);
+            else if (choix == 3)
+                this.environnement.ameliorationTour(choix);
+            else
+                this.environnement.ameliorationTour(choix);
+            this.infoBulleBoutonsTours.mAJ();
+            this.infoBulleBoutonsAmelioraton.mAJ();
+        }
     }
 
 
@@ -439,7 +446,7 @@ public class ControllerNiveau implements Initializable {
      * @param mouseEvent
      */
     @FXML
-    public void placerTour(MouseEvent mouseEvent) throws FileNotFoundException {
+    public void GestionTour(MouseEvent mouseEvent) throws FileNotFoundException {
         if (!arretTemps) {
             double positionX = mouseEvent.getX();
             double positionY = mouseEvent.getY();

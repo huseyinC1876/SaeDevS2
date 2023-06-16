@@ -55,6 +55,7 @@ public abstract class Ennemi {
         return v;
     }
 
+    //Si l'ennemi rentre dans la base l'atribut enter devient true
     public void seDeplacer(){
         if((positionBackUp[1] != this.x.getValue()/32+1)  && this.environnement.getMap().getTileMap()[(this.y.getValue()/32)][((this.x.getValue()/32)+ 1)] == 2 && !enter){
             if(positionBackUp[1] != this.x.getValue() / 32) {

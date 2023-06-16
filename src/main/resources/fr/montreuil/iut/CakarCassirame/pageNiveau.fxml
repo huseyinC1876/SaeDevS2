@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" onMouseClicked="#placerTour" prefHeight="640.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.montreuil.iut.CakarCassirame.controller.ControllerNiveau">
+<Pane fx:id="pane" onMouseClicked="#GestionTour" prefHeight="640.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.montreuil.iut.CakarCassirame.controller.ControllerNiveau">
     <TilePane fx:id="tilePaneExterne" alignment="CENTER" prefHeight="640" prefWidth="960" xmlns:fx="http://javafx.com/fxml">
     </TilePane>
    <TilePane fx:id="tilePaneBombe" prefHeight="640" prefWidth="960">

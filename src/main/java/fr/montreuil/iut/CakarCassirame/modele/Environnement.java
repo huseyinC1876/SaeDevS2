@@ -20,7 +20,7 @@ public class Environnement {
     private Map map;
     private ObservableList<Ennemi> listeEnnemis;
     private ObservableList<Tour> listeTours;
-    private IntegerProperty ressource = new SimpleIntegerProperty(5000);
+    private IntegerProperty ressource = new SimpleIntegerProperty(1300);
     private int nbEnnemisParVague;
     private IntegerProperty vie = new SimpleIntegerProperty(3);
     private ObservableList<Projectile> listeProjectiles;
@@ -37,6 +37,9 @@ public class Environnement {
     private int intervalleEnnemiParVague;
     private int tempsLastVague;
     private int intervalleVague;
+
+    private boolean finJeu = false;
+
     public Environnement(int niveau) throws IOException {
         if (niveau == 1) {
             this.map = new MapNiv1();
@@ -44,7 +47,7 @@ public class Environnement {
             this.nbEnnemisParVague = 10;
         } else {
             this.map = new MapNiv2();
-            this.nbEnnemiMax = new SimpleIntegerProperty(3);
+            this.nbEnnemiMax = new SimpleIntegerProperty(200);
             this.nbEnnemisParVague = 15;
         }
         this.x = this.map.getTileMap().length;
@@ -124,6 +127,9 @@ public class Environnement {
 
     public IntegerProperty niveauMaxChampProperty(){ return this.niveauMaxChamp; }
 
+    public boolean isFinJeu() {
+        return finJeu;
+    }
 
     public int getNbEnnemisParVague() {
         return this.nbEnnemisParVague;
@@ -231,7 +237,7 @@ public class Environnement {
 
     public boolean verificationPlacement(double x, double y) {
         for (Tour tour : this.listeTours) {
-            if (tour.XProperty().getValue() == (x + 16) && tour.YProperty().getValue() == (y + 16)) {
+            if (tour.XProperty().getValue() == (x + 16) && tour.YProperty().getValue() == (y + 16) ){
                 return false;
             }
         }
@@ -404,7 +410,17 @@ public class Environnement {
         }
     }
 
+    public void verificationFinPartie(){
+        if(this.getVieProperty().getValue() < 1 || this.getNbEnnemiTue() > 99){
+            this.finJeu = true;
+        }
+    }
 
+
+
+    /**
+     * Gestion de ce qu'il se passe pendant un tour
+     */
     public void unTour() {
         deplacementEnnemis();
         deplacementProjectiles();
@@ -414,6 +430,7 @@ public class Environnement {
         verifPerimetreChampDeForce();
         verifNbEnnemisParVague();
         verifProjectileHasCible();
+        verificationFinPartie();
     }
 
 }
