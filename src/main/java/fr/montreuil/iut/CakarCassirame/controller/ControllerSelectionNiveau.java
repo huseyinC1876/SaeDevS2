@@ -7,8 +7,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -42,6 +45,10 @@ public class ControllerSelectionNiveau implements Initializable {
         Scene scene = paneExterneSelection.getScene();
         Stage stage = (Stage) scene.getWindow();
         ControllerNiveau.load(stage);
+        Media music =  new  Media( new File("src/main/resources/fr/montreuil/iut/CakarCassirame/Hollow Knight OST - Enter Hallownest.mp3").toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(music);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
     }
 
     public static void load(Stage stage) throws IOException {
