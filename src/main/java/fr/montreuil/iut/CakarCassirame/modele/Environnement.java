@@ -20,7 +20,7 @@ public class Environnement {
     private Map map;
     private ObservableList<Ennemi> listeEnnemis;
     private ObservableList<Tour> listeTours;
-    private IntegerProperty ressource = new SimpleIntegerProperty(1300);
+    private IntegerProperty ressource = new SimpleIntegerProperty(2000);
     private int nbEnnemisParVague;
     private IntegerProperty vie = new SimpleIntegerProperty(3);
     private ObservableList<Projectile> listeProjectiles;
