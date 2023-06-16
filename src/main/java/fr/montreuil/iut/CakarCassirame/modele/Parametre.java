@@ -23,7 +23,7 @@ public class Parametre {
 
     public static final IntegerProperty tempsRechargeCanonLaser = new SimpleIntegerProperty(200);
 
-    public static final IntegerProperty tempsRechargeCanonMissile = new SimpleIntegerProperty(130);
+    public static final IntegerProperty tempsRechargeCanonMissile = new SimpleIntegerProperty(100);
 
     public static final IntegerProperty tempsRechargeCanonNuclaire = new SimpleIntegerProperty(500);
 

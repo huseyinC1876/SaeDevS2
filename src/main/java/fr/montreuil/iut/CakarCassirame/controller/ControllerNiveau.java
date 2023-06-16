@@ -119,8 +119,8 @@ public class ControllerNiveau implements Initializable {
     private boolean autorisationVente = false;
     private InfoBulleBoutonsAmelioraton infoBulleBoutonsAmelioraton;
     private InfoBulleBoutonsTours infoBulleBoutonsTours;
-    int nbEnnemiACreer = 0;
-    int tempsLastEnnemiCree = 0;
+    private int nbEnnemiACreer = 0;
+    private int tempsLastEnnemiCree = 0;
 
 
     @Override

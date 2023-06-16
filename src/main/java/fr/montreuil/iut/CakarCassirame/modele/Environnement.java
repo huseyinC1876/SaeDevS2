@@ -1,10 +1,7 @@
 package fr.montreuil.iut.CakarCassirame.modele;
 
 import fr.montreuil.iut.CakarCassirame.modele.ennemis.*;
-import fr.montreuil.iut.CakarCassirame.modele.projectiles.Projectile;
-import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonBombeNucleaire;
-import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonLaser;
-import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonMissile;
+import fr.montreuil.iut.CakarCassirame.modele.projectiles.*;
 import fr.montreuil.iut.CakarCassirame.modele.tours.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -125,12 +122,15 @@ public class Environnement {
     public int getNbEnnemisParVague() {
         return this.nbEnnemisParVague;
     }
+
     public int getIntervalleEnnemiParVague() {
         return this.intervalleEnnemiParVague;
     }
+
     public int getTempsLastVague() {
         return this.tempsLastVague;
     }
+
     public void setTempsLastVague(int temps) {
         this.tempsLastVague = temps;
     }
@@ -187,15 +187,12 @@ public class Environnement {
                 if (random < 1) {
                     this.listeEnnemis.add(new EnnemiExtraterrestre(this, this.debutMap[1], this.debutMap[0]));
                     this.nbEnnemiSpawn++;
-                    System.out.println("ENNEMI EXTRATERRESTRE AJOUTE");
                 } else if (random < 2) {
                     this.listeEnnemis.add(new EnnemiVaisseauSpatial(this, this.debutMap[1], this.debutMap[0]));
                     this.nbEnnemiSpawn++;
-                    System.out.println("ENNEMI VAISSEAU SPATIAL AJOUTE");
                 } else {
                     this.listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this, this.debutMap[1], this.debutMap[0]));
                     this.nbEnnemiSpawn++;
-                    System.out.println("ENNEMI SUPER VAISSEAU SPATIAL AJOUTE");
                 }
             }
         }
@@ -206,7 +203,7 @@ public class Environnement {
      */
     public void ajouterProjectileBombeNucleaire(int typeProjectile, int x, int y) {
         if (typeProjectile == 3) {
-            listeProjectiles.add(new ProjectileCanonBombeNucleaire(this, 5, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 1));
+            listeProjectiles.add(new ProjectileCanonBombeNucleaire(this, 50, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 1));
         }
     }
 
@@ -219,10 +216,10 @@ public class Environnement {
     //TODO : AJUSTER LES DEGATS SOUHAITES
     public void ajouterProjectileTeteChercheuse(int typeProjectile, int x, int y, Ennemi ennemi) {
         if (typeProjectile == 1) {
-            listeProjectiles.add(new ProjectileCanonLaser(this, 10, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 5, ennemi));
+            listeProjectiles.add(new ProjectileCanonLaser(this, 50, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 5, ennemi));
         }
         if (typeProjectile == 2) {
-            listeProjectiles.add(new ProjectileCanonMissile(this, 20, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 5, ennemi));
+            listeProjectiles.add(new ProjectileCanonMissile(this, 80, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 5, ennemi));
         }
     }
 
@@ -292,9 +289,13 @@ public class Environnement {
         }
     }
 
+
+    //TODO : modifier ici
     public void attaquer() {
         for (int i = 0; i < this.listeTours.size(); i++) {
-            listeTours.get(i).attaquer();
+            if (listeTours.get(i) instanceof TourChampDeForce) {
+                ((TourChampDeForce) listeTours.get(i)).reduireVitesse();
+            }
         }
         for (int i = 0; i < listeProjectiles.size(); i++) {
             listeProjectiles.get(i).attaquer();
@@ -367,6 +368,8 @@ public class Environnement {
     /**
      * Vérifie pour chaque projectile présent sur la map s'il a déjà attaqué ou non
      * Si oui --> le projectile est supprimé de l'environnement
+     * Vérifie aussi si les projectiles à tête chercheuse ont un ennemi cible
+     * Si non --> le projectile est supprimé de l'environnement
      */
     public void verifProjectileHasAttacked() {
         for (int i = listeProjectiles.size() - 1; i >= 0; i--) {
@@ -375,6 +378,22 @@ public class Environnement {
             }
         }
     }
+    public void verifProjectileHasCible() {
+        for (int i = listeProjectiles.size() - 1; i >= 0; i--) {
+            if (listeProjectiles.get(i) instanceof ProjectileTeteChercheuse) {
+                boolean hasTarget = false;
+                for (int j = 0; j < listeEnnemis.size(); j++) {
+                    if (((ProjectileTeteChercheuse) listeProjectiles.get(i)).getEnnemiCible() == listeEnnemis.get(j)) {
+                        hasTarget = true;
+                    }
+                }
+                if(!hasTarget){
+                    listeProjectiles.remove(i);
+                }
+            }
+        }
+    }
+
 
     public void unTour() {
         deplacementEnnemis();
@@ -384,6 +403,7 @@ public class Environnement {
         verifProjectileHasAttacked();
         verifPerimetreChampDeForce();
         verifNbEnnemisParVague();
+        verifProjectileHasCible();
     }
 
 }

@@ -23,7 +23,7 @@ public class TourChampDeForce extends TourPerimetre {
      * --> la vitesse des ennemis ne peut baisser que si elle est actuellement à son niveau max/initial.
      * Le boss (Ennemi Galactus) n'est pas affectée par le champ de force
      */
-    public void attaquer() {
+    public void reduireVitesse() {
         double vitesseInit;
         for(int i = 0 ; i < this.getEnvironnement().getListeEnnemis().size() ; i++) {
             Ennemi ennemi = this.getEnvironnement().getListeEnnemis().get(i);

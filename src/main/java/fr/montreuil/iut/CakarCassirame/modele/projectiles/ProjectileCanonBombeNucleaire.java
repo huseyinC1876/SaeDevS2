@@ -46,4 +46,9 @@ public class ProjectileCanonBombeNucleaire extends Projectile {
             setHasAttacked(true);
         }
     }
+
+    @Override
+    public void setDegat(int PV) {
+        super.setDegat(PV);
+    }
 }

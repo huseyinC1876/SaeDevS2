@@ -42,17 +42,16 @@ public abstract class ProjectileTeteChercheuse extends Projectile {
         //Les projectiles et les ennemis ont une vitesse différentes --> ils ne seront jamais à la même position --> Si le projectile est situé à  - de 3 pixels de l'ennemi, l'ennemi est attaqué (PV décrémentés)
         if (Math.abs(this.YProperty().getValue() - this.ennemiCible.YProperty().getValue()) < 3 && Math.abs(this.XProperty().getValue() - this.ennemiCible.XProperty().getValue()) < 3) {
             //Si c'est un SuperVaisseauSpatial, on décrémente d'abord le bouclier
-            if(ennemiCible instanceof EnnemiSuperVaisseauSpatial){
-                if(((EnnemiSuperVaisseauSpatial) ennemiCible).getBouclier() > 0) {
-                    ((EnnemiSuperVaisseauSpatial) ennemiCible).decrementerBouclier(this.getDegat());
-                }
-                // si le bouclier est épuisé on décrémente directement les PV
-                else ennemiCible.decrementerPV(this.getDegat());
+            if(ennemiCible instanceof EnnemiSuperVaisseauSpatial && ((EnnemiSuperVaisseauSpatial) ennemiCible).getBouclier() > 0 ){
+                ((EnnemiSuperVaisseauSpatial) ennemiCible).decrementerBouclier(this.getDegat());
             }
             else this.ennemiCible.decrementerPV(this.getDegat());
             //hasAttacked devient true --> permet que le projectile soit supprimé de la liste et disparaisse de la Map
             setHasAttacked(true);
         }
     }
+
+    public Ennemi getEnnemiCible(){return this.ennemiCible;}
+
 
 }

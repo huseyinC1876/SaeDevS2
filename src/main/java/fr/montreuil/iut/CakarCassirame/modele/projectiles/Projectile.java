@@ -35,5 +35,6 @@ public abstract class Projectile {
         hasAttacked = b;
     }
     public boolean getHasAttacked(){return hasAttacked;}
+    public void setDegat(int PV){this.degat = PV;}
 
 }
