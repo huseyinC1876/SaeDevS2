@@ -368,8 +368,6 @@ public class Environnement {
     /**
      * Vérifie pour chaque projectile présent sur la map s'il a déjà attaqué ou non
      * Si oui --> le projectile est supprimé de l'environnement
-     * Vérifie aussi si les projectiles à tête chercheuse ont un ennemi cible
-     * Si non --> le projectile est supprimé de l'environnement
      */
     public void verifProjectileHasAttacked() {
         for (int i = listeProjectiles.size() - 1; i >= 0; i--) {
@@ -378,6 +376,11 @@ public class Environnement {
             }
         }
     }
+
+    /**
+     * Vérifie aussi si les projectiles à tête chercheuse ont un ennemi cible
+     * Si non --> le projectile est supprimé de l'environnement
+     */
     public void verifProjectileHasCible() {
         for (int i = listeProjectiles.size() - 1; i >= 0; i--) {
             if (listeProjectiles.get(i) instanceof ProjectileTeteChercheuse) {
