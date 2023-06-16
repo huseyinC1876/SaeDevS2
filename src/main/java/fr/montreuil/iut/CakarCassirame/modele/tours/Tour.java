@@ -26,5 +26,4 @@ public abstract class Tour {
         return environnement;
     }
 
-
 }

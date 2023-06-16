@@ -11,7 +11,6 @@ public abstract class TourPerimetre extends Tour{
         this.rayonPerimetreAction = rayonPerimetreAction;
     }
 
-
     public static int getRayonPerimetreAction(){return rayonPerimetreAction;}
 
     /**

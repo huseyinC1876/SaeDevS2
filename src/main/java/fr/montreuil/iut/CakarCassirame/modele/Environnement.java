@@ -1,10 +1,7 @@
 package fr.montreuil.iut.CakarCassirame.modele;
 
 import fr.montreuil.iut.CakarCassirame.modele.ennemis.*;
-import fr.montreuil.iut.CakarCassirame.modele.projectiles.Projectile;
-import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonBombeNucleaire;
-import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonLaser;
-import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonMissile;
+import fr.montreuil.iut.CakarCassirame.modele.projectiles.*;
 import fr.montreuil.iut.CakarCassirame.modele.tours.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -36,7 +33,10 @@ public class Environnement {
     private final IntegerProperty niveauMaxCanon = new SimpleIntegerProperty(3);
     private final IntegerProperty niveauMaxChamp = new SimpleIntegerProperty(2);
 
-
+    private int tempsLastEnnemiInVague;
+    private int intervalleEnnemiParVague;
+    private int tempsLastVague;
+    private int intervalleVague;
     public Environnement(int niveau) throws IOException {
         if (niveau == 1) {
             this.map = new MapNiv1();
@@ -55,6 +55,10 @@ public class Environnement {
         this.listeTours = FXCollections.observableArrayList();
         this.debutMap = this.map.debutMapEnnemie();
         this.listeProjectiles = FXCollections.observableArrayList();
+        this.tempsLastEnnemiInVague = 0;
+        this.intervalleEnnemiParVague = 50;
+        this.tempsLastVague = 0;
+        this.intervalleVague = 1000;
     }
 
     public Map getMap() {
@@ -96,6 +100,7 @@ public class Environnement {
     public ObservableList<Projectile> getListeProjectiles() {
         return this.listeProjectiles;
     }
+
     public IntegerProperty getRessource() {
         return this.ressource;
     }
@@ -115,19 +120,39 @@ public class Environnement {
     public int getNiveauCanonNucleaire() {
         return niveauCanonNucleaire.getValue();
     }
-
     public IntegerProperty niveauMaxCanonProperty(){ return this.niveauMaxCanon; }
 
     public IntegerProperty niveauMaxChampProperty(){ return this.niveauMaxChamp; }
 
-    public void vendreTour(int x, int y){
+
+    public int getNbEnnemisParVague() {
+        return this.nbEnnemisParVague;
+    }
+
+    public int getIntervalleEnnemiParVague() {
+        return this.intervalleEnnemiParVague;
+    }
+
+    public int getTempsLastVague() {
+        return this.tempsLastVague;
+    }
+
+    public void setTempsLastVague(int temps) {
+        this.tempsLastVague = temps;
+    }
+
+    public int getIntervalleVague() {
+        return this.intervalleVague;
+    }
+
+    public void vendreTour(int x, int y) {
         Tour tour = tourPlacement(x, y);
-        if(tour instanceof TourCanonLaser)
-            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonLaser.getValue()/2);
+        if (tour instanceof TourCanonLaser)
+            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonLaser.getValue() / 2);
         else if (tour instanceof TourCanonMissile)
             this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonMissile.getValue());
-        else if(tour instanceof TourCanonBombeNuclaire)
-            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonNucleaire.getValue()/2);
+        else if (tour instanceof TourCanonBombeNuclaire)
+            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonNucleaire.getValue() / 2);
         else
             this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourChampForce.getValue());
         this.listeTours.remove(tour);
@@ -136,15 +161,19 @@ public class Environnement {
     public IntegerProperty niveauCanonLaserProperty() {
         return niveauCanonLaser;
     }
-    public void ameliorationCanonLaser(){
+
+    public void ameliorationCanonLaser() {
         this.niveauCanonLaser.setValue(this.niveauCanonLaser.getValue() + 1);
     }
-    public void ameliorationCanonMissile(){
+
+    public void ameliorationCanonMissile() {
         this.niveauCanonMissile.setValue(this.niveauCanonMissile.getValue() + 1);
     }
-    public void ameliorationChampForce(){
+
+    public void ameliorationChampForce() {
         this.niveauChampForce.setValue(this.niveauCanonMissile.getValue() + 1);
     }
+
     public void ameliorationCanonNucleaire() {
         this.niveauCanonNucleaire.setValue(this.niveauCanonNucleaire.getValue() + 1);
     }
@@ -171,26 +200,6 @@ public class Environnement {
                     this.listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this, this.debutMap[1], this.debutMap[0]));
                     this.nbEnnemiSpawn++;
                 }
-            }
-        }
-    }
-
-    /**
-     * Ajoute nbENnemisParVagues (10 au niveau 1 et 15 au niveau 2) ennemis de manière aléatoire (pas de boss)
-     */
-    public void ajouterVagueEnnemis() {
-        verifNbEnnemisParVague();
-        for (int i = 0; i < this.nbEnnemisParVague; i++) {
-            double random = Math.random() * 3;
-            if (random < 1) {
-                this.listeEnnemis.add(new EnnemiExtraterrestre(this, this.debutMap[1], this.debutMap[0]));
-                this.nbEnnemiSpawn++;
-            } else if (random < 2) {
-                this.listeEnnemis.add(new EnnemiVaisseauSpatial(this, this.debutMap[1], this.debutMap[0]));
-                this.nbEnnemiSpawn++;
-            } else {
-                this.listeEnnemis.add(new EnnemiSuperVaisseauSpatial(this, this.debutMap[1], this.debutMap[0]));
-                this.nbEnnemiSpawn++;
             }
         }
     }
@@ -239,7 +248,7 @@ public class Environnement {
     }
 
     /**
-     * Ajoute un tour dans l'environnement
+     * Ajoute une tour dans l'environnement
      *
      * @param x
      * @param y
@@ -287,6 +296,8 @@ public class Environnement {
         }
     }
 
+
+    //TODO : modifier ici
     public void attaquer() {
         for (Tour listeTour : this.listeTours) {
             if(listeTour instanceof TourChampDeForce){
@@ -344,18 +355,15 @@ public class Environnement {
         for (int i = this.listeEnnemis.size() - 1; i >= 0; i--) {
             if (this.listeEnnemis.get(i).getPv() < 1) {
                 this.ressource.setValue(this.getRessource().getValue() + this.listeEnnemis.get(i).getGain());
-                System.out.println(this.nbEnnemiSpawn < this.nbEnnemiMax.getValue() - 2);
                 if (this.listeEnnemis.get(i) instanceof EnnemiVaisseauSpatial) {
                     this.listeEnnemis.remove(i);
                     this.nbEnnemiTue.setValue(this.nbEnnemiTue.getValue() + 1);
                     //Lorsqu'un ennemiVaisseauSpatial meurt, 2 nouveaux vaisseaux apparaissent (ils ne comptent pas dans les listes des ennemis ajoutés et morts)
                     listeEnnemis.add(new EnnemiDivise(this, this.debutMap[1], this.debutMap[0]));
                     listeEnnemis.add(new EnnemiDivise(this, this.debutMap[1] + 16, this.debutMap[0] + 16));
-                }
-                else if (this.listeEnnemis.get(i) instanceof EnnemiDivise) {
+                } else if (this.listeEnnemis.get(i) instanceof EnnemiDivise) {
                     this.listeEnnemis.remove(i);
-                }
-                else {
+                } else {
                     this.listeEnnemis.remove(i);
                     this.nbEnnemiTue.setValue(this.nbEnnemiTue.getValue() + 1);
                 }
@@ -376,6 +384,27 @@ public class Environnement {
         }
     }
 
+    /**
+     * Vérifie aussi si les projectiles à tête chercheuse ont un ennemi cible
+     * Si non --> le projectile est supprimé de l'environnement
+     */
+    public void verifProjectileHasCible() {
+        for (int i = listeProjectiles.size() - 1; i >= 0; i--) {
+            if (listeProjectiles.get(i) instanceof ProjectileTeteChercheuse) {
+                boolean hasTarget = false;
+                for (int j = 0; j < listeEnnemis.size(); j++) {
+                    if (((ProjectileTeteChercheuse) listeProjectiles.get(i)).getEnnemiCible() == listeEnnemis.get(j)) {
+                        hasTarget = true;
+                    }
+                }
+                if(!hasTarget){
+                    listeProjectiles.remove(i);
+                }
+            }
+        }
+    }
+
+
     public void unTour() {
         deplacementEnnemis();
         deplacementProjectiles();
@@ -383,6 +412,8 @@ public class Environnement {
         verificationEnnemisMorts();
         verifProjectileHasAttacked();
         verifPerimetreChampDeForce();
+        verifNbEnnemisParVague();
+        verifProjectileHasCible();
     }
 
 }

@@ -43,7 +43,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-
 public class ControllerNiveau implements Initializable {
     @FXML
     private TilePane tilePaneExterne;
@@ -121,6 +120,8 @@ public class ControllerNiveau implements Initializable {
     private boolean autorisationVente = false;
     private InfoBulleBoutonsAmelioraton infoBulleBoutonsAmelioraton;
     private InfoBulleBoutonsTours infoBulleBoutonsTours;
+    private int nbEnnemiACreer = 0;
+    private int tempsLastEnnemiCree = 0;
 
     @FXML
     private Label prixAmeliorationNucleaire;
@@ -153,8 +154,8 @@ public class ControllerNiveau implements Initializable {
         this.venteVue = new VenteVue(pane, this.environnement);
 
 
-       this.infoBulleBoutonsTours = new InfoBulleBoutonsTours(canonLaser, canonMissile, champForce, canonNucleaire, environnement);
-       this.infoBulleBoutonsAmelioraton = new InfoBulleBoutonsAmelioraton(ameliorationCanonLaser, ameliorationCanonMissile, ameliorationChampDeForce, ameliorationCanonNucleaire, environnement);
+        this.infoBulleBoutonsTours = new InfoBulleBoutonsTours(canonLaser, canonMissile, champForce, canonNucleaire, environnement);
+        this.infoBulleBoutonsAmelioraton = new InfoBulleBoutonsAmelioraton(ameliorationCanonLaser, ameliorationCanonMissile, ameliorationChampDeForce, ameliorationCanonNucleaire, environnement);
         menuAmelioration1.setVisible(false);
         menuAmelioration2.setVisible(false);
         this.projectileBombeNuclaireVue = new ProjectileBombeNuclaireVue(pane);
@@ -201,6 +202,7 @@ public class ControllerNiveau implements Initializable {
         temps = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
+
         KeyFrame kf = new KeyFrame(
                 // on définit le FPS (nbre de frame par seconde)
                 Duration.seconds(0.017),
@@ -208,15 +210,16 @@ public class ControllerNiveau implements Initializable {
                 // c'est un eventHandler d'ou le lambda
                 (ev -> {
                     if (environnement.getNbEnnemiTue() == environnement.getNbEnnemiMax() && !enter) {
-                        System.out.println("fini");
                         enter = true;
                         try {
+                            //affichage de la page de victoire
                             this.finJeuVue.victoire();
                         } catch (FileNotFoundException e) {
                             throw new RuntimeException(e);
                         }
                         temps = 0;
 
+                        //Si l'ennemi a encore des vies
                     } else if (this.environnement.getVieProperty().getValue() > 0) {
 
                         if (this.environnement.getListeTours().size() != 0) {
@@ -247,34 +250,43 @@ public class ControllerNiveau implements Initializable {
                             AffichageBoutonTours();
 
                             if (this.environnement.getVieProperty().getValue() < 3) {
-                                if(-(this.environnement.getVieProperty().getValue() + 1 - 3) > 2){
-                                    for(int i = 0; i < this.hboxVie.getChildren().size(); i++){
+                                if (-(this.environnement.getVieProperty().getValue() + 1 - 3) > 2) {
+                                    for (int i = 0; i < this.hboxVie.getChildren().size(); i++) {
                                         this.hboxVie.getChildren().get(i).setVisible(false);
                                     }
-                                }
-                                else
+                                } else
                                     this.hboxVie.getChildren().get(-(this.environnement.getVieProperty().getValue() + 1 - 3)).setVisible(false);
                             }
                             if (this.environnement.getVieProperty().getValue() < 1) {
                                 try {
+                                    //affichade de la page de défaite
                                     this.finJeuVue.defaite();
                                 } catch (FileNotFoundException e) {
                                     throw new RuntimeException(e);
                                 }
                                 temps = 0;
                             }
-                            //ajout d'ennemi à un rythme continu
-                        } else if (temps % 101 == 0) {
+
+                        }
+                        //ajout d'ennemi à un rythme continu
+                        if (temps % 100 == 0) {
                             if (this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
                                 environnement.ajouterEnnemi();
                             }
-                            //Envoie d'une vague d'ennemi à un rythme régulier (10 ennemis)
-                        } else if (temps % 500 == 0 && this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
-                            this.environnement.ajouterVagueEnnemis();
-                        }
-                        if(temps % 100 == 0){
                             projectileBombeNucleaireExplosionVue.resetGIF();
                         }
+                        //si le temps de "recharge vague" est passé, on doit creer nbEnnemisParVague
+                        if (temps - this.environnement.getTempsLastVague() >= this.environnement.getIntervalleVague() && this.environnement.getNbEnnemiSpawn() < this.environnement.getNbEnnemiMax()) {
+                            nbEnnemiACreer += this.environnement.getNbEnnemisParVague();
+                            this.environnement.setTempsLastVague(temps);
+                        }
+                        //S'il y a des ennemis à créer, on les ajoute selon l'intervalle précisé pour constituer la vague d'ennemis
+                        if(nbEnnemiACreer > 0 && temps - tempsLastEnnemiCree > this.environnement.getIntervalleEnnemiParVague()){
+                            tempsLastEnnemiCree = temps;
+                            this.environnement.ajouterEnnemi();
+                            this.nbEnnemiACreer--;
+                        }
+                        //s'il ne reste plus de vie à l'ennemi ou que le joueur a tué tous les ennemis
                     } else if (this.environnement.getVieProperty().getValue() < 1 || this.environnement.getNbEnnemiTue() == this.environnement.getNbEnnemiMax()) {
                         if (temps > 100) {
                             try {
@@ -301,7 +313,7 @@ public class ControllerNiveau implements Initializable {
     public static void load(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pageNiveau.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 640);
-        stage.setTitle("Space Defencer");
+        stage.setTitle("Space Defender");
         stage.setScene(scene);
         stage.show();
     }
@@ -332,55 +344,44 @@ public class ControllerNiveau implements Initializable {
             ameliorationCanonLaser.setDisable(true);
         } else {
             ameliorationCanonLaser.setDisable(false);
-            if(!(this.environnement.getNiveauCanonLaser() < this.environnement.niveauMaxCanonProperty().getValue())){
-                //prixAmeliorationLaser.setText("Nv Max");
-            }
+
         }
         if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonMissile.getValue() || this.environnement.getNiveauCanonMissile() >= this.environnement.niveauMaxCanonProperty().getValue()){
             ameliorationCanonMissile.setDisable(true);
         } else {
             ameliorationCanonMissile.setDisable(false);
-            if(!(this.environnement.getNiveauCanonMissile() < this.environnement.niveauMaxCanonProperty().getValue())){
-                //prixAmeliorationMissile.setText("Nv Max");
-            }
+
         }
         if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonNucleaire.getValue() || this.environnement.getNiveauCanonNucleaire() >= this.environnement.niveauMaxCanonProperty().getValue()){
             ameliorationCanonNucleaire.setDisable(true);
-        }
-        else{
+        } else {
             ameliorationCanonNucleaire.setDisable(false);
-            if(!(this.environnement.getNiveauCanonNucleaire() < this.environnement.niveauMaxCanonProperty().getValue())) {
-                //prixCanonLaser.setText("Nv Max");
-            }
+
         }
         if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationChampForce.getValue() || this.environnement.getNiveauChampForce() >= this.environnement.niveauMaxChampProperty().getValue()){
             ameliorationChampDeForce.setDisable(true);
-        }
-        else{
+        } else {
             ameliorationChampDeForce.setDisable(false);
-            if (!(this.environnement.getNiveauChampForce() < this.environnement.niveauMaxChampProperty().getValue())){
-                //prixCanonLaser.setText("Nv Max");
-            }
         }
     }
 
-    public void AffichageBoutonTours(){
-        if(this.environnement.getRessource().getValue() < Parametre.prixTourCanonLaser.getValue()){
+    public void AffichageBoutonTours() {
+        if (this.environnement.getRessource().getValue() < Parametre.prixTourCanonLaser.getValue()) {
             canonLaser.setDisable(true);
         } else {
             canonLaser.setDisable(false);
         }
-        if(this.environnement.getRessource().getValue() < Parametre.prixTourCanonMissile.getValue()){
+        if (this.environnement.getRessource().getValue() < Parametre.prixTourCanonMissile.getValue()) {
             canonMissile.setDisable(true);
         } else {
             canonMissile.setDisable(false);
         }
-        if(this.environnement.getRessource().getValue() < Parametre.prixTourCanonNucleaire.getValue()){
+        if (this.environnement.getRessource().getValue() < Parametre.prixTourCanonNucleaire.getValue()) {
             canonNucleaire.setDisable(true);
         } else {
             canonNucleaire.setDisable(false);
         }
-        if(this.environnement.getRessource().getValue() < Parametre.prixTourChampForce.getValue()){
+        if (this.environnement.getRessource().getValue() < Parametre.prixTourChampForce.getValue()) {
             champForce.setDisable(true);
         } else {
             champForce.setDisable(false);
@@ -403,14 +404,14 @@ public class ControllerNiveau implements Initializable {
 
 
     /**
-     *Affiche les emplacments disponibles pour placer une tour
+     * Affiche les emplacments disponibles pour placer une tour
      */
     @FXML
     public void affichagePlacement() throws FileNotFoundException {
         if (!arretTemps) {
             choixTour = (canonLaser.isArmed()) ? 1 : (canonMissile.isArmed()) ? 2 : (canonNucleaire.isArmed()) ? 3 : 4;
             int prix;
-            if(choixTour == 1)
+            if (choixTour == 1)
                 prix = Parametre.prixTourCanonLaser.getValue();
             else if (choixTour == 2)
                 prix = Parametre.prixTourCanonMissile.getValue();
@@ -425,8 +426,8 @@ public class ControllerNiveau implements Initializable {
         }
     }
 
-    public void affichagePlacementVente(){
-        if(!arretTemps){
+    public void affichagePlacementVente() {
+        if (!arretTemps) {
             this.venteVue.affichaged();
             this.autorisationVente = true;
         }
@@ -434,6 +435,7 @@ public class ControllerNiveau implements Initializable {
 
     /**
      * Récupère la position de la souris et place une tour à la position souhaitée
+     *
      * @param mouseEvent
      */
     @FXML
@@ -446,9 +448,9 @@ public class ControllerNiveau implements Initializable {
                     positionX = ((int) positionX / 32) * 32;
                     positionY = ((int) positionY / 32) * 32;
                     if (this.environnement.verificationPlacement(positionX, positionY)) {
-                        this.environnement.ajouterTour((int)positionX + 16, (int)positionY + 16, this.choixTour);
+                        this.environnement.ajouterTour((int) positionX + 16, (int) positionY + 16, this.choixTour);
                         int prix;
-                        if(choixTour == 1)
+                        if (choixTour == 1)
                             prix = Parametre.prixTourCanonLaser.getValue();
                         else if (choixTour == 2)
                             prix = Parametre.prixTourCanonMissile.getValue();
@@ -460,11 +462,11 @@ public class ControllerNiveau implements Initializable {
                     }
 
                 }
-                if(autorisationVente){
+                if (autorisationVente) {
                     positionX = ((int) positionX / 32) * 32 + 16;
                     positionY = ((int) positionY / 32) * 32 + 16;
-                    if (!this.environnement.verificationPlacement(positionX, positionY)){
-                        this.environnement.vendreTour((int)positionX ,(int) positionY);
+                    if (!this.environnement.verificationPlacement(positionX, positionY)) {
+                        this.environnement.vendreTour((int) positionX, (int) positionY);
                     }
                 }
             }
