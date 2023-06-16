@@ -16,6 +16,11 @@ public class MapVue {
     }
 
 
+    /**
+     * Creer la map dans la vue en fonction du Map qu'il lui est passé en paramétre
+     * @param map
+     * @throws FileNotFoundException
+     */
     public void creerMap(Map map) throws FileNotFoundException {
         int[][] terrain = map.getTileMap();
         for(int i = 0 ; i < terrain.length ; i++){

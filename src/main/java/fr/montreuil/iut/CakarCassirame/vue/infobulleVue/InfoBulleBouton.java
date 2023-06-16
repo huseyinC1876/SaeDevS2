@@ -48,33 +48,13 @@ public abstract class InfoBulleBouton {
     }
 
     public abstract void infobulleLaser();
-    /*
-    {
-        Tooltip tooltip = new Tooltip("Atq -> "+ TourCanonLaser.degat);
-        this.buttonCanonLaser.setTooltip(tooltip);
-    }
-
-     */
 
     public abstract void infobulleMissile();
-    /*{
-        Tooltip tooltip = new Tooltip("Atq -> "+ TourCanonMissile.degat);
-        this.buttonCanonMissile.setTooltip(tooltip);
-    }
 
-     */
+    public abstract void infobulleChamp();
 
-    public abstract void infobulleChamp(); /*{
-        Tooltip tooltip = new Tooltip("Reduc vitesse -> "+(int) -(TourChampDeForce.pourcentageReduction * 100 - 100) +"%");
-        this.buttonChampDeForce.setTooltip(tooltip);
-    }
-    */
+    public abstract void infobulleNucleaire();
 
-    public abstract void infobulleNucleaire(); /*{
-        Tooltip tooltip = new Tooltip("Atq -> "+ TourCanonBombeNuclaire.degat);
-        this.buttonCanonNucleaire.setTooltip(tooltip);
-    }
-    */
     public abstract void mAJ();
 
 
