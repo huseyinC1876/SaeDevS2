@@ -30,8 +30,6 @@ public abstract class Projectile {
     public Environnement getEnv(){return this.env;}
     public int getDegat(){return this.degat;}
 
-    public void setDegat(int degat) { this.degat = degat;}
-
     public abstract void seDeplacer();
     public abstract void attaquer();
     public void setHasAttacked(boolean b){
