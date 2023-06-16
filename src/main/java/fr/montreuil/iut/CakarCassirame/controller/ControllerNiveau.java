@@ -34,12 +34,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -308,13 +305,22 @@ public class ControllerNiveau implements Initializable {
         gameLoop.getKeyFrames().add(kf);
     }
 
-
+    /**
+     * Permet de charger la page d'acceuil
+     * @throws IOException
+     */
     public void chargerPageAcceuil() throws IOException {
         Scene scene = pane.getScene();
         Stage stage = (Stage) scene.getWindow();
         ControllerPageAccueil.load(stage);
     }
 
+
+    /**
+     * Permet de charger la page du Jeu
+     * @param stage
+     * @throws IOException
+     */
     public static void load(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pageNiveau.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 640);
@@ -323,6 +329,9 @@ public class ControllerNiveau implements Initializable {
         stage.show();
     }
 
+    /**
+     * Mets pause la partie lorsque le bouton Pause/Play est cliqué
+     */
     public void pause() {
         arretTemps = !arretTemps;
         if (gameLoop.getStatus() == Animation.Status.RUNNING) {
@@ -331,6 +340,9 @@ public class ControllerNiveau implements Initializable {
             gameLoop.play();
     }
 
+    /**
+     * affiche ou desaffiche le menu des amelioration lorsque le bouton amelioration est cliqué
+     */
     public void affichageMenuAmelioration() {
         if (!affichageMenu) {
             menuAmelioration1.setVisible(true);
@@ -344,6 +356,9 @@ public class ControllerNiveau implements Initializable {
         }
     }
 
+    /**
+     * Grise les image des bouton des amelioration si l'utilisateur n'a pas l'argent nécessaire
+     */
     public void AffichageBoutonAmelioration() {
         if (this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonLaser.getValue() || this.environnement.getNiveauCanonLaser() >= this.environnement.niveauMaxCanonProperty().getValue()) {
             ameliorationCanonLaser.setDisable(true);
@@ -369,7 +384,9 @@ public class ControllerNiveau implements Initializable {
             ameliorationChampDeForce.setDisable(false);
         }
     }
-
+    /**
+     * Grise les image des bouton d'achat des tours si l'utilisateur n'a pas l'argent nécessaire
+     */
     public void AffichageBoutonTours() {
         if (this.environnement.getRessource().getValue() < Parametre.prixTourCanonLaser.getValue()) {
             canonLaser.setDisable(true);
@@ -393,17 +410,13 @@ public class ControllerNiveau implements Initializable {
         }
     }
 
+    /**
+     * Appele la fonction de l'environnement qui ajoute 1 au niveau de la tour qui est ameliorer
+     */
     public void ameliorationTours() {
         if(!arretTemps) {
             int choix = (ameliorationCanonLaser.isArmed()) ? 1 : (ameliorationCanonMissile.isArmed()) ? 2 : (ameliorationCanonNucleaire.isArmed()) ? 3 : 4;
-            if (choix == 1)
-                this.environnement.ameliorationTour(choix);
-            else if (choix == 2)
-                this.environnement.ameliorationTour(choix);
-            else if (choix == 3)
-                this.environnement.ameliorationTour(choix);
-            else
-                this.environnement.ameliorationTour(choix);
+            this.environnement.ameliorationTour(choix);
             this.infoBulleBoutonsTours.mAJ();
             this.infoBulleBoutonsAmelioraton.mAJ();
         }
@@ -433,6 +446,9 @@ public class ControllerNiveau implements Initializable {
         }
     }
 
+    /**
+     * Autorise la vente et et diminu l'opacite des tours de la map pour monter l'activation du bouton vente
+     */
     public void affichagePlacementVente() {
         if (!arretTemps) {
             this.venteVue.affichaged();
@@ -442,7 +458,7 @@ public class ControllerNiveau implements Initializable {
 
     /**
      * Récupère la position de la souris et place une tour à la position souhaitée
-     *
+     * Récupère la position de la souris et vend la tour disponible à cette emplacement
      * @param mouseEvent
      */
     @FXML
