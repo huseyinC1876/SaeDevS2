@@ -20,7 +20,7 @@ public class Environnement {
     private Map map;
     private ObservableList<Ennemi> listeEnnemis;
     private ObservableList<Tour> listeTours;
-    private IntegerProperty ressource = new SimpleIntegerProperty(2000);
+    private IntegerProperty ressource = new SimpleIntegerProperty(4000);
     private int nbEnnemisParVague;
     private IntegerProperty vie = new SimpleIntegerProperty(3);
     private ObservableList<Projectile> listeProjectiles;
@@ -349,7 +349,6 @@ public class Environnement {
     public void verifNbEnnemisParVague() {
         if (this.nbEnnemiSpawn > (nbEnnemiMax.getValue() - (nbEnnemisParVague + 1))) { //89
             this.nbEnnemisParVague = (nbEnnemiMax.getValue() - 1) - nbEnnemiSpawn;
-            System.out.println("NB ENNEMIS / VAGUE : " + (this.nbEnnemisParVague));
         }
     }
 
