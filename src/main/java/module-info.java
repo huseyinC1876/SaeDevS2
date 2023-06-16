@@ -3,6 +3,7 @@ module com.application.towerdefense {
     requires javafx.fxml;
 
     requires org.controlsfx.controls;
+    requires javafx.media;
 
     opens fr.montreuil.iut.CakarCassirame to javafx.fxml;
     exports fr.montreuil.iut.CakarCassirame;

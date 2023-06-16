@@ -59,7 +59,7 @@ public class Environnement {
         this.debutMap = this.map.debutMapEnnemie();
         this.listeProjectiles = FXCollections.observableArrayList();
         this.tempsLastEnnemiInVague = 0;
-        this.intervalleEnnemiParVague = 50;
+        this.intervalleEnnemiParVague = 30;
         this.tempsLastVague = 0;
         this.intervalleVague = 1000;
     }

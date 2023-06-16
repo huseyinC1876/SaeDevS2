@@ -34,9 +34,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -191,7 +194,6 @@ public class ControllerNiveau implements Initializable {
             prixAmeliorationChamps.textProperty().bind(Parametre.prixAmeliorationChampForce.asString());
 
 
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -243,24 +245,22 @@ public class ControllerNiveau implements Initializable {
 
                         //Si l'ennemi a encore des vies
                      if (this.environnement.getVieProperty().getValue() > 0 && !enter) {
-
                         if (this.environnement.getListeTours().size() != 0) {
                             for (int i = 0; i < this.environnement.getListeTours().size(); i++) {
                                 if (this.environnement.getListeTours().get(i) instanceof TourTeteChercheuse) {
                                     TourTeteChercheuse tour = (TourTeteChercheuse) this.environnement.getListeTours().get(i);
                                     //Ici, on vérifie si le temps de recharge de la tour a été dépassé. Si oui, on vérifie si un ennemi est présent dans le périmètre
-                                    if(this.environnement.getListeTours().get(i) instanceof TourCanonLaser) {
+                                    if (this.environnement.getListeTours().get(i) instanceof TourCanonLaser) {
                                         if (Math.abs(temps - tour.getTempsLastEnnemi()) >= (Parametre.tempsRechargeCanonLaser.getValue() - ((this.environnement.getNiveauCanonLaser() - 1) * 10))) {
                                             tour.recupererEnnemiCible(temps);
                                         }
-                                        else if (Math.abs(temps - tour.getTempsLastEnnemi()) >= (Parametre.tempsRechargeCanonMissile.getValue()  - ((this.environnement.getNiveauCanonMissile() - 1) * 10))){
-                                            tour.recupererEnnemiCible(temps);
-                                        }
+                                    } else if (Math.abs(temps - tour.getTempsLastEnnemi()) >= (Parametre.tempsRechargeCanonMissile.getValue() - ((this.environnement.getNiveauCanonMissile() - 1) * 10))) {
+                                        tour.recupererEnnemiCible(temps);
                                     }
                                 }
                                 //Les tours bombe nucléaires envoient une bombe si leur temps de recharge est passé
                                 if (this.environnement.getListeTours().get(i) instanceof TourCanonBombeNuclaire) {
-                                    if ((temps % Parametre.tempsRechargeCanonNuclaire.getValue() - ((this.environnement.getNiveauCanonNucleaire() - 1) * 10))  == 0 && temps != 0) {
+                                    if ((temps % Parametre.tempsRechargeCanonNuclaire.getValue() - ((this.environnement.getNiveauCanonNucleaire() - 1) * 10)) == 0 && temps != 0) {
                                         this.environnement.ajouterProjectileBombeNucleaire(3, this.environnement.getListeTours().get(i).XProperty().getValue(), this.environnement.getListeTours().get(i).YProperty().getValue());
                                     }
                                 }
@@ -344,26 +344,26 @@ public class ControllerNiveau implements Initializable {
         }
     }
 
-    public void AffichageBoutonAmelioration(){
-        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonLaser.getValue() || this.environnement.getNiveauCanonLaser() >= this.environnement.niveauMaxCanonProperty().getValue()){
+    public void AffichageBoutonAmelioration() {
+        if (this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonLaser.getValue() || this.environnement.getNiveauCanonLaser() >= this.environnement.niveauMaxCanonProperty().getValue()) {
             ameliorationCanonLaser.setDisable(true);
         } else {
             ameliorationCanonLaser.setDisable(false);
 
         }
-        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonMissile.getValue() || this.environnement.getNiveauCanonMissile() >= this.environnement.niveauMaxCanonProperty().getValue()){
+        if (this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonMissile.getValue() || this.environnement.getNiveauCanonMissile() >= this.environnement.niveauMaxCanonProperty().getValue()) {
             ameliorationCanonMissile.setDisable(true);
         } else {
             ameliorationCanonMissile.setDisable(false);
 
         }
-        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonNucleaire.getValue() || this.environnement.getNiveauCanonNucleaire() >= this.environnement.niveauMaxCanonProperty().getValue()){
+        if (this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonNucleaire.getValue() || this.environnement.getNiveauCanonNucleaire() >= this.environnement.niveauMaxCanonProperty().getValue()) {
             ameliorationCanonNucleaire.setDisable(true);
         } else {
             ameliorationCanonNucleaire.setDisable(false);
 
         }
-        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationChampForce.getValue() || this.environnement.getNiveauChampForce() >= this.environnement.niveauMaxChampProperty().getValue()){
+        if (this.environnement.getRessource().getValue() < Parametre.prixAmeliorationChampForce.getValue() || this.environnement.getNiveauChampForce() >= this.environnement.niveauMaxChampProperty().getValue()) {
             ameliorationChampDeForce.setDisable(true);
         } else {
             ameliorationChampDeForce.setDisable(false);
@@ -470,10 +470,10 @@ public class ControllerNiveau implements Initializable {
 
                 }
                 if (autorisationVente) {
-                    positionX = ((int) positionX / 32) * 32 + 16;
-                    positionY = ((int) positionY / 32) * 32 + 16;
+                    positionX = ((int) positionX / 32) * 32;
+                    positionY = ((int) positionY / 32) * 32;
                     if (!this.environnement.verificationPlacement(positionX, positionY)) {
-                        this.environnement.vendreTour((int) positionX, (int) positionY);
+                        this.environnement.vendreTour((int) (positionX + 16), (int) (positionY + 16));
                     }
                 }
             }
