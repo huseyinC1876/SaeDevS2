@@ -46,4 +46,5 @@ public class ProjectileCanonBombeNucleaire extends Projectile {
             setHasAttacked(true);
         }
     }
+
 }

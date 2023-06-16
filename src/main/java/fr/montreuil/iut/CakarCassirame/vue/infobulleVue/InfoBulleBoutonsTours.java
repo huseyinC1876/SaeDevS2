@@ -3,7 +3,6 @@ package fr.montreuil.iut.CakarCassirame.vue.infobulleVue;
 
 import fr.montreuil.iut.CakarCassirame.modele.Environnement;
 import fr.montreuil.iut.CakarCassirame.modele.Parametre;
-import fr.montreuil.iut.CakarCassirame.modele.tours.TourCanonBombeNuclaire;
 import fr.montreuil.iut.CakarCassirame.modele.tours.TourChampDeForce;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -19,13 +18,13 @@ public class InfoBulleBoutonsTours extends InfoBulleBouton{
 
     @Override
     public void infobulleLaser() {
-        Tooltip tooltip = new Tooltip("Atq -> "+ (Parametre.degatCanonLaser.getValue() + this.getEnvironnement().getNiveauCanonLaser() - 1)  + "\n Temps de recharge -> " + (Parametre.tempsRechargeCanonLaser.getValue() - (this.getEnvironnement().getNiveauCanonLaser() - 1) * 10) + "s");
-        super.getButtonCanonLaser().setTooltip(tooltip);
+            Tooltip tooltip = new Tooltip("Atq -> " + (Parametre.degatCanonLaser.getValue() + ((this.getEnvironnement().getNiveauCanonLaser() - 1) * 10)) + "\n Temps de recharge -> " + (Parametre.tempsRechargeCanonLaser.getValue() - ((this.getEnvironnement().getNiveauCanonLaser() - 1) * 10)) + "s");
+            super.getButtonCanonLaser().setTooltip(tooltip);
     }
 
     @Override
     public void infobulleMissile() {
-        Tooltip tooltip = new Tooltip("Atq -> "+ Parametre.degatCanonMissile.getValue() + this.getEnvironnement().getNiveauCanonMissile()  + "\n Temps de recharge -> " + Parametre.tempsRechargeCanonMissile.getValue() + "s");
+        Tooltip tooltip = new Tooltip("Atq -> "+ (Parametre.degatCanonMissile.getValue() + ((this.getEnvironnement().getNiveauCanonMissile() - 1) * 20))  + "\n Temps de recharge -> " + (Parametre.tempsRechargeCanonMissile.getValue() - ((this.getEnvironnement().getNiveauCanonMissile()- 1) * 10)) + "s");
         super.getButtonCanonMissile().setTooltip(tooltip);
     }
 
@@ -37,7 +36,7 @@ public class InfoBulleBoutonsTours extends InfoBulleBouton{
 
     @Override
     public void infobulleNucleaire() {
-        Tooltip tooltip = new Tooltip("Atq -> "+ (Parametre.degatCanonNuclaire.getValue() + this.getEnvironnement().getNiveauCanonNucleaire())  + "\n Temps de recharge -> " + (TourCanonBombeNuclaire.tempsRecharge.getValue() - this.getEnvironnement().getNiveauCanonNucleaire()) * 10 + "s");
+        Tooltip tooltip = new Tooltip("Atq -> "+ (Parametre.degatCanonNuclaire.getValue() + ((this.getEnvironnement().getNiveauCanonNucleaire() - 1) * 10))  + "\n Temps de recharge -> " + (Parametre.tempsRechargeCanonNuclaire.getValue() - ((this.getEnvironnement().getNiveauCanonNucleaire()- 1) * 10)) + "s");
         super.getButtonCanonNucleaire().setTooltip(tooltip);
     }
 

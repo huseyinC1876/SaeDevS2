@@ -25,6 +25,6 @@ public abstract class Tour {
     public Environnement getEnvironnement() {
         return environnement;
     }
-    public abstract void attaquer();
+
 
 }

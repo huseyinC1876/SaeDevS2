@@ -1,27 +1,20 @@
 package fr.montreuil.iut.CakarCassirame.modele.tours;
 
 import fr.montreuil.iut.CakarCassirame.modele.Environnement;
+import fr.montreuil.iut.CakarCassirame.modele.Parametre;
 import fr.montreuil.iut.CakarCassirame.modele.ennemis.Ennemi;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 
 
 
 public abstract class TourTeteChercheuse extends TourPerimetre {
-    public static IntegerProperty tempsRecharge;
-    public static IntegerProperty degat;
+
     private int tempsLastEnnemi;
 
-    public TourTeteChercheuse(Environnement environnement, int x, int y, int rayonPerimetreAction, int tempsRecharge, int degat) {
+    public TourTeteChercheuse(Environnement environnement, int x, int y, int rayonPerimetreAction) {
         super(environnement, x, y, rayonPerimetreAction);
-        this.tempsRecharge = new SimpleIntegerProperty(tempsRecharge);
-        this.degat = new SimpleIntegerProperty(degat);
         this.tempsLastEnnemi = 0;
     }
 
-    public int getTempsRecharge() {
-        return this.tempsRecharge.getValue();
-    }
 
     /**
      * On vérifie si un ennemi est présent dans le périmètre d'action de la tour
@@ -35,10 +28,10 @@ public abstract class TourTeteChercheuse extends TourPerimetre {
             ennemi = this.getEnvironnement().getListeEnnemis().get(i);
             if (Math.sqrt(Math.pow(this.XProperty().getValue() - ennemi.XProperty().getValue(), 2) + Math.pow(this.YProperty().getValue() - ennemi.YProperty().getValue(), 2)) <= this.getRayonPerimetreAction()) {
                 if(this instanceof TourCanonLaser) {
-                    this.getEnvironnement().ajouterProjectileTeteChercheuse(1, this.XProperty().getValue(), this.YProperty().getValue(), ennemi);
+                    this.getEnvironnement().ajouterProjectileTeteChercheuse(1, this.XProperty().getValue(), this.YProperty().getValue(), Parametre.degatCanonLaser.getValue() + ((this.getEnvironnement().getNiveauCanonLaser() - 1) * 10),ennemi);
                 }
                 if(this instanceof TourCanonMissile){
-                    this.getEnvironnement().ajouterProjectileTeteChercheuse(2, this.XProperty().getValue(), this.YProperty().getValue(), ennemi);
+                    this.getEnvironnement().ajouterProjectileTeteChercheuse(2, this.XProperty().getValue(), this.YProperty().getValue(), Parametre.degatCanonMissile.getValue() + ((this.getEnvironnement().getNiveauCanonLaser() - 1) * 20),ennemi);
                 }
                 this.tempsLastEnnemi = temps;
                 quit = true;

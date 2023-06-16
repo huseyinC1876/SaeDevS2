@@ -4,6 +4,7 @@ import fr.montreuil.iut.CakarCassirame.Main;
 import fr.montreuil.iut.CakarCassirame.modele.Environnement;
 import fr.montreuil.iut.CakarCassirame.modele.Parametre;
 import fr.montreuil.iut.CakarCassirame.modele.tours.TourCanonBombeNuclaire;
+import fr.montreuil.iut.CakarCassirame.modele.tours.TourCanonLaser;
 import fr.montreuil.iut.CakarCassirame.modele.tours.TourTeteChercheuse;
 import fr.montreuil.iut.CakarCassirame.vue.FinJeuVue;
 import fr.montreuil.iut.CakarCassirame.vue.MapVue;
@@ -121,6 +122,12 @@ public class ControllerNiveau implements Initializable {
     private InfoBulleBoutonsAmelioraton infoBulleBoutonsAmelioraton;
     private InfoBulleBoutonsTours infoBulleBoutonsTours;
 
+    @FXML
+    private Label prixAmeliorationNucleaire;
+
+    @FXML
+    private Label prixAmeliorationChamps;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -176,8 +183,11 @@ public class ControllerNiveau implements Initializable {
             prixChampDeForce.textProperty().bind(Parametre.prixTourChampForce.asString());
             prixCanonNucleaire.textProperty().bind(Parametre.prixTourCanonNucleaire.asString());
             nbRessources.textProperty().bind(this.environnement.getRessource().asString());
-            prixAmeliorationLaser.textProperty().bind(Parametre.prixAmeliorationCanonLaser.add(Parametre.prixAmeliorationCanonLaser.multiply(Math.pow (2, this.environnement.niveauCanonLaserProperty().subtract(1).getValue()))).asString());
-            prixAmeliorationMissile.textProperty().bind(Parametre.prixTourCanonMissile.add(Parametre.prixTourCanonMissile.getValue() * Math.pow (2,this.environnement.getNiveauCanonMissile() - 1)).asString());
+            prixAmeliorationLaser.textProperty().bind(Parametre.prixAmeliorationCanonLaser.asString());
+            prixAmeliorationMissile.textProperty().bind(Parametre.prixAmeliorationCanonMissile.asString());
+            prixAmeliorationNucleaire.textProperty().bind(Parametre.prixAmeliorationCanonNucleaire.asString());
+            prixAmeliorationChamps.textProperty().bind(Parametre.prixAmeliorationChampForce.asString());
+
 
 
         } catch (FileNotFoundException e) {
@@ -214,13 +224,18 @@ public class ControllerNiveau implements Initializable {
                                 if (this.environnement.getListeTours().get(i) instanceof TourTeteChercheuse) {
                                     TourTeteChercheuse tour = (TourTeteChercheuse) this.environnement.getListeTours().get(i);
                                     //Ici, on vérifie si le temps de recharge de la tour a été dépassé. Si oui, on vérifie si un ennemi est présent dans le périmètre
-                                    if (Math.abs(temps - tour.getTempsLastEnnemi()) >= tour.getTempsRecharge()) {
-                                         tour.recupererEnnemiCible(temps);
+                                    if(this.environnement.getListeTours().get(i) instanceof TourCanonLaser) {
+                                        if (Math.abs(temps - tour.getTempsLastEnnemi()) >= (Parametre.tempsRechargeCanonLaser.getValue() - ((this.environnement.getNiveauCanonLaser() - 1) * 10))) {
+                                            tour.recupererEnnemiCible(temps);
+                                        }
+                                        else if (Math.abs(temps - tour.getTempsLastEnnemi()) >= (Parametre.tempsRechargeCanonMissile.getValue()  - ((this.environnement.getNiveauCanonMissile() - 1) * 10))){
+                                            tour.recupererEnnemiCible(temps);
+                                        }
                                     }
                                 }
                                 //Les tours bombe nucléaires envoient une bombe si leur temps de recharge est passé
                                 if (this.environnement.getListeTours().get(i) instanceof TourCanonBombeNuclaire) {
-                                    if (temps % TourCanonBombeNuclaire.tempsRecharge.getValue() == 0 && temps != 0) {
+                                    if ((temps % Parametre.tempsRechargeCanonNuclaire.getValue() - ((this.environnement.getNiveauCanonNucleaire() - 1) * 10))  == 0 && temps != 0) {
                                         this.environnement.ajouterProjectileBombeNucleaire(3, this.environnement.getListeTours().get(i).XProperty().getValue(), this.environnement.getListeTours().get(i).YProperty().getValue());
                                     }
                                 }
@@ -313,27 +328,39 @@ public class ControllerNiveau implements Initializable {
     }
 
     public void AffichageBoutonAmelioration(){
-        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonLaser.getValue() * Math.pow(2, this.environnement.getNiveauCanonLaser() - 1)){
+        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonLaser.getValue() || this.environnement.getNiveauCanonLaser() >= this.environnement.niveauMaxCanonProperty().getValue()){
             ameliorationCanonLaser.setDisable(true);
         } else {
             ameliorationCanonLaser.setDisable(false);
+            if(!(this.environnement.getNiveauCanonLaser() < this.environnement.niveauMaxCanonProperty().getValue())){
+                //prixAmeliorationLaser.setText("Nv Max");
+            }
         }
-        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonMissile.getValue() * Math.pow(2, this.environnement.getNiveauCanonMissile() - 1)){
+        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonMissile.getValue() || this.environnement.getNiveauCanonMissile() >= this.environnement.niveauMaxCanonProperty().getValue()){
             ameliorationCanonMissile.setDisable(true);
         } else {
             ameliorationCanonMissile.setDisable(false);
+            if(!(this.environnement.getNiveauCanonMissile() < this.environnement.niveauMaxCanonProperty().getValue())){
+                //prixAmeliorationMissile.setText("Nv Max");
+            }
         }
-        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonNucleaire.getValue() * Math.pow(2, this.environnement.getNiveauCanonNucleaire() - 1)){
+        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonNucleaire.getValue() || this.environnement.getNiveauCanonNucleaire() >= this.environnement.niveauMaxCanonProperty().getValue()){
             ameliorationCanonNucleaire.setDisable(true);
         }
         else{
             ameliorationCanonNucleaire.setDisable(false);
+            if(!(this.environnement.getNiveauCanonNucleaire() < this.environnement.niveauMaxCanonProperty().getValue())) {
+                //prixCanonLaser.setText("Nv Max");
+            }
         }
-        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationChampForce.getValue() * Math.pow(2, this.environnement.getNiveauChampForce() - 1)){
+        if(this.environnement.getRessource().getValue() < Parametre.prixAmeliorationChampForce.getValue() || this.environnement.getNiveauChampForce() >= this.environnement.niveauMaxChampProperty().getValue()){
             ameliorationChampDeForce.setDisable(true);
         }
         else{
             ameliorationChampDeForce.setDisable(false);
+            if (!(this.environnement.getNiveauChampForce() < this.environnement.niveauMaxChampProperty().getValue())){
+                //prixCanonLaser.setText("Nv Max");
+            }
         }
     }
 

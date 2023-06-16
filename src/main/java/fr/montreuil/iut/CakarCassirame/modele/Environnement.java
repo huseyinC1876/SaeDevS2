@@ -33,6 +33,8 @@ public class Environnement {
     private IntegerProperty niveauCanonMissile = new SimpleIntegerProperty(1);
     private IntegerProperty niveauChampForce = new SimpleIntegerProperty(1);
     private IntegerProperty niveauCanonNucleaire = new SimpleIntegerProperty(1);
+    private final IntegerProperty niveauMaxCanon = new SimpleIntegerProperty(3);
+    private final IntegerProperty niveauMaxChamp = new SimpleIntegerProperty(2);
 
 
     public Environnement(int niveau) throws IOException {
@@ -114,6 +116,10 @@ public class Environnement {
         return niveauCanonNucleaire.getValue();
     }
 
+    public IntegerProperty niveauMaxCanonProperty(){ return this.niveauMaxCanon; }
+
+    public IntegerProperty niveauMaxChampProperty(){ return this.niveauMaxChamp; }
+
     public void vendreTour(int x, int y){
         Tour tour = tourPlacement(x, y);
         if(tour instanceof TourCanonLaser)
@@ -194,7 +200,7 @@ public class Environnement {
      */
     public void ajouterProjectileBombeNucleaire(int typeProjectile, int x, int y) {
         if (typeProjectile == 3) {
-            listeProjectiles.add(new ProjectileCanonBombeNucleaire(this, 5, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 1));
+            listeProjectiles.add(new ProjectileCanonBombeNucleaire(this, (Parametre.degatCanonNuclaire.getValue() + ((this.getNiveauCanonNucleaire() - 1)* 10)), new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 1));
         }
     }
 
@@ -205,18 +211,18 @@ public class Environnement {
      * @param ennemi         --> ennemi à viser
      */
     //TODO : AJUSTER LES DEGATS SOUHAITES
-    public void ajouterProjectileTeteChercheuse(int typeProjectile, int x, int y, Ennemi ennemi) {
+    public void ajouterProjectileTeteChercheuse(int typeProjectile, int x, int y,int degat,  Ennemi ennemi) {
         if (typeProjectile == 1) {
-            listeProjectiles.add(new ProjectileCanonLaser(this, 10, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 5, ennemi));
+            listeProjectiles.add(new ProjectileCanonLaser(this, degat, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 5, ennemi));
         }
         if (typeProjectile == 2) {
-            listeProjectiles.add(new ProjectileCanonMissile(this, 20, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 5, ennemi));
+            listeProjectiles.add(new ProjectileCanonMissile(this, degat, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), 5, ennemi));
         }
     }
 
     public boolean verificationPlacement(double x, double y) {
         for (Tour tour : this.listeTours) {
-            if (tour.XProperty().getValue() == x && tour.YProperty().getValue() == y) {
+            if (tour.XProperty().getValue() == (x + 16) && tour.YProperty().getValue() == (y + 16)) {
                 return false;
             }
         }
@@ -266,26 +272,29 @@ public class Environnement {
 
     public void ameliorationTour(int choix) {
         if (choix == 1) {
-            this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationCanonLaser.getValue() * Math.pow(2, this.getNiveauCanonLaser() - 1));
+            this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationCanonLaser.getValue());
             this.ameliorationCanonLaser();
         } else if (choix == 2) {
-            this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationCanonMissile.getValue() * Math.pow(2, this.getNiveauCanonMissile() - 1));
+            this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationCanonMissile.getValue());
             this.ameliorationCanonMissile();
         } else if (choix == 3) {
-            this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationCanonNucleaire.getValue() * Math.pow(2, this.getNiveauCanonNucleaire() - 1));
+            this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationCanonNucleaire.getValue());
             this.ameliorationCanonNucleaire();
         } else {
-            this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationChampForce.getValue() * Math.pow(2, this.getNiveauChampForce() - 1));
+            this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationChampForce.getValue());
             this.ameliorationChampForce();
+            TourChampDeForce.amelioration();
         }
     }
 
     public void attaquer() {
-        for (int i = 0; i < this.listeTours.size(); i++) {
-            listeTours.get(i).attaquer();
+        for (Tour listeTour : this.listeTours) {
+            if(listeTour instanceof TourChampDeForce){
+                ((TourChampDeForce) listeTour).reduireVitesse();
+            }
         }
-        for (int i = 0; i < listeProjectiles.size(); i++) {
-            listeProjectiles.get(i).attaquer();
+        for (Projectile listeProjectile : this.listeProjectiles) {
+            listeProjectile.attaquer();
         }
     }
 
@@ -339,13 +348,9 @@ public class Environnement {
                 if (this.listeEnnemis.get(i) instanceof EnnemiVaisseauSpatial) {
                     this.listeEnnemis.remove(i);
                     this.nbEnnemiTue.setValue(this.nbEnnemiTue.getValue() + 1);
-//                    if (this.nbEnnemiSpawn.getValue() < this.nbEnnemiMax.getValue() - 2) {
-//                    System.out.println("ENNEMIS SPAWN  BIS " + this.nbEnnemiSpawn);
-//                    TODO : avec la condition ça marche pas, sans la condition, ça risque de dépasser qd on sera à 99, ça va faire 101
                     //Lorsqu'un ennemiVaisseauSpatial meurt, 2 nouveaux vaisseaux apparaissent (ils ne comptent pas dans les listes des ennemis ajoutés et morts)
                     listeEnnemis.add(new EnnemiDivise(this, this.debutMap[1], this.debutMap[0]));
                     listeEnnemis.add(new EnnemiDivise(this, this.debutMap[1] + 16, this.debutMap[0] + 16));
-//                    }
                 }
                 else if (this.listeEnnemis.get(i) instanceof EnnemiDivise) {
                     this.listeEnnemis.remove(i);
