@@ -1,7 +1,6 @@
 package fr.montreuil.iut.CakarCassirame.modele.tours;
 
 import fr.montreuil.iut.CakarCassirame.modele.Environnement;
-import fr.montreuil.iut.CakarCassirame.modele.Parametre;
 
 
 public class TourCanonMissile extends TourTeteChercheuse{
