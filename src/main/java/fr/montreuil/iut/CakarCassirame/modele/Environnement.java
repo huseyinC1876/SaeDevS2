@@ -292,8 +292,8 @@ public class Environnement {
                 ((TourChampDeForce) listeTour).reduireVitesse();
             }
         }
-        for (Projectile listeProjectile : this.listeProjectiles) {
-            listeProjectile.attaquer();
+        for (int i = listeProjectiles.size()-1 ; i >= 0 ; i--){
+            listeProjectiles.get(i).attaquer();
         }
     }
 
@@ -355,19 +355,6 @@ public class Environnement {
         }
     }
 
-
-    /**
-     * Vérifie pour chaque projectile présent sur la map s'il a déjà attaqué ou non
-     * Si oui --> le projectile est supprimé de l'environnement
-     */
-    public void verifProjectileHasAttacked() {
-        for (int i = listeProjectiles.size() - 1; i >= 0; i--) {
-            if (listeProjectiles.get(i).getHasAttacked()) {
-                this.listeProjectiles.remove(i);
-            }
-        }
-    }
-
     /**
      * Vérifie aussi si les projectiles à tête chercheuse ont un ennemi cible
      * Si non (l'ennemi cible a été tué par un autre projectile) --> le projectile est supprimé de l'environnement
@@ -403,7 +390,6 @@ public class Environnement {
         deplacementProjectiles();
         attaquer();
         verificationEnnemisMorts();
-        verifProjectileHasAttacked();
         verifPerimetreChampDeForce();
         verifNbEnnemisParVague();
         verifProjectileHasCible();

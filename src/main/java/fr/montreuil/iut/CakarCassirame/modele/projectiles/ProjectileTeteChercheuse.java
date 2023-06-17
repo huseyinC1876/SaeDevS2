@@ -45,9 +45,11 @@ public abstract class ProjectileTeteChercheuse extends Projectile {
             if(ennemiCible instanceof EnnemiSuperVaisseauSpatial && ((EnnemiSuperVaisseauSpatial) ennemiCible).getBouclier() > 0 ){
                 ((EnnemiSuperVaisseauSpatial) ennemiCible).decrementerBouclier(this.getDegat());
             }
-            else this.ennemiCible.decrementerPV(this.getDegat());
-            //hasAttacked devient true --> permet que le projectile soit supprimé de la liste et disparaisse de la Map
-            setHasAttacked(true);
+            else {
+                this.ennemiCible.decrementerPV(this.getDegat());
+
+            }
+            this.getEnv().getListeProjectiles().remove(this);
         }
     }
 

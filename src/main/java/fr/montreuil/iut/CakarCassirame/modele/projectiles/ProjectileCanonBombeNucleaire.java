@@ -30,17 +30,18 @@ public class ProjectileCanonBombeNucleaire extends Projectile {
     //Le projectile décrémente la vie de tous les ennemis présents sur la Map une fois qu'il a atteint le centre de la Map
     @Override
     public void attaquer() {
-        if(this.YProperty().getValue() == this.getEnv().getMap().getTileMapHeight() * 32 / 2 && this.XProperty().getValue() ==this.getEnv().getMap().getTileMapWidth() * 32 / 2 && !getHasAttacked()) {
-            for(int i = 0 ; i < this.getEnv().getListeEnnemis().size() ; i++) {
+        if (this.YProperty().getValue() == this.getEnv().getMap().getTileMapHeight() * 32 / 2 && this.XProperty().getValue() == this.getEnv().getMap().getTileMapWidth() * 32 / 2 && !getHasAttacked()) {
+            for (int i = 0; i < this.getEnv().getListeEnnemis().size(); i++) {
                 //Si c'est un SuperVaisseauSpatial, on décrémente d'abord le bouclier
-                if(this.getEnv().getListeEnnemis().get(i) instanceof EnnemiSuperVaisseauSpatial && ((EnnemiSuperVaisseauSpatial) this.getEnv().getListeEnnemis().get(i)).getBouclier() > 0){
-                        ((EnnemiSuperVaisseauSpatial) this.getEnv().getListeEnnemis().get(i)).decrementerBouclier(this.getDegat());
-                    }
-                    // si le bouclier est épuisé on décrémente directement les PV             }
+                if (this.getEnv().getListeEnnemis().get(i) instanceof EnnemiSuperVaisseauSpatial && ((EnnemiSuperVaisseauSpatial) this.getEnv().getListeEnnemis().get(i)).getBouclier() > 0) {
+                    ((EnnemiSuperVaisseauSpatial) this.getEnv().getListeEnnemis().get(i)).decrementerBouclier(this.getDegat());
+                }
+                // si le bouclier est épuisé on décrémente directement les PV
                 else this.getEnv().getListeEnnemis().get(i).decrementerPV(this.getDegat());
+
             }
             //hasAttacked devient true --> permet que le projectile soit supprimé de la liste et disparaisse de la Map
-            setHasAttacked(true);
+            this.getEnv().getListeProjectiles().remove(this);
         }
     }
 }
