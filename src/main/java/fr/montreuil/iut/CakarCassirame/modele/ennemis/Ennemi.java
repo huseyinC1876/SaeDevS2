@@ -55,7 +55,10 @@ public abstract class Ennemi {
         return v;
     }
 
-    //Si l'ennemi rentre dans la base l'atribut enter devient true
+    /**
+     * Permet le deplacer les ennemie sur le chemin
+     * L'attribut enter devient true si l'ennemi entre dans la base de l'utilisateur et met ces gain ansi que ces pv à 0
+     */
     public void seDeplacer(){
         if((positionBackUp[1] != this.x.getValue()/32+1)  && this.environnement.getMap().getTileMap()[(this.y.getValue()/32)][((this.x.getValue()/32)+ 1)] == 2 && !enter){
             if(positionBackUp[1] != this.x.getValue() / 32) {

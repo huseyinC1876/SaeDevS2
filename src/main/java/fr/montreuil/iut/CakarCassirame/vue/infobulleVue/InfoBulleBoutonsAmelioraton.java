@@ -15,6 +15,9 @@ public class InfoBulleBoutonsAmelioraton extends InfoBulleBouton{
         infobulleNucleaire();
     }
 
+    /**
+     * Creer un infobulle pour le bouton d'amélioration du tour canon Laser il suffit de rester dessus avec la souris
+     */
     @Override
     public void infobulleLaser() {
         if(this.getEnvironnement().getNiveauCanonLaser() < this.getEnvironnement().niveauMaxCanonProperty().getValue()) {
@@ -26,7 +29,9 @@ public class InfoBulleBoutonsAmelioraton extends InfoBulleBouton{
             super.getButtonCanonLaser().setTooltip(tooltip);
         }
     }
-
+    /**
+     * Creer un infobulle pour le bouton d'amélioration du tour Canon Missile il suffit de rester dessus avec la souris
+     */
     @Override
     public void infobulleMissile() {
         if(this.getEnvironnement().getNiveauCanonMissile() < this.getEnvironnement().niveauMaxCanonProperty().getValue()) {
@@ -39,6 +44,9 @@ public class InfoBulleBoutonsAmelioraton extends InfoBulleBouton{
         }
     }
 
+    /**
+     * Creer un infobulle pour le bouton d'amélioration du tour Champ de Force il suffit de rester dessus avec la souris
+     */
     @Override
     public void infobulleChamp() {
         if(this.getEnvironnement().getNiveauChampForce() < this.getEnvironnement().niveauMaxChampProperty().getValue()) {
@@ -51,6 +59,9 @@ public class InfoBulleBoutonsAmelioraton extends InfoBulleBouton{
         }
     }
 
+    /**
+     * Creer un infobulle pour le bouton d'amélioration du tour Canon Nucleaire il suffit de rester dessus avec la souris
+     */
     @Override
     public void infobulleNucleaire() {
         if(this.getEnvironnement().getNiveauCanonNucleaire() < this.getEnvironnement().niveauMaxCanonProperty().getValue()) {
@@ -63,6 +74,9 @@ public class InfoBulleBoutonsAmelioraton extends InfoBulleBouton{
         }
     }
 
+    /**
+     * Met à jour les infobulles
+     */
     public void mAJ(){
         infobulleLaser();
         infobulleMissile();

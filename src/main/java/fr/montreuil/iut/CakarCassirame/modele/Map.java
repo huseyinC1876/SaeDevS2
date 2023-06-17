@@ -24,6 +24,11 @@ public abstract class Map {
     public int[][] getTileMap(){
         return this.tileMap;
     }
+
+    /**
+     * retourne la position de spawn des ennemis
+     * @return
+     */
     public int[] debutMapEnnemie(){
         int[] placement = new int[2];
         for (int i = 0; i < tileMap.length; i++){
@@ -50,6 +55,12 @@ public abstract class Map {
         return placement;
     }
 
+    /**
+     * Permet de lire un fichier et de creer la map en tableau remplie avec des int en fonction de celui-ci qui est retourné
+     * @param lien
+     * @return
+     * @throws IOException
+     */
     public int[][] map(String lien) throws IOException {
         int[][] map = new int[20][30];
         File file = new File(lien);

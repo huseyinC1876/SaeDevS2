@@ -14,8 +14,7 @@ class EnnemiTest {
         Environnement environnement = new Environnement(1);
         Ennemi ennemi = new EnnemiExtraterrestre(environnement, environnement.getMap().debutMapEnnemie()[1], environnement.getMap().debutMapEnnemie()[0]);
         ennemi.seDeplacer();
-        int y = ennemi.YProperty().getValue();
-        int yAttendu = (int) (environnement.getMap().debutMapEnnemie()[0] + ennemi.getV());
-        Assertions.assertEquals((int)(environnement.getMap().debutMapEnnemie()[0] + ennemi.getV()),ennemi.YProperty().getValue());
+        Assertions.assertEquals((environnement.getMap().debutMapEnnemie()[0] + ennemi.getV()),ennemi.YProperty().getValue());
+
     }
 }
