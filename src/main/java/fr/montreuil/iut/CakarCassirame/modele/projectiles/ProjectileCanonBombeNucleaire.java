@@ -30,7 +30,7 @@ public class ProjectileCanonBombeNucleaire extends Projectile {
     //Le projectile décrémente la vie de tous les ennemis présents sur la Map une fois qu'il a atteint le centre de la Map
     @Override
     public void attaquer() {
-        if (this.YProperty().getValue() == this.getEnv().getMap().getTileMapHeight() * 32 / 2 && this.XProperty().getValue() == this.getEnv().getMap().getTileMapWidth() * 32 / 2 && !getHasAttacked()) {
+        if (this.YProperty().getValue() == this.getEnv().getMap().getTileMapHeight() * 32 / 2 && this.XProperty().getValue() == this.getEnv().getMap().getTileMapWidth() * 32 / 2) {
             for (int i = 0; i < this.getEnv().getListeEnnemis().size(); i++) {
                 //Si c'est un SuperVaisseauSpatial, on décrémente d'abord le bouclier
                 if (this.getEnv().getListeEnnemis().get(i) instanceof EnnemiSuperVaisseauSpatial && ((EnnemiSuperVaisseauSpatial) this.getEnv().getListeEnnemis().get(i)).getBouclier() > 0) {

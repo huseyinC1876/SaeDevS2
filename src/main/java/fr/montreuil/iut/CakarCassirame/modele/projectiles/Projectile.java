@@ -10,7 +10,6 @@ public abstract class Projectile {
     private final String id;
     private static int compteur = 0;
     private final int v;
-    private boolean hasAttacked;
 
     public Projectile(Environnement env, int degat, IntegerProperty x, IntegerProperty y, int v){
         this.env = env;
@@ -20,7 +19,6 @@ public abstract class Projectile {
         this.y = y;
         this.degat = degat;
         this.v = v;
-        this.hasAttacked = false;
     }
 
     public IntegerProperty XProperty(){return this.x;}
@@ -31,9 +29,7 @@ public abstract class Projectile {
     public int getDegat(){return this.degat;}
     public abstract void seDeplacer();
     public abstract void attaquer();
-    public void setHasAttacked(boolean b){
-        hasAttacked = b;
-    }
-    public boolean getHasAttacked(){return hasAttacked;}
+
+
 
 }
