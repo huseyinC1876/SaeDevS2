@@ -285,7 +285,6 @@ public class Environnement {
     }
 
 
-    //TODO : modifier ici
     public void attaquer() {
         for (Tour listeTour : this.listeTours) {
             if(listeTour instanceof TourChampDeForce){
