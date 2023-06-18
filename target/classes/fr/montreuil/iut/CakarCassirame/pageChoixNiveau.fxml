@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="paneExterneSelection" prefHeight="640.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.montreuil.iut.CakarCassirame.controller.ControllerSelectionNiveau">
+   <children>
+      <ImageView fitHeight="640.0" fitWidth="1300.0" pickOnBounds="true">
+         <image>
+            <Image url="@espace.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="boutonNiveau1" layoutX="414.0" layoutY="160.0" mnemonicParsing="false" onAction="#chargerNiveau" prefHeight="61.0" prefWidth="76.0" text="NIV 1">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Button>
+      <Button fx:id="boutonNiveau2" layoutX="811.0" layoutY="160.0" mnemonicParsing="false" onAction="#chargerNiveau" prefHeight="61.0" prefWidth="76.0" text="NIV 2">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" layoutX="452.0" layoutY="384.0" mnemonicParsing="false" onAction="#chargerPageAccueil" prefHeight="77.0" prefWidth="397.0" text="Page d'Accueil">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Label alignment="CENTER" layoutX="1.0" layoutY="30.0" prefHeight="58.0" prefWidth="1300.0" text="Choix du Niveau">
+         <font>
+            <Font name="System Bold" size="70.0" />
+         </font>
+         <textFill>
+            <RadialGradient centerX="0.5044053031484461" centerY="0.5" focusAngle="-135.0" radius="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.42500001192092896" green="0.5808333158493042" blue="0.8500000238418579" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </textFill>
+      </Label>
+   </children>
+</Pane>

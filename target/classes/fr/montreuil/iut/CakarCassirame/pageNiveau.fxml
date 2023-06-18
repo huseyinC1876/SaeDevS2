@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="pane" onMouseClicked="#GestionTour" prefHeight="640.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.montreuil.iut.CakarCassirame.controller.ControllerNiveau">
+    <TilePane fx:id="tilePaneExterne" alignment="CENTER" prefHeight="640" prefWidth="960" xmlns:fx="http://javafx.com/fxml">
+    </TilePane>
+   <TilePane fx:id="tilePaneBombe" prefHeight="640" prefWidth="960">
+   </TilePane>
+   <TilePane fx:id="tilePaneInterne" prefHeight="640.0" prefWidth="960.0" />
+   <Pane fx:id="paneVente" prefHeight="640.0" prefWidth="960.0" />
+   <HBox fx:id="hboxVie" prefHeight="33.0" prefWidth="107.0">
+      <children>
+         <ImageView fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@coeur32.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@coeur32.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@coeur32.png" />
+            </image>
+         </ImageView>
+      </children>
+      <padding>
+         <Insets left="850.0" top="10.0" />
+      </padding>
+   </HBox>
+   <HBox prefHeight="38.0" prefWidth="98.0">
+      <children>
+         <Label fx:id="nbEnnemiTue" textFill="WHITE">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
+         <Label text="/" textFill="WHITE">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
+         <Label fx:id="nbEnnemiMax" textFill="#f4f4f4">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
+      </children>
+   </HBox>
+   <ImageView fitHeight="640.0" fitWidth="340.0" layoutX="960.0" pickOnBounds="true">
+      <image>
+         <Image url="@Galactus.jpg" />
+      </image>
+   </ImageView>
+   <VBox layoutX="960.0" layoutY="-5.0" prefHeight="640.0" prefWidth="340.0">
+      <children>
+         <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+               <Label alignment="CENTER" prefHeight="38.0" prefWidth="83.0" text="Tours :" textFill="#faf0f0">
+                  <font>
+                     <Font name="System Bold" size="24.0" />
+                  </font>
+               </Label>
+               <ImageView fitHeight="150.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@argent.png" />
+                  </image>
+                  <HBox.margin>
+                     <Insets left="100.0" />
+                  </HBox.margin>
+               </ImageView>
+               <Label fx:id="nbRessources" textFill="WHITE">
+                  <font>
+                     <Font name="System Bold Italic" size="24.0" />
+                  </font>
+                  <HBox.margin>
+                     <Insets left="20.0" />
+                  </HBox.margin>
+               </Label>
+            </children>
+         </HBox>
+         <HBox>
+            <children>
+               <VBox>
+                  <children>
+                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Canon Laser" textFill="WHITE" />
+                     <Button fx:id="canonLaser" mnemonicParsing="false" onAction="#affichagePlacement" prefHeight="90.0" prefWidth="115.0">
+                        <graphic>
+                           <ImageView fitHeight="83.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@canonLaser.png" />
+                              </image>
+                           </ImageView>
+                        </graphic>
+                     </Button>
+                     <HBox prefHeight="18.0" prefWidth="111.0">
+                        <children>
+                           <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="#f4f2f2" />
+                           <Label fx:id="prixCanonLaser" textFill="WHITE">
+                              <HBox.margin>
+                                 <Insets left="-30.0" />
+                              </HBox.margin>
+                           </Label>
+                        </children>
+                     </HBox>
+                  </children>
+                  <HBox.margin>
+                     <Insets right="10.0" />
+                  </HBox.margin>
+               </VBox>
+               <VBox>
+                  <children>
+                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Canon Missile" textFill="#fffefe" />
+                     <Button fx:id="canonMissile" mnemonicParsing="false" onAction="#affichagePlacement" prefHeight="90.0" prefWidth="115.0">
+                        <graphic>
+                           <ImageView fitHeight="83.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@canonMissile.jpg" />
+                              </image>
+                           </ImageView>
+                        </graphic>
+                     </Button>
+                     <HBox prefHeight="18.0" prefWidth="102.0">
+                        <children>
+                           <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="WHITE" />
+                           <Label fx:id="prixCanonMissile" textFill="WHITE">
+                              <HBox.margin>
+                                 <Insets left="-30.0" />
+                              </HBox.margin>
+                           </Label>
+                        </children>
+                     </HBox>
+                  </children>
+                  <HBox.margin>
+                     <Insets left="10.0" />
+                  </HBox.margin>
+               </VBox>
+            </children>
+            <VBox.margin>
+               <Insets bottom="20.0" />
+            </VBox.margin>
+            <padding>
+               <Insets left="10.0" right="10.0" />
+            </padding>
+         </HBox>
+         <HBox prefHeight="142.0" prefWidth="340.0">
+            <children>
+               <VBox>
+                  <children>
+                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Champs de force" textFill="WHITE" />
+                     <Button fx:id="champForce" mnemonicParsing="false" onAction="#affichagePlacement" prefHeight="90.0" prefWidth="115.0">
+                        <graphic>
+                           <ImageView fitHeight="80.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@champDeForce.jpg" />
+                              </image>
+                           </ImageView>
+                        </graphic>
+                     </Button>
+                     <HBox prefHeight="22.0" prefWidth="85.0">
+                        <children>
+                           <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="WHITE" />
+                           <Label fx:id="prixChampDeForce" textFill="WHITE">
+                              <HBox.margin>
+                                 <Insets left="-30.0" />
+                              </HBox.margin>
+                           </Label>
+                        </children>
+                     </HBox>
+                  </children>
+                  <HBox.margin>
+                     <Insets right="10.0" />
+                  </HBox.margin>
+               </VBox>
+               <VBox>
+                  <children>
+                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Canon Nucléaire" textFill="WHITE" />
+                     <Button fx:id="canonNucleaire" mnemonicParsing="false" onAction="#affichagePlacement" prefHeight="90.0" prefWidth="115.0">
+                        <graphic>
+                           <ImageView fitHeight="84.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@bombeNucléaireDraw.jpg" />
+                              </image>
+                           </ImageView>
+                        </graphic>
+                     </Button>
+                     <HBox prefHeight="18.0" prefWidth="82.0">
+                        <children>
+                           <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="WHITE" />
+                           <Label fx:id="prixCanonNucleaire" textFill="WHITE">
+                              <HBox.margin>
+                                 <Insets left="-30.0" />
+                              </HBox.margin>
+                           </Label>
+                        </children>
+                     </HBox>
+                  </children>
+                  <HBox.margin>
+                     <Insets left="10.0" />
+                  </HBox.margin>
+               </VBox>
+            </children>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+            <padding>
+               <Insets left="10.0" right="10.0" />
+            </padding>
+         </HBox>
+         <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+               <Button fx:id="buttonMenuAmelioration" mnemonicParsing="false" onAction="#affichageMenuAmelioration" prefHeight="30.0" prefWidth="253.0" text="Amelioration">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Button>
+               <Button fx:id="butonVente" mnemonicParsing="false" onAction="#affichagePlacementVente" prefHeight="26.0" prefWidth="102.0">
+                  <HBox.margin>
+                     <Insets left="5.0" />
+                  </HBox.margin>
+                  <graphic>
+                     <ImageView fitHeight="26.0" fitWidth="86.0" pickOnBounds="true" smooth="false">
+                        <image>
+                           <Image url="@vente.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+               </Button>
+            </children>
+         </HBox>
+         <HBox fx:id="menuAmelioration1">
+            <children>
+               <VBox>
+                  <children>
+                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Canon Laser" textFill="WHITE" />
+                     <Button fx:id="ameliorationCanonLaser" mnemonicParsing="false" onAction="#ameliorationTours" prefHeight="54.0" prefWidth="62.0">
+                        <graphic>
+                           <ImageView fitHeight="46.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@canonLaser.png" />
+                              </image>
+                           </ImageView>
+                        </graphic>
+                        <VBox.margin>
+                           <Insets left="20.0" />
+                        </VBox.margin>
+                     </Button>
+                     <HBox prefHeight="18.0" prefWidth="111.0">
+                        <children>
+                           <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="#f4f2f2">
+                              <HBox.margin>
+                                 <Insets left="20.0" />
+                              </HBox.margin>
+                           </Label>
+                           <Label fx:id="prixAmeliorationLaser" textFill="WHITE">
+                              <HBox.margin>
+                                 <Insets left="-30.0" />
+                              </HBox.margin>
+                           </Label>
+                        </children>
+                     </HBox>
+                  </children>
+                  <HBox.margin>
+                     <Insets right="10.0" />
+                  </HBox.margin>
+               </VBox>
+               <VBox>
+                  <children>
+                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Canon Missile" textFill="#fffefe" />
+                     <Button fx:id="ameliorationCanonMissile" mnemonicParsing="false" onAction="#ameliorationTours" prefHeight="48.0" prefWidth="32.0">
+                        <graphic>
+                           <ImageView fitHeight="46.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@canonMissile.jpg" />
+                              </image>
+                           </ImageView>
+                        </graphic>
+                        <VBox.margin>
+                           <Insets left="20.0" />
+                        </VBox.margin>
+                     </Button>
+                     <HBox prefHeight="18.0" prefWidth="102.0">
+                        <children>
+                           <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="WHITE">
+                              <HBox.margin>
+                                 <Insets left="20.0" />
+                              </HBox.margin>
+                           </Label>
+                           <Label fx:id="prixAmeliorationMissile" textFill="WHITE">
+                              <HBox.margin>
+                                 <Insets left="-30.0" />
+                              </HBox.margin>
+                           </Label>
+                        </children>
+                     </HBox>
+                  </children>
+                  <HBox.margin>
+                     <Insets left="10.0" />
+                  </HBox.margin>
+               </VBox>
+            </children>
+            <padding>
+               <Insets left="10.0" right="10.0" />
+            </padding>
+         </HBox>
+         <HBox fx:id="menuAmelioration2" prefHeight="142.0" prefWidth="340.0">
+            <children>
+               <VBox>
+                  <children>
+                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Champs de force" textFill="WHITE" />
+                     <Button fx:id="ameliorationChampDeForce" mnemonicParsing="false" onAction="#ameliorationTours" prefHeight="46.0" prefWidth="78.0">
+                        <graphic>
+                           <ImageView fitHeight="46.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@champDeForce.jpg" />
+                              </image>
+                           </ImageView>
+                        </graphic>
+                        <VBox.margin>
+                           <Insets left="20.0" />
+                        </VBox.margin>
+                     </Button>
+                     <HBox prefHeight="22.0" prefWidth="85.0">
+                        <children>
+                           <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="WHITE">
+                              <HBox.margin>
+                                 <Insets left="20.0" />
+                              </HBox.margin>
+                           </Label>
+                           <Label fx:id="prixAmeliorationChamps" textFill="WHITE">
+                              <HBox.margin>
+                                 <Insets left="-30.0" />
+                              </HBox.margin>
+                           </Label>
+                        </children>
+                     </HBox>
+                  </children>
+                  <HBox.margin>
+                     <Insets right="10.0" />
+                  </HBox.margin>
+               </VBox>
+               <VBox>
+                  <children>
+                     <Label alignment="CENTER" prefHeight="23.0" prefWidth="115.0" text="Canon Nucléaire" textFill="WHITE" />
+                     <Button fx:id="ameliorationCanonNucleaire" mnemonicParsing="false" onAction="#ameliorationTours" prefHeight="44.0" prefWidth="63.0">
+                        <graphic>
+                           <ImageView fitHeight="46.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@bombeNucléaireDraw.jpg" />
+                              </image>
+                           </ImageView>
+                        </graphic>
+                        <VBox.margin>
+                           <Insets left="20.0" />
+                        </VBox.margin>
+                     </Button>
+                     <HBox prefHeight="18.0" prefWidth="82.0">
+                        <children>
+                           <Label alignment="TOP_LEFT" prefHeight="23.0" prefWidth="60.0" text="Prix :" textFill="WHITE">
+                              <HBox.margin>
+                                 <Insets left="20.0" />
+                              </HBox.margin>
+                           </Label>
+                           <Label fx:id="prixAmeliorationNucleaire" textFill="WHITE">
+                              <HBox.margin>
+                                 <Insets left="-30.0" />
+                              </HBox.margin>
+                           </Label>
+                        </children>
+                     </HBox>
+                  </children>
+                  <HBox.margin>
+                     <Insets left="10.0" />
+                  </HBox.margin>
+               </VBox>
+            </children>
+            <padding>
+               <Insets left="10.0" right="10.0" />
+            </padding>
+         </HBox>
+         <Button mnemonicParsing="false" onAction="#pause" prefHeight="35.0" prefWidth="340.0" text="Pause/Play">
+            <VBox.margin>
+               <Insets top="1.0" />
+            </VBox.margin>
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Button>
+         <Button mnemonicParsing="false" onMouseClicked="#chargerPageAcceuil" prefHeight="38.0" prefWidth="340.0" text="Page d'accueil">
+            <font>
+               <Font size="16.0" />
+            </font>
+            <VBox.margin>
+               <Insets top="10.0" />
+            </VBox.margin>
+         </Button>
+      </children>
+   </VBox>
+
+</Pane>
