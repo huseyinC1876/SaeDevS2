@@ -5,7 +5,6 @@ import fr.montreuil.iut.CakarCassirame.modele.Parametre;
 import fr.montreuil.iut.CakarCassirame.modele.ennemis.Ennemi;
 
 
-
 public abstract class TourTeteChercheuse extends TourPerimetre {
 
     private int tempsLastEnnemi;
@@ -19,6 +18,7 @@ public abstract class TourTeteChercheuse extends TourPerimetre {
     /**
      * On vérifie si un ennemi est présent dans le périmètre d'action de la tour
      * Dès qu'un ennemi est récupéré, on ajoute un nouveau projectile qui va viser cet ennemi + le tempsLastEnnemi est mis à jour
+     *
      * @param temps
      */
     public void recupererEnnemiCible(int temps) {
@@ -26,19 +26,19 @@ public abstract class TourTeteChercheuse extends TourPerimetre {
         Ennemi ennemi;
         for (int i = 0; i < this.getEnvironnement().getListeEnnemis().size(); i++) {
             ennemi = this.getEnvironnement().getListeEnnemis().get(i);
-            if (Math.sqrt(Math.pow(this.XProperty().getValue() - ennemi.XProperty().getValue(), 2) + Math.pow(this.YProperty().getValue() - ennemi.YProperty().getValue(), 2)) <= getRayonPerimetreAction()) {
-                if(this instanceof TourCanonLaser) {
-                    this.getEnvironnement().ajouterProjectileTeteChercheuse(1, this.XProperty().getValue(), this.YProperty().getValue(), Parametre.degatCanonLaser.getValue() + ((this.getEnvironnement().getNiveauCanonLaser() - 1) * 10),ennemi);
+            if (hasEnnemiDansPerimetre(ennemi)){
+                if (this instanceof TourCanonLaser) {
+                    this.getEnvironnement().ajouterProjectileTeteChercheuse(1, this.XProperty().getValue(), this.YProperty().getValue(), Parametre.degatCanonLaser.getValue() + ((this.getEnvironnement().getNiveauCanonLaser() - 1) * 10), ennemi);
                 }
-                if(this instanceof TourCanonMissile){
-                    this.getEnvironnement().ajouterProjectileTeteChercheuse(2, this.XProperty().getValue(), this.YProperty().getValue(), Parametre.degatCanonMissile.getValue() + ((this.getEnvironnement().getNiveauCanonLaser() - 1) * 20),ennemi);
-                }
-                this.tempsLastEnnemi = temps;
-                quit = true;
+            if (this instanceof TourCanonMissile) {
+                this.getEnvironnement().ajouterProjectileTeteChercheuse(2, this.XProperty().getValue(), this.YProperty().getValue(), Parametre.degatCanonMissile.getValue() + ((this.getEnvironnement().getNiveauCanonLaser() - 1) * 20), ennemi);
             }
-            if (quit) break;
+            this.tempsLastEnnemi = temps;
+            quit = true;
         }
+        if (quit) break;
     }
+}
 
 
     public int getTempsLastEnnemi() {
