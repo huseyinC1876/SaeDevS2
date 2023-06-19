@@ -2,8 +2,7 @@ package fr.montreuil.iut.CakarCassirame.modele.projectiles;
 
 import fr.montreuil.iut.CakarCassirame.modele.Environnement;
 import fr.montreuil.iut.CakarCassirame.modele.Parametre;
-import fr.montreuil.iut.CakarCassirame.modele.ennemis.Ennemi;
-import fr.montreuil.iut.CakarCassirame.modele.ennemis.EnnemiExtraterrestre;
+import fr.montreuil.iut.CakarCassirame.modele.ennemis.*;
 import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonLaser;
 import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonMissile;
 import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileTeteChercheuse;
@@ -78,8 +77,54 @@ public class ProjectileTeteChercheuseTest {
 
     }
 
+
     @Test
     void attaquerTest() throws IOException{
+        Environnement env = new Environnement(2);
 
+        //cas 1 : valAbs différence Xs et Ys supérieure à 3
+        EnnemiVaisseauSpatial ennemi = new EnnemiVaisseauSpatial(env, 145, 145);
+        ProjectileTeteChercheuse projectile = new ProjectileCanonLaser(env, Parametre.degatCanonLaser.getValue(), new SimpleIntegerProperty(152), new SimpleIntegerProperty(152), 2, ennemi);
+
+        projectile.attaquer();
+
+        assertTrue(ennemi.getPv() == ennemi.getPvMax());
+
+        //cas 2 : valAbs différence Xs et Ys inférieure à 3
+        EnnemiDivise ennemi1 = new EnnemiDivise(env, 150, 154);
+        ProjectileTeteChercheuse projectile1 = new ProjectileCanonMissile(env, Parametre.degatCanonMissile.getValue(), new SimpleIntegerProperty(152), new SimpleIntegerProperty(152), 2, ennemi1);
+
+        projectile1.attaquer();
+
+        assertTrue(ennemi1.getPv() == ennemi1.getPvMax() - projectile1.getDegat());
+
+        //cas 3 : valAbs différence Xs et Ys inférieure à 3 et ennemi instance of EnnemiSuperVaisseauSpatial
+        EnnemiSuperVaisseauSpatial ennemi2 = new EnnemiSuperVaisseauSpatial(env, 150, 154);
+        ProjectileTeteChercheuse projectile2 = new ProjectileCanonLaser(env, Parametre.degatCanonLaser.getValue(), new SimpleIntegerProperty(152), new SimpleIntegerProperty(152), 2, ennemi2);
+
+        int bouclierMax = ennemi2.getBouclier();
+
+        projectile2.attaquer();
+
+        assertTrue(ennemi2.getPv() == ennemi2.getPvMax()); // les PV de l'ennemi n'ont pas été décrémentés
+        assertTrue(ennemi2.getBouclier() == bouclierMax - projectile2.getDegat());
+
+
+        //cas 4 : valAbs différence Xs supérieure à 3 et Ys inférieure à 3
+        EnnemiExtraterrestre ennemi3 = new EnnemiExtraterrestre(env, 155, 152);
+        ProjectileTeteChercheuse projectile3 = new ProjectileCanonLaser(env, Parametre.degatCanonLaser.getValue(), new SimpleIntegerProperty(150), new SimpleIntegerProperty(152), 2, ennemi3);
+
+        projectile3.attaquer();
+
+        assertTrue(ennemi3.getPv() == ennemi3.getPvMax());
+
+
+        //cas 5 : valAbs différence Xs inférieure à 3 et Ys supérieure à 3
+        EnnemiExtraterrestre ennemi4 = new EnnemiExtraterrestre(env, 155, 152);
+        ProjectileTeteChercheuse projectile4 = new ProjectileCanonMissile(env, Parametre.degatCanonMissile.getValue(), new SimpleIntegerProperty(153), new SimpleIntegerProperty(160), 2, ennemi4);
+
+        projectile4.attaquer();
+
+        assertTrue(ennemi4.getPv() == ennemi4.getPvMax());
     }
 }
