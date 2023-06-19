@@ -1,7 +1,9 @@
-package fr.montreuil.iut.CakarCassirame.modele.ennemis;
+package fr.montreuil.iut.CakarCassirame.modele.projectiles;
 
 import fr.montreuil.iut.CakarCassirame.modele.Environnement;
 import fr.montreuil.iut.CakarCassirame.modele.Parametre;
+import fr.montreuil.iut.CakarCassirame.modele.ennemis.Ennemi;
+import fr.montreuil.iut.CakarCassirame.modele.ennemis.EnnemiExtraterrestre;
 import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonLaser;
 import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileCanonMissile;
 import fr.montreuil.iut.CakarCassirame.modele.projectiles.ProjectileTeteChercheuse;
