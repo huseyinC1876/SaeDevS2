@@ -104,8 +104,12 @@ public class Environnement {
         return this.listeProjectiles;
     }
 
-    public IntegerProperty getRessource() {
+    public IntegerProperty ressourceProperty() {
         return this.ressource;
+    }
+
+    public void setRessource(int ressource){
+        this.ressource.setValue(ressource);
     }
 
     public int getNiveauCanonLaser() {
@@ -222,15 +226,17 @@ public class Environnement {
 
     public void vendreTour(int x, int y) {
         Tour tour = tourPlacement(x, y);
-        if (tour instanceof TourCanonLaser)
-            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonLaser.getValue() / 2);
-        else if (tour instanceof TourCanonMissile)
-            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonMissile.getValue());
-        else if (tour instanceof TourCanonBombeNuclaire)
-            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonNucleaire.getValue() / 2);
-        else
-            this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourChampForce.getValue());
-        this.listeTours.remove(tour);
+        if (tour != null) {
+            if (tour instanceof TourCanonLaser)
+                this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonLaser.getValue() / 2);
+            else if (tour instanceof TourCanonMissile)
+                this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonMissile.getValue() / 2);
+            else if (tour instanceof TourCanonBombeNuclaire)
+                this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourCanonNucleaire.getValue() / 2);
+            else
+                this.ressource.setValue(this.ressource.getValue() + Parametre.prixTourChampForce.getValue() / 2);
+            this.listeTours.remove(tour);
+        }
     }
 
     public Tour tourPlacement(int x, int y) {
@@ -243,13 +249,23 @@ public class Environnement {
     }
 
     public void ajouterTour(int x, int y, int nbChoixTour) {
-        if (nbChoixTour == 1)
+        if (nbChoixTour == 1 && this.ressource.getValue() >= Parametre.prixTourCanonLaser.getValue()) {
             this.listeTours.add(new TourCanonLaser(this, x, y));
-        else if (nbChoixTour == 2)
+            this.ressource.setValue(this.ressource.getValue() - Parametre.prixTourCanonLaser.getValue());
+        }
+        else if (nbChoixTour == 2 && this.ressource.getValue() >= Parametre.prixTourCanonMissile.getValue()) {
             this.listeTours.add(new TourCanonMissile(this, x, y));
-        else if (nbChoixTour == 3)
+            this.ressource.setValue(this.ressource.getValue() - Parametre.prixTourCanonMissile.getValue());
+        }
+        else if (nbChoixTour == 3 && this.ressource.getValue() >= Parametre.prixTourCanonNucleaire.getValue()) {
             this.listeTours.add(new TourCanonBombeNuclaire(this, x, y));
-        else this.listeTours.add(new TourChampDeForce(this, x, y));
+            this.ressource.setValue(this.ressource.getValue() - Parametre.prixTourCanonNucleaire.getValue());
+        }
+        else if(nbChoixTour == 4 && this.ressource.getValue() >= Parametre.prixTourChampForce.getValue()) {
+            this.listeTours.add(new TourChampDeForce(this, x, y));
+            this.ressource.setValue(this.ressource.getValue() - Parametre.prixTourChampForce.getValue());
+        }
+
     }
 
     public void deplacementEnnemis() {
@@ -268,16 +284,16 @@ public class Environnement {
     }
 
     public void ameliorationTour(int choix) {
-        if (choix == 1) {
+        if (choix == 1 && this.niveauCanonLaser.getValue() < this.niveauMaxCanon.getValue() && this.ressource.getValue() > Parametre.prixAmeliorationCanonLaser.getValue()) {
             this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationCanonLaser.getValue());
             this.ameliorationCanonLaser();
-        } else if (choix == 2) {
+        } else if (choix == 2 && this.niveauCanonMissile.getValue() < this.niveauMaxCanon.getValue() && this.ressource.getValue() > Parametre.prixAmeliorationCanonMissile.getValue()) {
             this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationCanonMissile.getValue());
             this.ameliorationCanonMissile();
-        } else if (choix == 3) {
+        } else if (choix == 3 && this.niveauCanonNucleaire.getValue() < this.niveauMaxCanon.getValue() && this.ressource.getValue() > Parametre.prixAmeliorationCanonNucleaire.getValue()) {
             this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationCanonNucleaire.getValue());
             this.ameliorationCanonNucleaire();
-        } else {
+        } else if (choix == 4 && this.niveauChampForce.getValue() < this.niveauMaxChamp.getValue() && this.ressource.getValue() > Parametre.prixAmeliorationChampForce.getValue()) {
             this.ressource.setValue(this.ressource.getValue() - Parametre.prixAmeliorationChampForce.getValue());
             this.ameliorationChampForce();
             TourChampDeForce.amelioration();
@@ -338,7 +354,7 @@ public class Environnement {
     public void verificationEnnemisMorts() {
         for (int i = this.listeEnnemis.size() - 1; i >= 0; i--) {
             if (this.listeEnnemis.get(i).getPv() < 1) {
-                this.ressource.setValue(this.getRessource().getValue() + this.listeEnnemis.get(i).getGain());
+                this.ressource.setValue(this.ressourceProperty().getValue() + this.listeEnnemis.get(i).getGain());
                 if (this.listeEnnemis.get(i) instanceof EnnemiDivise) {
                     this.listeEnnemis.remove(i);
                 } else {
