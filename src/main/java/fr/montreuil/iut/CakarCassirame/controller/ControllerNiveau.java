@@ -184,7 +184,7 @@ public class ControllerNiveau implements Initializable {
             prixCanonMissile.textProperty().bind(Parametre.prixTourCanonMissile.asString());
             prixChampDeForce.textProperty().bind(Parametre.prixTourChampForce.asString());
             prixCanonNucleaire.textProperty().bind(Parametre.prixTourCanonNucleaire.asString());
-            nbRessources.textProperty().bind(this.environnement.getRessource().asString());
+            nbRessources.textProperty().bind(this.environnement.ressourceProperty().asString());
             prixAmeliorationLaser.textProperty().bind(Parametre.prixAmeliorationCanonLaser.asString());
             prixAmeliorationMissile.textProperty().bind(Parametre.prixAmeliorationCanonMissile.asString());
             prixAmeliorationNucleaire.textProperty().bind(Parametre.prixAmeliorationCanonNucleaire.asString());
@@ -360,25 +360,25 @@ public class ControllerNiveau implements Initializable {
      * Grise les image des bouton des amelioration si l'utilisateur n'a pas l'argent nécessaire
      */
     public void AffichageBoutonAmelioration() {
-        if (this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonLaser.getValue() || this.environnement.getNiveauCanonLaser() >= this.environnement.niveauMaxCanonProperty().getValue()) {
+        if (this.environnement.ressourceProperty().getValue() < Parametre.prixAmeliorationCanonLaser.getValue() || this.environnement.getNiveauCanonLaser() >= this.environnement.niveauMaxCanonProperty().getValue()) {
             ameliorationCanonLaser.setDisable(true);
         } else {
             ameliorationCanonLaser.setDisable(false);
 
         }
-        if (this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonMissile.getValue() || this.environnement.getNiveauCanonMissile() >= this.environnement.niveauMaxCanonProperty().getValue()) {
+        if (this.environnement.ressourceProperty().getValue() < Parametre.prixAmeliorationCanonMissile.getValue() || this.environnement.getNiveauCanonMissile() >= this.environnement.niveauMaxCanonProperty().getValue()) {
             ameliorationCanonMissile.setDisable(true);
         } else {
             ameliorationCanonMissile.setDisable(false);
 
         }
-        if (this.environnement.getRessource().getValue() < Parametre.prixAmeliorationCanonNucleaire.getValue() || this.environnement.getNiveauCanonNucleaire() >= this.environnement.niveauMaxCanonProperty().getValue()) {
+        if (this.environnement.ressourceProperty().getValue() < Parametre.prixAmeliorationCanonNucleaire.getValue() || this.environnement.getNiveauCanonNucleaire() >= this.environnement.niveauMaxCanonProperty().getValue()) {
             ameliorationCanonNucleaire.setDisable(true);
         } else {
             ameliorationCanonNucleaire.setDisable(false);
 
         }
-        if (this.environnement.getRessource().getValue() < Parametre.prixAmeliorationChampForce.getValue() || this.environnement.getNiveauChampForce() >= this.environnement.niveauMaxChampProperty().getValue()) {
+        if (this.environnement.ressourceProperty().getValue() < Parametre.prixAmeliorationChampForce.getValue() || this.environnement.getNiveauChampForce() >= this.environnement.niveauMaxChampProperty().getValue()) {
             ameliorationChampDeForce.setDisable(true);
         } else {
             ameliorationChampDeForce.setDisable(false);
@@ -388,22 +388,22 @@ public class ControllerNiveau implements Initializable {
      * Grise les image des bouton d'achat des tours si l'utilisateur n'a pas l'argent nécessaire
      */
     public void AffichageBoutonTours() {
-        if (this.environnement.getRessource().getValue() < Parametre.prixTourCanonLaser.getValue()) {
+        if (this.environnement.ressourceProperty().getValue() < Parametre.prixTourCanonLaser.getValue()) {
             canonLaser.setDisable(true);
         } else {
             canonLaser.setDisable(false);
         }
-        if (this.environnement.getRessource().getValue() < Parametre.prixTourCanonMissile.getValue()) {
+        if (this.environnement.ressourceProperty().getValue() < Parametre.prixTourCanonMissile.getValue()) {
             canonMissile.setDisable(true);
         } else {
             canonMissile.setDisable(false);
         }
-        if (this.environnement.getRessource().getValue() < Parametre.prixTourCanonNucleaire.getValue()) {
+        if (this.environnement.ressourceProperty().getValue() < Parametre.prixTourCanonNucleaire.getValue()) {
             canonNucleaire.setDisable(true);
         } else {
             canonNucleaire.setDisable(false);
         }
-        if (this.environnement.getRessource().getValue() < Parametre.prixTourChampForce.getValue()) {
+        if (this.environnement.ressourceProperty().getValue() < Parametre.prixTourChampForce.getValue()) {
             champForce.setDisable(true);
         } else {
             champForce.setDisable(false);
@@ -439,7 +439,7 @@ public class ControllerNiveau implements Initializable {
                 prix = Parametre.prixTourCanonNucleaire.getValue();
             else
                 prix = Parametre.prixTourChampForce.getValue();
-            if (this.environnement.getRessource().getValue() >= prix) {
+            if (this.environnement.ressourceProperty().getValue() >= prix) {
                 this.placementVue.affichaged();
                 this.placement = true;
             }
@@ -472,18 +472,7 @@ public class ControllerNiveau implements Initializable {
                     positionY = ((int) positionY / 32) * 32;
                     if (this.environnement.verificationPlacement(positionX, positionY)) {
                         this.environnement.ajouterTour((int) positionX + 16, (int) positionY + 16, this.choixTour);
-                        int prix;
-                        if (choixTour == 1)
-                            prix = Parametre.prixTourCanonLaser.getValue();
-                        else if (choixTour == 2)
-                            prix = Parametre.prixTourCanonMissile.getValue();
-                        else if (choixTour == 3)
-                            prix = Parametre.prixTourCanonNucleaire.getValue();
-                        else
-                            prix = Parametre.prixTourChampForce.getValue();
-                        this.environnement.getRessource().setValue(this.environnement.getRessource().getValue() - prix);
                     }
-
                 }
                 if (autorisationVente) {
                     positionX = ((int) positionX / 32) * 32;
